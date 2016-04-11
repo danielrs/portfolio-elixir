@@ -1,0 +1,28 @@
+@import "settings";
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,700|Inconsolata:400,700|Josefin+Slab:400,700|Montserrat);
+
+html {
+  font-family: "Open Sans", "sans-serif";
+}
+
+body {
+  color: @color-body;
+}
+
+code {
+  font-family: "Inconsolata", "monospace";
+}
+
+h1, h2, h3, h4 {
+  font-family: "Montserrat", "sans-serif";
+  font-weight: normal;
+  color: @color-gray-3;
+}
+
+a {
+  text-decoration: none;
+  color: @color-link;
+
+  &:visited { color: @color-link-visited; }
+  &:hover { text-decoration: underline; color: @color-link-hover; }
+}

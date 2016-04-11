@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Daniel Rivas personal website">
+    <meta name="author" content="Daniel Rivas">
+
+    <title>Hello Portfolio!</title>
+    <link rel="stylesheet" href="<%= static_path(@conn, "/css/vendor.css") %>">
+    <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
+  </head>
+
+  <body>
+    <header class="header header--fixed">
+      <div class="container">
+        <button class="navbar-toggle" type="button">&#9776;</button>
+        <a class="navbar-brand" href="/"><strong>Daniel</strong>Rivas</a>
+        <nav role="navigation">
+          <ul class="nav">
+            <li><a href="/">Home</a></li>
+            <li><a href="/projects">Projects</a></li>
+            <li><a href="/contact">Contact</a></li>
+            <li><a href="/blog">Blog</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <%# <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %1></p> %>
+    <%# <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %1></p> %>
+
+    <main role="main">
+      <%= render @view_module, @view_template, assigns %>
+    </main>
+
+    <footer role="footer" class="container">
+      <div class="social">
+        <h2>Social</h2>
+        <ul>
+          <li><i class="fa fa-github-alt"></i><a href="#">Github</a></li>
+          <li><i class="fa fa-stack-overflow"></i><a href="#">StackOverflow</a></li>
+          <li><i class="fa fa-linkedin"></i><a href="#">LinkedIn</a></li>
+          <li><i class="fa fa-twitter"></i><a href="#">Twitter</a></li>
+        </ul>
+      </div>
+
+      <nav role="footer-navigation">
+        <h2>Navigate</h2>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/projects">Projects</a></li>
+          <li><a href="/contact">Contact</a></li>
+          <li><a href="/blog">Blog</a></li>
+        </ul>
+      </nav>
+
+      <p class="copyright">
+        Copyright © 2016, Daniel Rivas
+      </p>
+    </footer>
+
+    <script src="<%= static_path(@conn, "/js/vendor.js") %>"></script>
+    <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
+  </body>
+</html>

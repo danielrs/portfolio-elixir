@@ -1,0 +1,34 @@
+@import "util.less";
+
+@grid-width: 100%;
+@gutter: 10%;
+
+@column-float: left;
+
+.opposite-float(left) { @opposite-float: right; }
+.opposite-float(right) { @opposite-float: left; }
+
+.row() {
+  .clearfix;
+}
+
+.column(@column-span, @columns, @cycle: 0) {
+  .opposite-float(@column-float);
+  @spanned-gutters: @gutter * (@column-span - 1);
+  @width-left: @grid-width - (@gutter * (@columns - 1));
+  @column-width: (@width-left / @columns) * @column-span + @spanned-gutters;
+
+  display: block;
+  float: @column-float;
+  width: @column-width;
+  margin-@{opposite-float}: @gutter;
+
+  & when (@cycle < 1) {
+    &:last-child { margin-@{opposite-float}: 0; }
+  }
+  & when not (@cycle < 1) {
+    &:nth-child(@{cycle}n), &:last-child { margin-@{opposite-float}: 0; }
+    &:nth-child(@{cycle}n + 1) { clear: @column-float; }
+  }
+
+}
