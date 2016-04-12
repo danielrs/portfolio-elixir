@@ -7,22 +7,29 @@
     <meta name="description" content="Daniel Rivas personal website">
     <meta name="author" content="Daniel Rivas">
 
-    <title>Hello Portfolio!</title>
+    <title><%= @page_title || "Daniel Rivas"%></title>
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/vendor.css") %>">
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
   </head>
 
-  <body>
+  <body >
     <header class="header header--fixed">
       <div class="container">
         <button class="navbar-toggle" type="button">&#9776;</button>
         <a class="navbar-brand" href="/"><strong>Daniel</strong>Rivas</a>
         <nav role="navigation">
           <ul class="nav">
-            <li><a href="/">Home</a></li>
-            <li><a href="/projects">Projects</a></li>
-            <li><a href="/contact">Contact</a></li>
-            <li><a href="/blog">Blog</a></li>
+            <%= for item <- @menu do %>
+              <li>
+                <%= if item.root == @menu_root do %>
+                  <a href="<%= item.path %>" class="nav__active">
+                    <%= item.caption %>
+                  </a>
+                <% else %>
+                  <a href="<%= item.path %>"><%= item.caption %></a>
+                <% end %>
+              </li>
+            <% end %>
           </ul>
         </nav>
       </div>
@@ -30,8 +37,10 @@
 
     <%# <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %1></p> %>
     <%# <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %1></p> %>
-
-    <main role="main">
+    <main role="main"
+        <%= if @menu_root == home_path(Portfolio.Endpoint, :index) |> path_root do %>
+        class="main--home"
+        <% end %>>
       <%= render @view_module, @view_template, assigns %>
     </main>
 
@@ -49,11 +58,13 @@
       <nav role="footer-navigation">
         <h2>Navigate</h2>
         <ul>
-          <li><a href="/">Home</a></li>
-          <li><a href="/projects">Projects</a></li>
-          <li><a href="/contact">Contact</a></li>
-          <li><a href="/blog">Blog</a></li>
+          <%= for item <- @menu do %>
+            <li>
+              <a href="<%= item.path %>"><%= item.caption %></a></li>
+            </li>
+          <% end %>
         </ul>
+
       </nav>
 
       <p class="copyright">
@@ -63,5 +74,6 @@
 
     <script src="<%= static_path(@conn, "/js/vendor.js") %>"></script>
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
+
   </body>
 </html>

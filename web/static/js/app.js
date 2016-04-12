@@ -21,10 +21,35 @@ import "phoenix_html"
 // import socket from "./socket"
 
 $(document).ready(function() {
+
   $('#tagline').typing({
     sentences: ["Hello",
                 "I'm daniel",
-                "I'm daniel, and...",
-                "I'm a programmer"]});
+                "I code stuff",
+                "I'm a programmer!"]});
+
+  $(document).scroll(function() {
+    const scroll = $(this).stop().scrollTop();
+    if (scroll > 10) $('header').removeClass('header--home');
+    else $('header').addClass('header--home');
+  });
+
+  if ($('main[role=main]').hasClass('main--home')) {
+    $(document).scroll(function() {
+      const scroll = $(this).stop().scrollTop();
+      if (scroll > 10) {
+        $('header').removeClass('header--home');
+        $('header .navbar-brand').removeClass('fadeOutLeft');
+        $('header .navbar-brand').addClass('animated fadeInLeft');
+      }
+      else {
+        $('header').addClass('header--home');
+        $('header .navbar-brand').removeClass('fadeInLeft');
+        $('header .navbar-brand').addClass('animated fadeOutLeft');
+      }
+    });
+  }
+
+  $(document).scroll();
 
 });

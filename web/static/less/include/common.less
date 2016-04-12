@@ -9,9 +9,9 @@
 header.header {
   .clearfix;
 
-  background: color-white;
+  background: @color-white;
   box-shadow: 0 0 2px rgba(0, 0, 0, .125);
-  transition: background .125s, box-shadow 125s;
+  transition: background .125s, box-shadow .125s;
 
   &--fixed {
     position: fixed;
@@ -26,20 +26,25 @@ header.header {
     box-shadow: none;
   }
 
-  .container { .clearfix; }
+  .container {
+    .clearfix;
+    padding: 0;
+  }
 }
 
 .navbar-toggle {
   float: left;
   margin: 0;
-  padding: 1rem
+  padding: 1rem;
   border: none;
   font-size: 2rem;
   line-height: 2rem;
   cursor: pointer;
+  background: transparent;
+  color: @color-body;
   transition: background .125s;
   &:hover {
-    background: @color-gray-2;
+    background: @color-gray-8;
   }
 }
 
@@ -52,6 +57,7 @@ header.header {
   font-size: 2rem;
   line-height: 4rem;
   color: @color-body;
+  animation-duration: .5s;
   &:hover { color: @color-body; text-decoration: none; }
   * { word-wrap: break-word; }
 }
@@ -105,7 +111,7 @@ nav[role=navigation] {
         display: inline-block;
         a.nav__active {
           background: transparent;
-          border-bottom: 2px solid @color-body;
+          border-bottom: 1px solid @color-body;
         }
       }
     }
@@ -120,7 +126,7 @@ nav[role=navigation] {
   padding: 6em 1em 2em;
   overflow: hidden;
 
-  background: linear-gradient(to bottom, transparent 0%, transparent 90%, rgba(0, 0, 0, .125) 100%);
+  background: linear-gradient(to bottom, transparent 0%, transparent 90%, rgba(0, 0, 0, .1) 100%);
 
   &__content {
     position: absolute;
@@ -150,6 +156,19 @@ nav[role=navigation] {
   }
 }
 
+/* CSS for animation typejs cursor */
+@keyframes blink {
+	0% { opacity: 1; }
+	45% { opacity: 1; }
+	50% { opacity: 0; }
+	95% { opacity: 0; }
+	100% { opacity: 1; }
+}
+
+.typingjs__caret {
+	animation: blink 1s linear 0s infinite;
+}
+
 // --------
 // Footer
 // --------
@@ -157,8 +176,8 @@ nav[role=navigation] {
 @column-float: right;
 footer[role=footer] {
   .row;
-  paddin-top: 1em;
-  paddin-bottom: 2em;
+  padding-top: 1em;
+  padding-bottom: 2em;
   border-top: 1px solid @color-gray-9;
 
   .copyright { text-align: center; }
