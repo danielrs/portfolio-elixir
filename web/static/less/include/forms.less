@@ -1,4 +1,81 @@
+@import "settings";
+
 ul {
   list-style: none;
   padding: 0;
+}
+
+@border-radius: 2px;
+
+button,
+input[type=button],
+input[type=submit] {
+  padding: .75em 1em;
+  border: 1px solid @color-gray-7;
+  border-radius: @border-radius;
+  outline: none;
+  background: transparent;
+  color: @color-gray-7;
+
+  transition: border-color @animation-normal, color @animation-normal;
+
+  &:hover {
+    border-color: @color-gray-6;
+    color: @color-gray-6;
+  }
+  &:active {
+    border-color: @color-body;
+    color: @color-body;
+  }
+}
+
+input[type=text],
+input[type=search],
+input[type=email],
+input[type=password],
+textarea {
+  padding: .75em;
+  border: 1px solid @color-gray-9;
+  border-radius: @border-radius;
+  outline: none;
+  resize: none;
+
+  transition: border-color @animation-normal;
+
+  &:focus { border-color: @color-body; }
+}
+
+textarea {
+  min-height: 240px;
+}
+
+fieldset {
+  margin: 1em 0 0 0;
+  padding: 0;
+  border: 0;
+
+  &:first-child { margin-top: 0; }
+
+  &.form-group {
+    & > * {
+      display: block;
+      position: relative;
+      box-sizing: border-box;
+      width: 100%;
+      border-radius: 0;
+      top: -1px;
+      margin-bottom: -1px;
+
+      &:first-child {
+        top: 0;
+        border-top-left-radius: @border-radius;
+        border-top-right-radius: @border-radius;
+      }
+      &:last-child {
+        border-bottom-left-radius: @border-radius;
+        border-bottom-right-radius: @border-radius;
+      }
+      &:focus { z-index: 1; }
+    }
+  }
 }

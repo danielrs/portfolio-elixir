@@ -19,7 +19,7 @@
         <a class="navbar-brand" href="/"><strong>Daniel</strong>Rivas</a>
         <nav role="navigation">
           <ul class="nav">
-            <%= for item <- @menu do %>
+            <%= for item <- Enum.drop(@menu, 1) do %>
               <li>
                 <%= if item.root == @menu_root do %>
                   <a href="<%= item.path %>" class="nav__active">
@@ -35,8 +35,11 @@
       </div>
     </header>
 
-    <%# <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %1></p> %>
-    <%# <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %1></p> %>
+    <%# <section class="container"> %>
+    <%#   <p class="alert alert--info" role="alert"><%= get_flash(@conn, :info) %1></p> %>
+    <%#   <p class="alert alert--danger" role="alert"><%= get_flash(@conn, :error) %1></p> %>
+    <%# </section> %>
+
     <main role="main"
         <%= if @menu_root == home_path(Portfolio.Endpoint, :index) |> path_root do %>
         class="main--home"
@@ -48,10 +51,12 @@
       <div class="social">
         <h2>Social</h2>
         <ul>
-          <li><i class="fa fa-github-alt"></i><a href="#">Github</a></li>
-          <li><i class="fa fa-stack-overflow"></i><a href="#">StackOverflow</a></li>
-          <li><i class="fa fa-linkedin"></i><a href="#">LinkedIn</a></li>
-          <li><i class="fa fa-twitter"></i><a href="#">Twitter</a></li>
+          <%= for item <- @social do %>
+            <li>
+              <i class="fa <%= item.icon %>"></i>
+              <a href="<%= item.url %>"><%= item.caption %></a>
+            </li>
+          <% end %>
         </ul>
       </div>
 
@@ -59,9 +64,7 @@
         <h2>Navigate</h2>
         <ul>
           <%= for item <- @menu do %>
-            <li>
-              <a href="<%= item.path %>"><%= item.caption %></a></li>
-            </li>
+            <li><a href="<%= item.path %>"><%= item.caption %></a></li>
           <% end %>
         </ul>
 

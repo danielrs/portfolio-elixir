@@ -18,7 +18,7 @@
   @width-left: @grid-width - (@gutter * (@columns - 1));
   @column-width: (@width-left / @columns) * @column-span + @spanned-gutters;
 
-  display: block;
+  display: inline-block;
   float: @column-float;
   width: @column-width;
   margin-@{opposite-float}: @gutter;

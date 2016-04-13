@@ -5,20 +5,23 @@
 // --------
 // Header
 // --------
+.box-shadow() { box-shadow: 0 2px 2px -2px rgba(0, 0, 0, .125);
+}
 
 header.header {
   .clearfix;
+  .box-shadow();
 
+  position: relative;
+  z-index: 100;
   background: @color-white;
-  box-shadow: 0 0 2px rgba(0, 0, 0, .125);
-  transition: background .125s, box-shadow .125s;
+  transition: background @animation-fast, box-shadow @animation-fast;
 
   &--fixed {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
-    z-index: 100;
   }
 
   &--home {
@@ -33,61 +36,82 @@ header.header {
 }
 
 .navbar-toggle {
+  position: relative;
+  z-index: 1;
   float: left;
-  margin: 0;
+  margin: 0 .5em 0 0;
   padding: 1rem;
   border: none;
+  outline: none;
+
   font-size: 2rem;
   line-height: 2rem;
   cursor: pointer;
+
   background: transparent;
   color: @color-body;
-  transition: background .125s;
+  transition: background @animation-fast;
+
   &:hover {
-    background: @color-gray-8;
+    background: @color-gray-9;
   }
 }
 
 .navbar-brand {
+  position: relative;
+  z-index: 0;
   float: left;
-  display: inline-block;
-  margin-left: 0.5em;
+
   vertical-align: middle;
   font-family: "Josefin Slab", "serif";
   font-size: 2rem;
   line-height: 4rem;
+
   color: @color-body;
-  animation-duration: .5s;
+  animation-duration: @animation-slow;
+
   &:hover { color: @color-body; text-decoration: none; }
   * { word-wrap: break-word; }
 }
 
 nav[role=navigation] {
-  display: none;
+  .clearfix;
   clear: both;
   vertical-align: middle;
   overflow: hidden;
 
   ul.nav {
-    display: block;
+    .box-shadow;
+
+    position: absolute;
+    left: 0;
+    right: 0;
     margin: 0;
     padding: 0;
     list-style: none;
+    background: @color-white;
+
+    transition: transform @animation-normal;
+
+    &.nav--hidden {
+      transform: translateX(-100%);
+    }
 
     li {
       display: block;
       margin: 0;
+      padding: 1rem .5rem;
       text-align: center;
 
       a {
-        display: block;
-        padding: 1rem;
+        display: inline-block;
+        padding: .5rem;
         font-family: "Montserrat", "sans-serif";
         font-size: 1rem;
-        line-height: 2rem;
+        line-height: 1rem;
         color: @color-body;
 
-        &.nav__active {background: @color-gray-2}
+        &.nav__active { border-bottom: 2px solid @color-body; }
         &:hover {text-decoration: underline}
       }
     }
@@ -96,24 +120,20 @@ nav[role=navigation] {
 
 @media screen and (min-width: @break-m) {
 
+  header.header .container { padding: 0 2em; }
+
   .navbar-toggle { display: none; }
 
   nav[role=navigation] {
     display: inline-block;
     clear: none;
     float: right;
-    position: relative;
-    height: auto;
 
     ul.nav {
       display: inline-block;
-      li {
-        display: inline-block;
-        a.nav__active {
-          background: transparent;
-          border-bottom: 1px solid @color-body;
-        }
-      }
+      position: relative;
+      &.nav--hidden { transform: none; }
+      li { display: inline-block;}
     }
   }
 }
@@ -176,11 +196,17 @@ nav[role=navigation] {
 @column-float: right;
 footer[role=footer] {
   .row;
-  padding-top: 1em;
-  padding-bottom: 2em;
+  margin-bottom: 1em;
   border-top: 1px solid @color-gray-9;
 
   .copyright { text-align: center; }
+
+  .social h2,
+  nav[role=footer-navigation] h2,
+  .copyright {
+    margin-top: 2rem;
+  }
+
 
   @media screen and (min-width: @break-s) and (max-width: (@break-m - 1px)) {
     .social,
@@ -198,5 +224,12 @@ footer[role=footer] {
       .column(2, 4);
     }
   }
+}
 
+// --------
+// Alerts and errors
+// --------
+
+.alert {
+  display: block;
 }

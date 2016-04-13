@@ -1,0 +1,11 @@
+<ul class="project-list">
+  <%= for project <- Enum.take(project_list, assigns[:project_limit] || project_count) do %>
+    <li>
+      <p>
+        <strong>
+          <a href="<%= project.url %>" alt="link to project"><%= project.caption %></a>
+        </strong> - <%= project.description %>
+      </p>
+    </li>
+  <% end %>
+<ul>

@@ -22,7 +22,8 @@
     "jquery": "^2.2.3",
     "typing.js": "^0.2.2",
     "normalize-css": "^4.0.0",
-    "animate.css": "^3.5.1"
+    "animate.css": "^3.5.1",
+    "font-awesome": "^4.6.1"
   },
   "resolutions": {
     "jquery": "^2.2.3"

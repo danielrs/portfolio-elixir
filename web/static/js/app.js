@@ -49,7 +49,10 @@ $(document).ready(function() {
       }
     });
   }
-
   $(document).scroll();
+
+  $('.navbar-toggle').click(function() {
+    $('nav[role=navigation] .nav').toggleClass('nav--hidden');
+  }).trigger('click');
 
 });

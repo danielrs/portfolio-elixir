@@ -7,14 +7,14 @@
   </div>
 </section>
 
-<section class="section">
+<section>
   <div class="container">
-    <h2>Some of my projects</h2>
-    <p>List of projects</p>
+    <h2>Recent projects</h2>
+    <%= render Portfolio.ProjectsView, "project-list.html", project_limit: 3 %>
   </div>
 </section>
 
-<section class="section">
+<section>
   <div class="container">
     <h2>Recent blog entries</h2>
     <p>List of blog posts</p>

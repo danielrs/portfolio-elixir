@@ -21,19 +21,21 @@ defmodule Portfolio.Plug.Menu do
     end
   end
 
-  defmacrop menu_entry(caption, path_func) do
+  defmacrop menu_entry(menu, caption, path_func) do
     quote do
-      %{caption: unquote(caption),
-        path: unquote(path_func)(Portfolio.Endpoint, :index),
-        root: unquote(path_func)(Portfolio.Endpoint, :index) |> path_root}
+      unquote(menu)
+      ++ [%{caption: unquote(caption),
+            path: unquote(path_func)(Portfolio.Endpoint, :index),
+            root: unquote(path_func)(Portfolio.Endpoint, :index) |> path_root}]
     end
   end
 
   def init(opts) do
-    menu = [menu_entry("Home", :home_path),
-            menu_entry("Projects", :projects_path),
-            menu_entry("Contact", :contact_path),
-            menu_entry("Blog", :blog_path)]
+    menu = []
+           |> menu_entry("Home", :home_path)
+           |> menu_entry("Projects", :projects_path)
+           |> menu_entry("Contact", :contact_path)
+           |> menu_entry("Blog", :blog_path)
 
     Keyword.put(opts, :menu, menu);
   end

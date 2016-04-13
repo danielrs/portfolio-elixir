@@ -7,6 +7,7 @@ defmodule Portfolio.Router do
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug Portfolio.Plug.Social
   end
 
   pipeline :api do
@@ -17,8 +18,12 @@ defmodule Portfolio.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", HomeController, :index
+
     get "/projects", ProjectsController, :index
+
     get "/contact", ContactController, :index
+    post "/contact", ContactController, :new
+
     get "/blog", BlogController, :index
   end
 
