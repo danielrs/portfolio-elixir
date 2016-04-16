@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Daniel Rivas personal website">
+    <meta name="author" content="Daniel Rivas">
+
+    <title><%= @page_title || "Daniel Rivas"%></title>
+    <link rel="stylesheet" href="<%= static_path(@conn, "/css/vendor.css") %>">
+    <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
+  </head>
+
+  <body >
+
+    <%# <section class="container"> %>
+    <%#   <p class="alert alert--info" role="alert"><%= get_flash(@conn, :info) %1></p> %>
+    <%#   <p class="alert alert--danger" role="alert"><%= get_flash(@conn, :error) %1></p> %>
+    <%# </section> %>
+
+    <main role="main"
+        <%= if @menu_root == home_path(Portfolio.Endpoint, :index) |> path_root do %>
+        class="main--home"
+        <% end %>>
+      <%= render @view_module, @view_template, assigns %>
+    </main>
+
+    <footer role="footer" class="container">
+      <div class="social">
+        <h2>Social</h2>
+        <ul>
+          <%= for item <- @social do %>
+            <li>
+              <i class="fa <%= item.icon %>"></i>
+              <a href="<%= item.url %>"><%= item.caption %></a>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+
+      <nav role="footer-navigation">
+        <h2>Navigate</h2>
+        <ul>
+          <%= for item <- @menu do %>
+            <li><a href="<%= item.path %>"><%= item.caption %></a></li>
+          <% end %>
+        </ul>
+
+      </nav>
+
+      <p class="copyright">
+        Copyright © 2016, Daniel Rivas
+      </p>
+    </footer>
+
+    <script src="<%= static_path(@conn, "/js/vendor.js") %>"></script>
+    <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
+
+  </body>
+</html>

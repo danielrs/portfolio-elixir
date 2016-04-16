@@ -30,6 +30,5 @@
         <%= submit "Send" %>
       </fieldset>
     <% end %>
-
   </div>
 </section>

@@ -5,27 +5,45 @@ ul {
   padding: 0;
 }
 
-@border-radius: 2px;
+@border-radius: 4px;
 
 button,
 input[type=button],
-input[type=submit] {
-  padding: .75em 1em;
-  border: 1px solid @color-gray-7;
+input[type=submit],
+.button {
+  padding: .75em 2em;
+  border: none;
   border-radius: @border-radius;
   outline: none;
-  background: transparent;
-  color: @color-gray-7;
+  font-family: "Montserrat", "sans-serif";
+  background: @color-gray-9;
+  color: @color-body;
 
-  transition: border-color @animation-normal, color @animation-normal;
+  transition: border-color @animation-normal,
+              background @animation-normal,
+              color @animation-normal;
 
   &:hover {
-    border-color: @color-gray-6;
-    color: @color-gray-6;
+    background: @color-gray-8;
   }
   &:active {
-    border-color: @color-body;
-    color: @color-body;
+    background: @color-gray-7;
+  }
+
+  &.button--primary {
+    background-color: @color-primary;
+    color: @color-white;
+    &:hover {
+      background-color: darken(@color-primary, 5%);
+    }
+    &:active {
+      background-color: darken(@color-primary, 10%);
+    }
+  }
+
+  &.button--wide {
+    padding-left: 4em;
+    padding-right: 4em;
   }
 }
 
@@ -77,5 +95,9 @@ fieldset {
       }
       &:focus { z-index: 1; }
     }
+  }
+
+  &.form-centered {
+    text-align: center;
   }
 }

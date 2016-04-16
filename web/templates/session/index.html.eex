@@ -1,0 +1,15 @@
+<section>
+  <div class="container login-container">
+    <%= form_for @changeset, session_path(@conn, :create), [id: "login-form"], fn f -> %>
+      <h3>Login</h3>
+      <fieldset class="form-group">
+        <%= text_input f, :email, placeholder: "E-mail" %>
+        <%= password_input f, :password, placeholder: "Password" %>
+      </fieldset>
+      <fieldset class="form-centered">
+        <%= hidden_input f, :request_path %>
+        <%= submit "Go", [class: "button--primary button--wide"] %>
+      </fieldset>
+    <% end %>
+  </div>
+</section>

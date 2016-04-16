@@ -9,3 +9,15 @@
 #
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
+
+alias Portfolio.{Repo, User}
+
+[
+  %{first_name: "Daniel",
+    last_name: "Rivas",
+    email: "ers.daniel@gmail.com",
+    password: "ONk0s13S"}
+]
+|> Enum.map(&User.changeset(%User{}, &1))
+|> Enum.each(&Repo.insert!(&1))
+
