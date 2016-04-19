@@ -26,19 +26,6 @@ defmodule Portfolio.Web do
     end
   end
 
-  def admin_controller do
-    quote do
-      use Phoenix.Controller, namespace: Portfolio.Admin
-
-      alias Portfolio.Repo
-      import Ecto
-      import Ecto.Query, only: [from: 1, from: 2]
-
-      import Portfolio.Router.Helpers
-      import Portfolio.Gettext
-    end
-  end
-
   def controller do
     quote do
       use Phoenix.Controller

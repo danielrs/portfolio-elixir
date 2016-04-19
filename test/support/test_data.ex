@@ -1,20 +1,27 @@
-# Script for populating the database. You can run it as:
-#
-#     mix run priv/repo/seeds.exs
-#
-# Inside the script, you can read and write to any of your
-# repositories directly:
-#
-#     Portfolio.Repo.insert!(%Portfolio.SomeModel{})
-#
-# We recommend using the bang functions (`insert!`, `update!`
-# and so on) as they will fail if something goes wrong.
+defmodule Portfolio.TestData do
 
-import Ecto
-alias Portfolio.{Repo, User, Project, SeedData}
+  import Ecto
+  alias Portfolio.Repo
+  alias Portfolio.User
+  alias Portfolio.Project
 
-defmodule Portfolio.SeedData do
-  @moduledoc false
+  def insert_all do
+    insert_users
+    insert_projects
+  end
+
+  def insert_users do
+    changesets = for user <- users, do: User.changeset(%User{}, user)
+    Enum.each(changesets, &Repo.insert!(&1))
+  end
+
+  def insert_projects do
+    users = Repo.all(User)
+    changesets = for user <- users, project <- projects do
+      build_assoc(user, :projects) |> Project.changeset(project)
+    end |> List.flatten
+    Enum.each(changesets, &Repo.insert!(&1))
+  end
 
   def user do
     %{
@@ -55,13 +62,3 @@ defmodule Portfolio.SeedData do
     ]
   end
 end
-
-SeedData.users
-|> Enum.map(&User.changeset(%User{}, &1))
-|> Enum.each(&Repo.insert!(&1))
-
-for user <- Repo.all(User), project <- SeedData.projects do
-  build_assoc(user, :projects) |> Project.changeset(project)
-end
-|> List.flatten
-|> Enum.each(&Repo.insert!(&1))

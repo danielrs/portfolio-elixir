@@ -7,7 +7,7 @@
     <meta name="description" content="Daniel Rivas personal website">
     <meta name="author" content="Daniel Rivas">
 
-    <title><%= @page_title || "Daniel Rivas"%></title>
+    <title><%= assigns[:page_title] || "Daniel Rivas"%></title>
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/vendor.css") %>">
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
   </head>

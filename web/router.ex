@@ -13,15 +13,15 @@ defmodule Portfolio.Router do
     plug Portfolio.Plug.Social
   end
 
-  pipeline :browser_admin do
-    plug Guardian.Plug.VerifySession
+  pipeline :api do
+    plug :accepts, ["json"]
+    plug Guardian.Plug.VerifyHeader
     plug Guardian.Plug.LoadResource
-    plug Guardian.Plug.EnsureAuthenticated, handler: Portfolio.SessionController
   end
 
-  # pipeline :api do
-  #   plug :accepts, ["json"]
-  # end
+  pipeline :api_auth do
+    plug Guardian.Plug.EnsureAuthenticated, handler: Portfolio.SessionController
+  end
 
   scope "/", Portfolio do
     pipe_through [:browser, :browser_user]
@@ -31,24 +31,22 @@ defmodule Portfolio.Router do
     get "/contact", ContactController, :index
     post "/contact", ContactController, :new
     get "/blog", BlogController, :index
-  end
-
-  scope "auth", Portfolio do
-    pipe_through [:browser, :browser_user]
-
-    get "/", SessionController, :index
-    post "/", SessionController, :create
-    get "/logout", SessionController, :delete
-  end
-
-  scope "/dashboard", Portfolio.Admin, as: :admin do
-    pipe_through [:browser, :browser_admin]
-
-    get "/", HomeController, :index
+    get "/dashboard*path", DashboardController, :index
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", Portfolio do
-  #   pipe_through :api
-  # end
+  scope "/api", Portfolio do
+    pipe_through :api
+
+    scope "/v1" do
+      post "/session", SessionController, :create
+      delete "/session", SessionController, :delete
+      scope "/" do
+        pipe_through :api_auth
+        get "/session", SessionController, :show
+        resources "/projects", ProjectController, except: [:edit, :new]
+      end
+    end
+  end
+
 end

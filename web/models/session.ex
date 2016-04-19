@@ -1,4 +1,4 @@
-defmodule Portfolio.Login do
+defmodule Portfolio.Session do
   use Portfolio.Web, :model
 
   import Comeonin.Bcrypt, only: [hashpwsalt: 1, checkpw: 2]
@@ -7,19 +7,19 @@ defmodule Portfolio.Login do
   alias Portfolio.User
   alias Portfolio.Repo
 
-  schema "login" do
+  schema "session" do
     field :email, :string, virtual: true
     field :password, :string, virtual: true
-    field :request_path, :string, virtual: true
   end
 
   @required_fields ~w(email password)
-  @optional_fields ~w(request_path)
+  @optional_fields ~w()
 
   def changeset(model, params \\ :empty) do
     model
     |> cast(params, @required_fields, @optional_fields)
     |> validate_format(:email, ~r/@/)
+    |> validate_length(:password, min: 5)
     |> update_change(:email, &String.downcase(&1))
   end
 
