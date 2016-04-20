@@ -18,6 +18,7 @@ class ProjectIndexView extends React.Component {
           {this.props.projects.map(this._renderProject)}
         </ul>
         {this.props.children}
+        <Link to="/dashboard/projects/new">Create project</Link>
       </div>
     );
   }

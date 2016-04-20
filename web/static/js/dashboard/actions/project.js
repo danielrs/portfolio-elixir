@@ -15,6 +15,29 @@ const ProjecActions = {
     };
   },
 
+  newProject: function(data) {
+    return dispatch => {
+      Request.post('/api/v1/projects', data)
+      .then(function(response) {
+        dispatch({
+          type: Constants.PROJECTS_PROJECT_NEW,
+          project: {...response.data, date: moment(response.data.date)}
+        });
+        console.log('INSERTED');
+        dispatch(replace('/dashboard/projects'));
+      })
+      .catch(function(error) {
+        error.response.json()
+        .then(function(errorJSON) {
+          dispatch({
+            type: Constants.PROJECTS_PROJECT_ERROR,
+            errors: errorJSON.errors
+          });
+        });
+      });
+    };
+  },
+
   fetchProject: function(id) {
     return dispatch => {
       dispatch({type: Constants.PROJECTS_PROJECT_FETCHING});

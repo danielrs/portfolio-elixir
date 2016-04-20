@@ -10,7 +10,9 @@ import MainLayoutView from '../views/layout/main';
 // Views
 import SessionNewView from '../views/session/new';
 import HomeIndexView from '../views/home/index';
+
 import ProjectIndexView from '../views/project/index';
+import ProjectNewView from '../views/project/new';
 import ProjectShowView from '../views/project/show';
 import ProjectEditView from '../views/project/edit';
 
@@ -36,6 +38,7 @@ export default function router(store) {
         <Route onEnter={ensureAuthenticated}>
           <IndexRoute component={HomeIndexView} />
           <Route path="projects" component={ProjectIndexView} >
+            <Route path="new" component={ProjectNewView} />
             <Route path=":id" component={ProjectShowView} />
             <Route path=":id/edit" component={ProjectEditView} />
           </Route>
