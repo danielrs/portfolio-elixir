@@ -1,13 +1,14 @@
 defmodule Portfolio.ProjectController do
   use Portfolio.Web, :controller
 
+  import Ecto.Query, only: [order_by: 3]
   alias Portfolio.Project
 
   plug :scrub_params, "project" when action in [:create, :update]
 
   def index(conn, _params) do
     user = Guardian.Plug.current_resource(conn)
-    projects = assoc(user, :projects) |> Repo.all
+    projects = assoc(user, :projects) |> order_by([p], desc: p.date) |> Repo.all
     render(conn, "index.json", projects: projects)
   end
 

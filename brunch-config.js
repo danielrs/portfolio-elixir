@@ -23,7 +23,7 @@ exports.config = {
       joinTo: {
         'css/app.css': /^web\/static\/less\/app.less/,
         'css/dashboard.css': /^web\/static\/less\/dashboard.less/,
-        'css/vendor.css': /^bower_components/
+        'css/vendor.css': /^(bower_components|node_modules)/
       }
     },
     templates: {
@@ -32,7 +32,7 @@ exports.config = {
   },
 
   conventions: {
-    ignored: /^(web\/static\/less\/(general|app|admin)\/)/,
+    ignored: /^(web\/static\/less\/(general|app|dashboard)\/)/,
     // This option sets where we should place non-css and non-js assets in.
     // By default, we set this to '/web/static/assets'. Files in this directory
     // will be copied to `paths.public`, which is 'priv/static' by default.
@@ -68,10 +68,7 @@ exports.config = {
   },
 
   npm: {
-    enabled: true,
-    // Whitelist the npm deps to be pulled in as front-end assets.
-    // All other deps in package.json will be excluded from the bundle.
-    // whitelist: ["phoenix", "phoenix_html"]
+    styles: {'react-datepicker': ['dist/react-datepicker.css']}
   }
 
 };

@@ -3,7 +3,8 @@ import Constants from '../constants';
 const initialState = {
   projects: [],
   fetching: false,
-  focusedProject: {}
+  focusedProject: {},
+  errors: []
 }
 
 export default function projectReducer(state = initialState, action) {
@@ -16,6 +17,8 @@ export default function projectReducer(state = initialState, action) {
       return {...state, fetching: true};
     case Constants.PROJECTS_PROJECT_RECEIVED:
       return {...state, focusedProject: action.project, fetching: false};
+    case Constants.PROJECTS_PROJECT_ERROR:
+      return {...state, errors: action.errors}
     default:
       return state;
   }

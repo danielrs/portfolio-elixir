@@ -6,14 +6,14 @@ const SessionActions = {
   signIn: function(email, password) {
     return dispatch => {
       Request.post('/api/v1/session', {session: {email: email, password: password}})
-      .then(function(response) {
+      .then(response => {
         localStorage.setItem('auth-token', response.data.jwt);
         dispatch({type: Constants.USER_SIGNED_IN, user: response.data.user});
         dispatch(push('/dashboard'));
       })
-      .catch(function(error) {
+      .catch(error => {
         error.response.json()
-        .then(function(errorJSON) {
+        .then(errorJSON => {
           dispatch({
             type: Constants.USER_ERROR,
             error: errorJSON.error

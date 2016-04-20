@@ -1,0 +1,16 @@
+@import '../general/mixins';
+
+.dashboard {
+  .clearfix;
+
+  .primary-aside {
+    width: 240px;
+    height: 100vh;
+    float: left;
+  }
+
+  main[role=main] {
+    width: ~"calc(100% - 240px)";
+    float: left;
+  }
+}

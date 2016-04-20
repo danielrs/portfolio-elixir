@@ -23,6 +23,9 @@ class ProjectShowView extends React.Component {
         <div className="project__content">
           {this.props.content}
         </div>
+        <Link to={"/dashboard/projects/" + this.props.params.id + "/edit"}>
+          Edit
+        </Link>
       </div>
     );
   }

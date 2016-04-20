@@ -24,5 +24,13 @@ defmodule Portfolio.Project do
   def changeset(model, params \\ :empty) do
     model
     |> cast(params, @required_fields, @optional_fields)
+    |> update_change(:date, &cast_date(&1))
+  end
+
+  def cast_date(date) do
+    case Ecto.Date.cast(date) do
+      {:ok, new_date} -> new_date
+      _ -> date
+    end
   end
 end
