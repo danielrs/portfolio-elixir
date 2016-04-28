@@ -1,4 +1,4 @@
-@import "settings";
+@import "../general/settings";
 
 ul {
   list-style: none;
@@ -16,7 +16,9 @@ input[type=submit],
   border-radius: @border-radius;
   outline: none;
   font-family: "Montserrat", "sans-serif";
-  background: @color-gray-9;
+  text-decoration: none;
+  white-space: nowrap;
+  background: @color-light-gray;
   color: @color-body;
 
   transition: border-color @animation-normal,
@@ -24,10 +26,12 @@ input[type=submit],
               color @animation-normal;
 
   &:hover {
-    background: @color-gray-8;
+    text-decoration: none;
+    color: @color-body;
+    background: @color-gray;
   }
   &:active {
-    background: @color-gray-7;
+    background: @color-dark-gray;
   }
 
   &.button--primary {
@@ -41,6 +45,21 @@ input[type=submit],
     }
   }
 
+  &.button--danger {
+    background-color: tomato;
+    color: @color-white;
+    &:hover {
+      background-color: darken(tomato, 5%);
+    }
+    &:active {
+      background-color: darken(tomato, 10%);
+    }
+  }
+
+  &.button--small {
+    padding: .5em 1em;
+    font-size: .75em;
+  }
   &.button--wide {
     padding-left: 4em;
     padding-right: 4em;
@@ -53,14 +72,14 @@ input[type=email],
 input[type=password],
 textarea {
   padding: .75em;
-  border: 1px solid @color-gray-9;
+  border: 1px solid @color-gray;
   border-radius: @border-radius;
   outline: none;
   resize: none;
 
   transition: border-color @animation-normal;
 
-  &:focus { border-color: @color-body; }
+  &:focus { border-color: @color-primary; }
 }
 
 textarea {
@@ -73,6 +92,25 @@ fieldset {
   border: 0;
 
   &:first-child { margin-top: 0; }
+
+  &.form-stacked {
+    & > * {
+      box-sizing: border-box;
+      display: block;
+      width: 100%;
+      margin-top: 1em;
+
+      &:first-child {
+        margin-top: 0;
+      }
+      label + & {
+        margin-top: .5em;
+      }
+      &.error {
+        margin-top: .25em;
+      }
+    }
+  }
 
   &.form-group {
     & > * {
@@ -99,5 +137,12 @@ fieldset {
 
   &.form-centered {
     text-align: center;
+  }
+
+  &.form-stacked.form-centered {
+    & > * {
+      margin-left: auto;
+      margin-right: auto;
+    }
   }
 }

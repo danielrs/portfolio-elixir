@@ -18,15 +18,11 @@ const ProjecActions = {
   newProject: function(data) {
     return dispatch => {
       Request.post('/api/v1/projects', data)
-      .then(function(response) {
-        dispatch({
-          type: Constants.PROJECTS_PROJECT_NEW,
-          project: {...response.data, date: moment(response.data.date)}
-        });
-        console.log('INSERTED');
+      .then(response => {
+        dispatch(this.fetchProjects());
         dispatch(replace('/dashboard/projects'));
       })
-      .catch(function(error) {
+      .catch(error => {
         error.response.json()
         .then(function(errorJSON) {
           dispatch({
@@ -71,6 +67,24 @@ const ProjecActions = {
           });
         });
       });
+    };
+  },
+
+  deleteProject: function(id) {
+    return dispatch => {
+      Request.delete(`/api/v1/projects/${id}`)
+      .then(response => {
+        dispatch(this.fetchProjects());
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    };
+  },
+
+  formReset: function() {
+    return dispatch => {
+      dispatch({type: Constants.PROJECTS_PROJECT_FORM_RESET});
     };
   }
 };

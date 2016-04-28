@@ -3,6 +3,19 @@ import {Link} from 'react-router';
 import {connect} from 'react-redux';
 import Constants from '../../constants';
 import Actions from '../../actions/project';
+import {Button, Dropdown, Glyph, Table} from 'elemental';
+import Enum from '../../utils/enum';
+import ProjectList from '../../components/project/project-list';
+
+const DropdownActions  = new Enum([
+  'EDIT',
+  'DELETE'
+]);
+
+const DROPDOWN_ITEMS = [
+  {label: 'Edit', value: DropdownActions.EDIT},
+  {label: 'Delete', value: DropdownActions.DELETE}
+];
 
 class ProjectIndexView extends React.Component {
   componentDidMount() {
@@ -13,25 +26,18 @@ class ProjectIndexView extends React.Component {
   render() {
     return (
       <div>
-        <h2>Projects</h2>
-        <ul>
-          {this.props.projects.map(this._renderProject)}
-        </ul>
+        <div className="header-content">
+          <Button component={<Link to="/dashboard/projects/new"/>} type="hollow-primary" size="sm">
+            <Glyph icon="plus" />
+            {' '}
+            Create project
+          </Button>
+        </div>
+        <div className="main-container">
+          <ProjectList />
+        </div>
         {this.props.children}
-        <Link to="/dashboard/projects/new">Create project</Link>
       </div>
-    );
-  }
-
-  _renderProject(project) {
-    return (
-      <li key={project.id}>
-        <Link to={'/dashboard/projects/' + project.id}>
-          {project.title}
-        </Link>
-        <p>{project.description}</p>
-        <Link to={'/dashboard/projects/' + project.id + '/edit'}>Edit</Link>
-      </li>
     );
   }
 }

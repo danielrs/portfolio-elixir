@@ -26,7 +26,7 @@ function checkStatus(response) {
 }
 
 function parseJSON(response) {
-  return response.json();
+  return response.status != 204 ? response.json() : response;
 }
 
 export default {

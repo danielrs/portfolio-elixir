@@ -3,10 +3,16 @@ import {Link} from 'react-router';
 import {connect} from 'react-redux';
 import Constants from '../../constants';
 import Actions from '../../actions/project';
+import {Button, Modal, ModalHeader, ModalBody, ModalFooter} from 'elemental';
 
 class ProjectShowView extends React.Component {
+  state = {
+    isOpen: false
+  }
+
   componentDidMount() {
     this.fetchProject();
+    this.setState({isOpen: true});
   }
 
   componentDidUpdate(prevProps) {
@@ -14,7 +20,21 @@ class ProjectShowView extends React.Component {
       this.fetchProject();
   }
 
+  fetchProject() {
+    const {dispatch} = this.props;
+    dispatch(Actions.fetchProject(this.props.params.id));
+  }
+
   render() {
+    return (
+      <Modal isOpen={this.state.isOpen}>
+        <ModalHeader text={this.props.project.title} showCloseButton onClose={this._handleClose} />
+        <ModalBody>
+        </ModalBody>
+        <ModalFooter>
+        </ModalFooter>
+      </Modal>
+    );
     return (
       <div className="project">
         <h1>{this.props.title}</h1>
@@ -28,11 +48,6 @@ class ProjectShowView extends React.Component {
         </Link>
       </div>
     );
-  }
-
-  fetchProject() {
-    const {dispatch} = this.props;
-    dispatch(Actions.fetchProject(this.props.params.id));
   }
 }
 

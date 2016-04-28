@@ -34,8 +34,8 @@ const SessionActions = {
   currentUser: function() {
     return dispatch => {
       Request.get('/api/v1/session')
-      .then(data => {
-        dispatch({type: Constants.USER_CURRENT_USER, user: data.user});
+      .then(response => {
+        dispatch({type: Constants.USER_CURRENT_USER, user: response.data.user});
       })
       .catch(error => {
         dispatch(this.signOut());

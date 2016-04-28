@@ -8,6 +8,7 @@
     <meta name="author" content="Daniel Rivas">
 
     <title><%= assigns[:page_title] || "Dashboard" %></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/vendor.css") %>">
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/dashboard.css") %>">
   </head>

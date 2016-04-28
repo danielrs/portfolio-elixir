@@ -21,9 +21,9 @@ exports.config = {
     },
     stylesheets: {
       joinTo: {
-        'css/app.css': /^web\/static\/less\/app.less/,
-        'css/dashboard.css': /^web\/static\/less\/dashboard.less/,
-        'css/vendor.css': /^(bower_components|node_modules)/
+        'css/app.css': /^web\/static\/less\/app\/app.less/,
+        'css/dashboard.css': /^web\/static\/less\/dashboard\/dashboard.less/,
+        'css/vendor.css': /^(bower_components|node_modules|web\/static\/vendor)/
       }
     },
     templates: {
@@ -32,7 +32,7 @@ exports.config = {
   },
 
   conventions: {
-    ignored: /^(web\/static\/less\/(general|app|dashboard)\/)/,
+    ignored: /^(web\/static\/less\/(?!app\/app.less|dashboard\/dashboard.less))/,
     // This option sets where we should place non-css and non-js assets in.
     // By default, we set this to '/web/static/assets'. Files in this directory
     // will be copied to `paths.public`, which is 'priv/static' by default.

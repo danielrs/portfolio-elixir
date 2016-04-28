@@ -5,6 +5,7 @@ import store from '../store';
 import Actions from '../actions/session';
 
 // Layouts
+import SessionLayoutView from '../views/layout/session';
 import MainLayoutView from '../views/layout/main';
 
 // Views
@@ -33,15 +34,15 @@ export default function router(store) {
 
   return (
     <Router history={history}>
-      <Route path="/dashboard" component={MainLayoutView}>
-        <Route path="sign_in" component={SessionNewView} />
-        <Route onEnter={ensureAuthenticated}>
-          <IndexRoute component={HomeIndexView} />
-          <Route path="projects" component={ProjectIndexView} >
-            <Route path="new" component={ProjectNewView} />
-            <Route path=":id" component={ProjectShowView} />
-            <Route path=":id/edit" component={ProjectEditView} />
-          </Route>
+      <Route component={SessionLayoutView}>
+        <Route path="/dashboard/sign_in" component={SessionNewView} />
+      </Route>
+      <Route path="/dashboard" component={MainLayoutView} onEnter={ensureAuthenticated}>
+        <IndexRoute component={HomeIndexView} />
+        <Route path="projects" component={ProjectIndexView} >
+          <Route path="new" component={ProjectNewView} />
+          <Route path=":id" component={ProjectShowView} />
+          <Route path=":id/edit" component={ProjectEditView} />
         </Route>
       </Route>
     </Router>

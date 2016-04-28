@@ -18,7 +18,9 @@ export default function projectReducer(state = initialState, action) {
     case Constants.PROJECTS_PROJECT_RECEIVED:
       return {...state, focusedProject: action.project, fetching: false};
     case Constants.PROJECTS_PROJECT_ERROR:
-      return {...state, errors: action.errors}
+      return {...state, errors: action.errors};
+    case Constants.PROJECTS_PROJECT_FORM_RESET:
+      return {...state, errors: []};
     default:
       return state;
   }
