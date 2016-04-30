@@ -70,15 +70,26 @@ const ProjecActions = {
     };
   },
 
-  deleteProject: function(id) {
+  deleteProject: function(id, data) {
     return dispatch => {
       Request.delete(`/api/v1/projects/${id}`)
       .then(response => {
+        dispatch({
+          type: Constants.PROJECTS_PROJECT_DELETED,
+          project: data
+        });
         dispatch(this.fetchProjects());
       })
       .catch(error => {
         console.log(error);
       });
+    };
+  },
+
+  undoDelete: function(data) {
+    return dispatch => {
+      dispatch(this.newProject({project: data}));
+      dispatch({type: Constants.PROJECTS_PROJECT_UNDO});
     };
   },
 

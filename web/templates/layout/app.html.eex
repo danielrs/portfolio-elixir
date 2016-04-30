@@ -17,11 +17,11 @@
     <header class="header header--fixed">
       <div class="container">
         <button class="navbar-toggle" type="button">&#9776;</button>
-        <a class="navbar-brand" href="/"><strong>Daniel</strong>Rivas</a>
+        <a class="navbar-brand" href="/">Daniel Rivas</a>
         <nav role="navigation">
           <ul class="nav">
             <%= for item <- Enum.drop(@menu, 1) do %>
-              <li>
+              <li class="nav__item">
                 <%= if item.root == @menu_root do %>
                   <a href="<%= item.path %>" class="nav__active">
                     <%= item.caption %>
@@ -48,33 +48,19 @@
       <%= render @view_module, @view_template, assigns %>
     </main>
 
-    <footer role="footer" class="container">
-      <div class="social">
-        <h2>Social</h2>
-        <ul>
-          <%= for item <- @social do %>
-            <li>
-              <i class="fa <%= item.icon %>"></i>
-              <a href="<%= item.url %>"><%= item.caption %></a>
-            </li>
-          <% end %>
-        </ul>
-      </div>
+    <div class="container">
+      <footer role="footer">
+          <div class="footer-nav">
+            <%= for item <- @menu do %>
+              <div class="footer-nav__item"><a href="<%= item.path %>"><%= item.caption %></a></div>
+            <% end %>
+          </div>
 
-      <nav role="footer-navigation">
-        <h2>Navigate</h2>
-        <ul>
-          <%= for item <- @menu do %>
-            <li><a href="<%= item.path %>"><%= item.caption %></a></li>
-          <% end %>
-        </ul>
-
-      </nav>
-
-      <p class="copyright">
-        Copyright © 2016, Daniel Rivas
-      </p>
-    </footer>
+          <span class="copyright">
+            © 2016 Daniel Rivas
+          </span>
+      </footer>
+    </div>
 
     <script src="<%= static_path(@conn, "/js/vendor.js") %>"></script>
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>

@@ -6,6 +6,7 @@ import Actions from '../../actions/project';
 import {Button, Dropdown, Glyph, Table} from 'elemental';
 import Enum from '../../utils/enum';
 import ProjectList from '../../components/project/project-list';
+import ProjectDeleteUndo from '../../components/project/project-delete-undo.js';
 
 const DropdownActions  = new Enum([
   'EDIT',
@@ -33,6 +34,7 @@ class ProjectIndexView extends React.Component {
             Create project
           </Button>
         </div>
+        <ProjectDeleteUndo />
         <div className="main-container">
           <ProjectList />
         </div>

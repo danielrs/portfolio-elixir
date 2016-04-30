@@ -23,7 +23,7 @@
     "typing.js": "^0.2.2",
     "normalize-css": "^4.0.0",
     "animate.css": "^3.5.1",
-    "greed": "^0.0.3"
+    "greed": "^0.1.0"
   },
   "resolutions": {
     "jquery": "^2.2.3"

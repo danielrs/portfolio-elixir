@@ -29,7 +29,7 @@ class ProjectListItem extends React.Component {
 
   _handleDelete = (e) => {
     const {dispatch} = this.props;
-    dispatch(Actions.deleteProject(this.props.project.id));
+    dispatch(Actions.deleteProject(this.props.project.id, this.props.project));
   }
 
   render() {
@@ -70,8 +70,8 @@ class ProjectList extends React.Component {
           transitionName="project-card-animation"
           transitionAppear={true}
           transitionEnterTimeout={500}
-          transitionLeaveTimeout={500}
-          transitionAppearTimeout={500}
+          transitionLeaveTimeout={250}
+          transitionAppearTimeout={250}
           >
           {this.props.projects.map(this._renderProject)}
         </ReactCSSTransitionGroup>

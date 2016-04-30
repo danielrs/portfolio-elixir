@@ -1,22 +1,25 @@
 <section class="mega-brand">
-  <div class="mega-brand__content">
+  <div class="mega-brand__container">
     <div class="mega-brand__header">
-      <h1><strong>Daniel</strong>Rivas</h1>
+      <h1>Daniel Rivas</h1>
       <code id="tagline">I'm a programer!</code>
+    </div>
+    <div class="mega-brand__body">
+      Amet natus commodi blanditiis officiis accusamus laborum. Voluptatibus voluptate quae neque sed ipsam voluptatum? Iste necessitatibus possimus quae blanditiis magni! Ex fugit voluptate neque minus architecto voluptate quo. Dolore numquam.
     </div>
   </div>
 </section>
 
-<section>
+<section class="main-section project-section">
   <div class="container">
-    <h2>Recent projects</h2>
-    <%= render Portfolio.ProjectsView, "project-list.html", project_limit: 3 %>
+    <h2 class="header--main">Personal projects</h2>
+    <%= render Portfolio.ProjectsView, "project-list.html" %>
   </div>
 </section>
 
-<section>
+<section class="main-section post-section">
   <div class="container">
-    <h2>Recent blog entries</h2>
+    <h2 class="header--main">Recent blog entries</h2>
     <p>List of blog posts</p>
   </div>
 </section>
