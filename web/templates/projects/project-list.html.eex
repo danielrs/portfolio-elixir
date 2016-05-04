@@ -1,12 +1,13 @@
 <div class="project-list">
-  <%= for project <- Enum.take(project_list, assigns[:project_limit] || project_count) do %>
+  <%= for project <- @projects do %>
     <article class="project-card">
       <div class="project-card__header">
-        <a href="<%= project.url %>"><h1><%= project.caption %></h1></a>
+        <h1><a href="<%= project.homepage %>"><%= project.title %></a></h1>
+        <span class="project-card__date"><%= project.date %></span>
       </div>
       <div class="project-card__body">
         <p><%= project.description %></p>
       </div>
     </article>
   <% end %>
-<div>
+</div>

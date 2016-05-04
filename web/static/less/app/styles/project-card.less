@@ -11,11 +11,11 @@
 }
 
 .project-list {
-  .grid(@gutter: 1em);
+  .grid(@gutter: 2em);
   .row;
 
   .project-card {
-    margin-bottom: 1em;
+    margin-bottom: 2em;
     @media screen and (max-width: (@break-m - 1px)) { .column(1, 1); }
     @media screen and (min-width: @break-m) and (max-width: (@break-l - 1px)) { .column(1, 2); }
     @media screen and (min-width: @break-l) { .column(1, 3); }

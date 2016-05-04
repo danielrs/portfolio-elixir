@@ -1,11 +1,14 @@
 <section class="mega-brand">
+  <div class="mega-brand__video-wrapper">
+    <video class="mega-brand__video" autoplay loop>
+      <source src="videos/typing.webm" type="video/mp4" />
+      Your browser doesn't support the video tag
+    </video>
+  </div>
   <div class="mega-brand__container">
     <div class="mega-brand__header">
-      <h1>Daniel Rivas</h1>
+      <h1 class="animated fadeInDown">Daniel Rivas</h1>
       <code id="tagline">I'm a programer!</code>
-    </div>
-    <div class="mega-brand__body">
-      Amet natus commodi blanditiis officiis accusamus laborum. Voluptatibus voluptate quae neque sed ipsam voluptatum? Iste necessitatibus possimus quae blanditiis magni! Ex fugit voluptate neque minus architecto voluptate quo. Dolore numquam.
     </div>
   </div>
 </section>
@@ -13,13 +16,6 @@
 <section class="main-section project-section">
   <div class="container">
     <h2 class="header--main">Personal projects</h2>
-    <%= render Portfolio.ProjectsView, "project-list.html" %>
-  </div>
-</section>
-
-<section class="main-section post-section">
-  <div class="container">
-    <h2 class="header--main">Recent blog entries</h2>
-    <p>List of blog posts</p>
+    <%= render Portfolio.ProjectsView, "project-list.html", projects: @projects %>
   </div>
 </section>

@@ -1,5 +1,6 @@
 defmodule Portfolio.Project do
   use Portfolio.Web, :model
+  alias Portfolio.Project
 
   schema "projects" do
     field :title, :string
@@ -27,7 +28,12 @@ defmodule Portfolio.Project do
     |> update_change(:date, &cast_date(&1))
   end
 
-  def cast_date(date) do
+  def order_by_date(query \\ %Project{}) do
+    projects = from p in query,
+               order_by: [desc: p.date]
+  end
+
+  defp cast_date(date) do
     case Ecto.Date.cast(date) do
       {:ok, new_date} -> new_date
       _ -> date

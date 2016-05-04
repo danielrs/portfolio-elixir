@@ -13,8 +13,8 @@
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
   </head>
 
-  <body >
-    <header class="header header--fixed">
+  <body <%= if @path_root == home_path(@conn, :index) |> path_root do %> class="body--home" <% end %> >
+    <header role="heading" class="header header--fixed">
       <div class="container">
         <button class="navbar-toggle" type="button">&#9776;</button>
         <a class="navbar-brand" href="/">Daniel Rivas</a>
@@ -22,7 +22,7 @@
           <ul class="nav">
             <%= for item <- Enum.drop(@menu, 1) do %>
               <li class="nav__item">
-                <%= if item.root == @menu_root do %>
+                <%= if item.root == @path_root do %>
                   <a href="<%= item.path %>" class="nav__active">
                     <%= item.caption %>
                   </a>
@@ -41,26 +41,23 @@
     <%#   <p class="alert alert--danger" role="alert"><%= get_flash(@conn, :error) %1></p> %>
     <%# </section> %>
 
-    <main role="main"
-        <%= if @menu_root == home_path(Portfolio.Endpoint, :index) |> path_root do %>
-        class="main--home"
-        <% end %>>
+    <main role="main">
       <%= render @view_module, @view_template, assigns %>
     </main>
 
-    <div class="container">
-      <footer role="footer">
-          <div class="footer-nav">
-            <%= for item <- @menu do %>
-              <div class="footer-nav__item"><a href="<%= item.path %>"><%= item.caption %></a></div>
-            <% end %>
-          </div>
+    <footer role="footer">
+      <div class="container">
+        <div class="footer-nav">
+          <%= for item <- @menu do %>
+            <div class="footer-nav__item"><a href="<%= item.path %>"><%= item.caption %></a></div>
+          <% end %>
+        </div>
 
-          <span class="copyright">
-            © 2016 Daniel Rivas
-          </span>
-      </footer>
-    </div>
+        <span class="copyright">
+          © 2016 Daniel Rivas
+        </span>
+      </div>
+    </footer>
 
     <script src="<%= static_path(@conn, "/js/vendor.js") %>"></script>
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>

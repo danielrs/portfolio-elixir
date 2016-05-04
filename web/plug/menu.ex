@@ -43,6 +43,6 @@ defmodule Portfolio.Plug.Menu do
   def call(%{:path_info => path_info} = conn, opts) do
     conn
     |> assign(:menu, Keyword.get(opts, :menu))
-    |> assign(:menu_root, hd_or(path_info, ""))
+    |> assign(:path_root, hd_or(path_info, ""))
   end
 end

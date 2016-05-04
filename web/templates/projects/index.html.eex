@@ -1,6 +1,6 @@
-<section>
+<section class="main-section">
   <div class="container">
     <h2>Projects</h2>
-    <%= render "project-list.html" %>
+    <%= render "project-list.html", projects: @projects %>
   </div>
 </section>

@@ -16,6 +16,15 @@ alias Portfolio.{Repo, User, Project, SeedData}
 defmodule Portfolio.SeedData do
   @moduledoc false
 
+  def user_daniel_rivas do
+    %{
+      first_name: "Daniel",
+      last_name: "Rivas",
+      email: "ers.daniel@gmail.com",
+      password: "ONk0s13S"
+    }
+  end
+
   def user do
     %{
       first_name: "John",
@@ -26,7 +35,7 @@ defmodule Portfolio.SeedData do
   end
 
   def users do
-    [user]
+    [user_daniel_rivas, user]
   end
 
   def projects do
