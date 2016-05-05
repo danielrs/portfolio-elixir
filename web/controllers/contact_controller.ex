@@ -1,6 +1,7 @@
 defmodule Portfolio.ContactController do
   use Portfolio.Web, :controller
   alias Portfolio.Message
+  alias Portfolio.Mailer
 
   plug :scrub_params, "message" when action in [:new]
   plug Portfolio.Plug.PageTitle, title: "Contact - Daniel Rivas"
@@ -15,7 +16,7 @@ defmodule Portfolio.ContactController do
     changeset = Message.changeset(%Message{}, contact_params)
 
     if changeset.valid? do
-      send_message
+      send_message(changeset)
       conn
       |> put_flash(:info, "Message sent")
       |> redirect(to: contact_path(conn, :index))
@@ -24,6 +25,11 @@ defmodule Portfolio.ContactController do
     end
   end
 
-  defp send_message do
+  defp send_message(changeset) do
+    changes = changeset.changes
+    Mailer.send_contact_email changes[:name],
+                              changes[:email],
+                              changes[:subject],
+                              changes[:text]
   end
 end

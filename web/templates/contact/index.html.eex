@@ -1,35 +1,25 @@
-<section class="main-section">
+<section class="main-section contact-section">
   <div class="container">
-    <h2>Contact</h2>
-    <div class="contact-container">
-      <div id="contact-body">
-        <h3>Hello!</h3>
-        <p>You can send me an e-email using the form contact form</p>
-        <h3>Want my personal e-mail?</h3>
-        <p>Go <a href="#">here</a> to get it</p>
-        <h3>Need any of my social networks?</h3>
-        <p>They are available in the footer!</p>
-      </div>
+    <h2>Contact me!</h2>
 
-      <%= form_for @changeset, contact_path(@conn, :new), [id: "contact-form"], fn f -> %>
+    <%= form_for @changeset, contact_path(@conn, :new), [id: "contact-form"], fn f -> %>
 
-        <%= if f.errors != [] do %>
-          <%= for {attr, message} <- f.errors do %>
-            <%= attr %> - <%= message %>
-          <% end %>
+      <%= if f.errors != [] do %>
+        <%= for {attr, message} <- f.errors do %>
+          <%= attr %> - <%= message %>
         <% end %>
-
-        <h3 class="form-title">Contact form</h3>
-        <fieldset class="form-group">
-          <%= text_input f, :name, placeholder: "Name", required: true %>
-          <%= email_input f, :email, placeholder: "e-mail", required: true %>
-          <%= text_input f, :subject, placeholder: "Subject", required: true %>
-          <%= textarea f, :body, placeholder: "Tell me what you need", required: true %>
-        </fieldset>
-        <fieldset>
-          <%= submit "Send" %>
-        </fieldset>
       <% end %>
-    </div>
+
+      <fieldset class="form-group">
+        <%= text_input f, :name, placeholder: "Name", required: true %>
+        <%= email_input f, :email, placeholder: "e-mail", required: true %>
+        <%= text_input f, :subject, placeholder: "Subject", required: true %>
+        <%= textarea f, :text, placeholder: "Tell me what you need", required: true %>
+      </fieldset>
+      <fieldset class="form-center">
+        <input type="submit" value="&#xf1d8; Send" class="button--wide" />
+      </fieldset>
+    <% end %>
+
   </div>
 </section>

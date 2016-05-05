@@ -1,3 +1,36 @@
+.button,
+button,
+input[type=button],
+input[type=submit] {
+  @color: lighten(@color-body, 8%);
+  @color-active: @color-body;
+
+  padding: .5em 1em;
+  border: 2px solid @color;
+  outline: none;
+  font-family: "Montserrat", FontAwesome;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: @color;
+  background: transparent;
+  .transition(border-color @animation-fast, color @animation-fast, background @animation-fast);
+
+  &:hover, &:focus {
+    color: @color-white;
+    background: @color;
+  }
+
+  &:active {
+    color: @color-white;
+    border-color: @color-active;
+    background: @color-active;
+  }
+
+  &.button--wide {
+    padding: .5em 3em;
+  }
+}
+
 input[type=text],
 input[type=email],
 input[type=password],
@@ -9,5 +42,42 @@ textarea {
   &:focus {
     border: 1px solid @color-dark-gray;
     outline: none;
+  }
+}
+
+textarea {
+  resize: none;
+}
+
+fieldset {
+  margin: 0;
+  padding: 0;
+  border: none;
+
+  &.form-center {
+    text-align: center;
+  }
+
+  &.form-stack {
+    & > * {
+      display: block;
+      width: 100%;
+      margin-bottom: 0.75em;
+    }
+  }
+
+  &.form-group {
+    margin-bottom: 1.5em;
+    & > input[type=text],
+    & > input[type=email],
+    & > input[type=password],
+    textarea {
+      display: block;
+      position: relative;
+      top: -1px;
+      width: 100%;
+      margin-bottom: -1px;
+      &:focus { z-index: 1; }
+    }
   }
 }

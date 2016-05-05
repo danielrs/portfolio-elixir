@@ -30,7 +30,7 @@
 <section class="main-section about-section">
   <div class="container">
     <h2 class="header--main">About me</h2>
-    <p>I do a lot of things related to software development, but what I love the most is programming! My favorite programming languages are <strong>Haskell</strong> and <strong>C++</strong>, the best of both worlds.</p>
+    <p>I do a lot of things related to software development, but what I love the most is programming! My favorite programming languages are <strong>Haskell</strong> for functional and <strong>C++</strong> for imperative, the best of both worlds.</p>
     <p>On my free time I like to learn about anything, either a new programming language or a new tool to boost my development.</p>
   </div>
 </section>

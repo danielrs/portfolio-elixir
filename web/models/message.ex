@@ -5,10 +5,10 @@ defmodule Portfolio.Message do
     field :name, :string, virtual: true
     field :email, :string, virtual: true
     field :subject, :string, virtual: true
-    field :body, :string, virtual: true
+    field :text, :string, virtual: true
   end
 
-  @required_fields ~w(name email subject body)
+  @required_fields ~w(name email subject text)
   @optional_fields ~w()
 
   def changeset(model, params \\ :empty) do
