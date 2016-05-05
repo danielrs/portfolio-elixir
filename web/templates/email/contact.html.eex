@@ -1,0 +1,5 @@
+<div><strong>From:</strong> <%= @name %> </div>
+
+<%= for paragraph <- String.replace(@text, ~r/\n+/, "\n") |> String.split(~r/\n/) do %>
+  <p><%= paragraph %></p>
+<% end %>

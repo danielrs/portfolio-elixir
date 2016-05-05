@@ -7,6 +7,6 @@ defmodule Portfolio.Mailer do
     send_email to: "info@danielrs.me",
                from: email,
                subject: name <> " - " <> subject,
-               text: text
+               html: Phoenix.View.render_to_string(Portfolio.EmailView, "contact.html", name: name, text: text)
   end
 end
