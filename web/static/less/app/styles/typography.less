@@ -1,5 +1,12 @@
 // @import url(https://fonts.googleapis.com/css?family=Pacifico|Open+Sans:400,700,400italic|Inconsolata:400,700);
-@import url(https://fonts.googleapis.com/css?family=Pacifico|Open+Sans:400,700,400italic|Inconsolata:400,700|Lato:400,700);
+@import url(https://fonts.googleapis.com/css?family=Pacifico|Open+Sans:400,400italic,700,700italic|Inconsolata:400,700|Lato:400,700);
+
+h1, h2, h3, h4, h5, h6,
+ul, ol, li,
+p {
+  margin: 0;
+  padding: 0;
+}
 
 html, body {
   font-family: "Open Sans", "sans-serif";
@@ -11,10 +18,12 @@ code {
   font-family: "Inconsolata", "monospace";
 }
 
+// Headers
 h1, h2, h3, h4, h5, h6 {
   font-family: "Lato", "sans-serif";
   font-weight: bold;
   color: @color-body;
+  margin-bottom: 1.5em;
 
   &.header--main {
     margin-bottom: 2em;
@@ -23,9 +32,34 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
-h1 { font-size: 2em; }
-h2 { font-size: 1.5em; }
-h3 { font-size: 1.17em; }
-h4 { font-size: 1.12em; }
-h5 { font-size: .83em; }
-h6 { font-size: .75em; }
+h1 {
+  font-size: 24em / 16;
+  line-height: 24em / 24;
+}
+
+h2 {
+  font-size: 22em / 16;
+  line-height: 24em / 22;
+}
+
+h3 {
+  font-size: 20em / 16;
+  line-height: 24em / 20;
+}
+
+h4 {
+  font-size: 18em / 16;
+  line-height: 24em / 18;
+}
+
+h5, h6 {
+  font-size: 16em / 16;
+  line-height: 24em / 16;
+}
+
+// Lists
+
+// Paragraphs
+p {
+  margin-bottom: 1.5em;
+}

@@ -2,7 +2,7 @@
   <%= for project <- @projects do %>
     <article class="project-card">
       <div class="project-card__header">
-        <h1><a href="<%= project.homepage %>"><%= project.title %></a></h1>
+        <h1 class="project-card__title"><a href="<%= project.homepage %>"><%= project.title %></a></h1>
         <span class="project-card__date"><%= project.date %></span>
       </div>
       <div class="project-card__body">

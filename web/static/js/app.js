@@ -49,24 +49,30 @@ class ClassToggler {
   }
 }
 
-if ($('body').hasClass('body--home')) {
-  $('#tagline').typing({
-    sentences: ["Hello",
-                "I'm daniel",
-                "I code stuff",
-                "I'm a programmer!"]});
+const isHome = $('body').hasClass('body--home');
 
-  const headerToggler = new ClassToggler('header.header');
-  const brandToggler = new ClassToggler('header.header .navbar-brand');
+// Tagline
+$('#tagline').typing({
+  sentences: ["Hello",
+              "I'm daniel",
+              "I code stuff",
+              "I'm a programmer!"]});
 
-  $(document).scroll(function() {
-    if ($(document).scrollTop() <= 10) {
-      headerToggler.on('header--transparent');
-      brandToggler.off('animated fadeOutLeft');
-    }
-    else {
-      headerToggler.off();
-      brandToggler.on('animated fadeInLeft');
-    }
-  }).trigger('scroll');
-}
+// Header toggle
+const headerToggler = new ClassToggler('header.header');
+const brandToggler = new ClassToggler('header.header .navbar-brand');
+$(document).scroll(function() {
+  if ($(document).scrollTop() <= 10) {
+    headerToggler.on('header--transparent');
+    if (isHome) brandToggler.off('animated fadeOutLeft');
+  }
+  else {
+    headerToggler.off();
+    if (isHome) brandToggler.on('animated fadeInLeft');
+  }
+}).trigger('scroll');
+
+// Navbar click
+$('.navbar-toggle').click(function() {
+  $('.nav-wrapper').toggleClass('nav-wrapper--collapsed');
+});

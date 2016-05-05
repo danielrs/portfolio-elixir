@@ -1,7 +1,7 @@
 .container {
   max-width: @break-l;
   margin: 0 auto;
-  padding: 0 1rem;
+  padding: 0 1.5rem;
 }
 
 header.header {
@@ -13,7 +13,6 @@ header.header {
   }
 
   position: relative;
-  border-bottom: 1px solid @color-gray;
   background: @background;
   .header-shadow();
   .transition(background @animation-normal, border-color @animation-normal, box-shadow @animation-normal);
@@ -74,13 +73,18 @@ header.header {
     color: @color-body;
   }
 
-  nav[role=navigation] {
+  .nav-wrapper {
     position: absolute;
     top: 100%;
     left: 0;
     right: 0;
     background: @background;
     .header-shadow();
+    .transition(transform @animation-normal);
+
+    &--collapsed {
+      .transform(translateX(-100%));
+    }
 
     .nav {
       list-style: none;
@@ -107,13 +111,14 @@ header.header {
 
   @media screen and (min-width: @break-m) {
     .navbar-toggle { display: none; }
-    nav[role=navigation] {
+    .nav-wrapper {
       display: inline-block;
       position: relative;
       top: 0;
       float: right;
       background: transparent;
       box-shadow: none;
+      &--collapsed { .transform(none); }
       .nav .nav__item { display: inline-block; }
     }
   }
@@ -132,7 +137,10 @@ footer[role=footer] {
   }
 
   .footer-nav {
-    margin-bottom: 2em;
+    &__item {
+      margin-bottom: 1.5em;
+      padding: 0 .5em;
+    }
   }
 
   .copyright {
@@ -148,11 +156,13 @@ footer[role=footer] {
     .footer-nav {
       .column(2, 5);
       text-align: right;
-      &__item { padding: 0 .5em; display: inline-block; }
+      &__item {
+        display: inline-block;
+        margin-bottom: 0;
+      }
     }
     .copyright { .column(3, 5); }
   }
-
 }
 
 main[role=main] {
@@ -160,11 +170,19 @@ main[role=main] {
 }
 
 .main-section {
-  padding: 2em 0;
+  padding: 3em 0;
+
+  &__link {
+    text-align: center;
+  }
 }
 
 .project-section {
   background: @color-light-gray;
+}
+
+.about-section {
+  .container { max-width: @break-m; }
 }
 
 #canvas {
@@ -216,11 +234,14 @@ main[role=main] {
     position: absolute;
     top: 50%;
     left: 50%;
+    width: 100%;
+    padding: 1.5em;
     .transform(translate(-50%, -50%));
   }
 
   &__header {
     text-align: center;
+    margin-bottom: 1.5em;
 
     h1 {
       font-family: "Pacifico", serif;
@@ -233,8 +254,8 @@ main[role=main] {
     }
   }
 
-  &__header + &__body {
-    margin-top: 2em;
+  &__body {
+    margin: 0 auto;
   }
 
   @media screen and (min-width: @break-m) {
@@ -245,11 +266,19 @@ main[role=main] {
     &__header {
       font-size: 1.25em;
     }
+
+    &__body {
+      max-width: 50%;
+    }
   }
 
   @media screen and (min-width: @break-l) {
     &__header {
       font-size: 1.5em;
+    }
+
+    &__body {
+      max-width: 25%;
     }
   }
 }

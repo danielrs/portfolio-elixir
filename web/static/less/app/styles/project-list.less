@@ -4,18 +4,33 @@
   background: @color-white;
 
   &__header {
-    font-size: .5em;
+    .clearfix;
+  }
+
+  &__header &__title {
+    display: inline-block;
+    float: left;
+    font-size: 16em / 16;
+    line-height: 24em / 16
+  }
+
+  &__header &__date {
+    display: inline-block;
+    float: right;
+    font-style: italic;
+    line-height: 1em;
+    color: lighten(@color-body, 32%);
   }
 
   &__body {}
 }
 
 .project-list {
-  .grid(@gutter: 2em);
+  .grid(@gutter: 1.5em);
   .row;
 
   .project-card {
-    margin-bottom: 2em;
+    margin-bottom: 1.5em;
     @media screen and (max-width: (@break-m - 1px)) { .column(1, 1); }
     @media screen and (min-width: @break-m) and (max-width: (@break-l - 1px)) { .column(1, 2); }
     @media screen and (min-width: @break-l) { .column(1, 3); }

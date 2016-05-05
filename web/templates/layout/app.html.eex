@@ -18,7 +18,7 @@
       <div class="container">
         <button class="navbar-toggle" type="button">&#9776;</button>
         <a class="navbar-brand" href="/">Daniel Rivas</a>
-        <nav role="navigation">
+        <nav class="nav-wrapper nav-wrapper--collapsed" role="navigation">
           <ul class="nav">
             <%= for item <- Enum.drop(@menu, 1) do %>
               <li class="nav__item">
