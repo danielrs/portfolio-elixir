@@ -15,7 +15,7 @@
 #dashboard-container {
   width: 100vw;
   height: 100vh;
-  background: radial-gradient(circle at 50% -25%, lighten(@color-secondary, 25%), @color-secondary);
+  background: radial-gradient(circle at 50% -25%, lighten(@color-primary, 25%), @color-primary);
 }
 
 .dashboard {
@@ -26,7 +26,7 @@
 
 header[role=heading] {
   height: 4rem;
-  border-bottom: 1px solid lighten(@color-primary, 25%);
+  border-bottom: 1px solid @color-gray;
   overflow: hidden;
   background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, .10));
   box-shadow: 0 4px 10px -5px rgba(0, 0, 0, .10);
@@ -134,11 +134,12 @@ main[role=main] {
 }
 
 .project-list {
-  .grid(@gutter: 1em);
+  .grid(@gutter: @magic-number);
   .row;
    perspective: 400px;
    -webkit-perspective: 400px;
   .project-card {
+    margin-bottom: @magic-number;
     padding: 0;
     &__header {
       padding: 1em;

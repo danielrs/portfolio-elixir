@@ -1,25 +1,6 @@
 <section class="main-section contact-section">
   <div class="container">
     <h2>Contact me!</h2>
-
-    <%= form_for @changeset, contact_path(@conn, :new), [id: "contact-form"], fn f -> %>
-
-      <%= if f.errors != [] do %>
-        <%= for {attr, message} <- f.errors do %>
-          <%= attr %> - <%= message %>
-        <% end %>
-      <% end %>
-
-      <fieldset class="form-group">
-        <%= text_input f, :name, placeholder: "Name", required: true %>
-        <%= email_input f, :email, placeholder: "e-mail", required: true %>
-        <%= text_input f, :subject, placeholder: "Subject", required: true %>
-        <%= textarea f, :text, placeholder: "Tell me what you need", required: true %>
-      </fieldset>
-      <fieldset class="form-center">
-        <input type="submit" value="&#xf1d8; Send" class="button--wide" />
-      </fieldset>
-    <% end %>
-
+    <%= render "form.html", assigns %>
   </div>
 </section>

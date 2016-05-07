@@ -10,6 +10,7 @@ defmodule Portfolio.Router do
   end
 
   pipeline :browser_user do
+    plug Portfolio.Plug.RequestPath
     plug Portfolio.Plug.Social
   end
 
@@ -29,7 +30,7 @@ defmodule Portfolio.Router do
     get "/", HomeController, :index
     get "/projects", ProjectsController, :index
     get "/contact", ContactController, :index
-    post "/contact", ContactController, :new
+    post "/contact", ContactController, :create
     get "/blog", BlogController, :index
     get "/dashboard*path", DashboardController, :index
   end

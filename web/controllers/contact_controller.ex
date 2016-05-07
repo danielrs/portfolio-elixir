@@ -2,17 +2,21 @@ defmodule Portfolio.ContactController do
   use Portfolio.Web, :controller
   alias Portfolio.Message
   alias Portfolio.Mailer
+  require Logger
 
-  plug :scrub_params, "message" when action in [:new]
+  plug :scrub_params, "message" when action in [:create]
   plug Portfolio.Plug.PageTitle, title: "Contact - Daniel Rivas"
   plug Portfolio.Plug.Menu
 
   def index(conn, _params) do
+    for item <- Map.from_struct(conn) do
+      Logger.debug inspect(item)
+    end
     changeset = Message.changeset(%Message{})
     render(conn, "index.html", changeset: changeset)
   end
 
-  def new(conn, %{"message" => contact_params}) do
+  def create(conn, %{"message" => contact_params}) do
     changeset = Message.changeset(%Message{}, contact_params)
 
     if changeset.valid? do

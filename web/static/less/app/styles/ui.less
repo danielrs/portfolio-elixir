@@ -43,6 +43,12 @@ textarea {
     border: 1px solid @color-dark-gray;
     outline: none;
   }
+
+  &.input--error {
+    border-color: lighten(tomato, 16%);
+    &:focus { border-color: tomato; }
+  }
+
 }
 
 textarea {
@@ -67,7 +73,7 @@ fieldset {
   }
 
   &.form-group {
-    margin-bottom: 1.5em;
+    margin-bottom: @magic-number;
     & > input[type=text],
     & > input[type=email],
     & > input[type=password],

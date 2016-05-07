@@ -1,7 +1,7 @@
 defmodule Portfolio.SessionView do
   use Portfolio.Web, :view
 
-  def render("show.json", %{jwt: jwt, user: user} = data) do
+  def render("show.json", %{jwt: jwt, user: user}) do
     %{data: %{jwt: jwt, user: user}}
   end
 

@@ -1,5 +1,5 @@
 <section class="mega-brand">
-  <div class="mega-brand__video-wrapper">
+  <div class="mega-brand__video-wrapper animated fadeIn">
     <video class="mega-brand__video" autoplay loop muted>
       <source src="videos/typing.webm" type="video/mp4" />
       Your browser doesn't support the video tag
@@ -11,7 +11,8 @@
       <code id="tagline">I'm a programer!</code>
     </div>
     <div class="mega-brand__body">
-      <p>You just have found my personal website! Scroll down to check out some of my recent projects; or just use the navigation above to find more</p>
+    <p>I do a lot of things related to software development, but what I love the most is programming! My favorite programming languages are <strong>Haskell</strong> for functional and <strong>C++</strong> for imperative, the best of both worlds.</p>
+    <p>On my free time I like to learn about anything, either a new programming language or a new tool to boost my development.</p>
     </div>
   </div>
 </section>
@@ -25,13 +26,3 @@
     </div>
   </div>
 </section>
-
-<!-- TODO: Add picture -->
-<section class="main-section about-section">
-  <div class="container">
-    <h2 class="header--main">About me</h2>
-    <p>I do a lot of things related to software development, but what I love the most is programming! My favorite programming languages are <strong>Haskell</strong> for functional and <strong>C++</strong> for imperative, the best of both worlds.</p>
-    <p>On my free time I like to learn about anything, either a new programming language or a new tool to boost my development.</p>
-  </div>
-</section>
-

@@ -4,6 +4,7 @@ defmodule Portfolio.ErrorHelpers do
   """
 
   use Phoenix.HTML
+  require Logger
 
   @doc """
   Generates tag for inlined form input errors.
@@ -11,6 +12,17 @@ defmodule Portfolio.ErrorHelpers do
   def error_tag(form, field) do
     if error = form.errors[field] do
       content_tag :span, translate_error(error), class: "help-block"
+    end
+  end
+
+  defmacro error_input(input, form, field, opts \\ []) do
+    quote do
+      opts =  if unquote(form).errors[unquote(field)] do
+                Keyword.update(unquote(opts), :class, "input--error", fn x -> x <> " " <> "input--error" end)
+              else
+                unquote(opts)
+              end
+      unquote(input)(unquote(form), unquote(field), opts)
     end
   end
 
