@@ -34,7 +34,7 @@ defmodule Portfolio.SessionControllerTest do
 
   defp authorized_conn(conn) do
     auth_conn = post conn, session_path(conn, :create), [session: @valid_user]
-    %{"jwt" => jwt} = auth_conn.resp_body |> Poison.decode!
+    %{"data" => %{"jwt" => jwt}} = auth_conn.resp_body |> Poison.decode!
     conn |> put_req_header("authorization", jwt)
   end
 end

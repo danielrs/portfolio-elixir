@@ -1,4 +1,4 @@
-defmodule Portfolio.ProjectsView do
+defmodule Portfolio.ProjectShowcaseView do
   use Portfolio.Web, :view
 
   def project_list do

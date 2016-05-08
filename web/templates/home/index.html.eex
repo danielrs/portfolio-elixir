@@ -20,9 +20,9 @@
 <section class="main-section project-section">
   <div class="container">
     <h2 class="header--main">Personal projects</h2>
-    <%= render Portfolio.ProjectsView, "project-list.html", projects: @projects %>
+    <%= render Portfolio.ProjectShowcaseView, "project-list.html", projects: @projects %>
     <div class="main-section__link">
-      <a href="<%= projects_path(@conn, :index) %>">Go to projects page</a>
+      <a href="<%= project_showcase_path(@conn, :index) %>">Go to projects page</a>
     </div>
   </div>
 </section>

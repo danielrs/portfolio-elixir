@@ -28,7 +28,7 @@ defmodule Portfolio.Router do
     pipe_through [:browser, :browser_user]
 
     get "/", HomeController, :index
-    get "/projects", ProjectsController, :index
+    get "/projects", ProjectShowcaseController, :index
     get "/contact", ContactController, :index
     post "/contact", ContactController, :create
     get "/blog", BlogController, :index
@@ -45,7 +45,8 @@ defmodule Portfolio.Router do
       scope "/" do
         pipe_through :api_auth
         get "/session", SessionController, :show
-        resources "/projects", ProjectController, except: [:edit, :new]
+        resources "/projects", ProjectController, except: [:new, :edit]
+        resources "/posts", PostController, except: [:new, :edit]
       end
     end
   end

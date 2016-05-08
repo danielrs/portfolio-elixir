@@ -39,7 +39,8 @@ defmodule Portfolio.Mixfile do
      {:cowboy, "~> 1.0"},
      {:comeonin, "~> 2.4"},
      {:guardian, "~> 0.10.0"},
-     {:mailgun, "~> 0.1.2"}]
+     {:mailgun, "~> 0.1.2"},
+     {:earmark, "~> 0.2.1"}]
   end
 
   # Aliases are shortcut or tasks specific to the current project.

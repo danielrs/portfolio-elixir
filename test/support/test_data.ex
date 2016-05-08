@@ -4,6 +4,7 @@ defmodule Portfolio.TestData do
   alias Portfolio.Repo
   alias Portfolio.User
   alias Portfolio.Project
+  alias Portfolio.Post
 
   def insert_all do
     insert_users
@@ -19,6 +20,14 @@ defmodule Portfolio.TestData do
     users = Repo.all(User)
     changesets = for user <- users, project <- projects do
       build_assoc(user, :projects) |> Project.changeset(project)
+    end |> List.flatten
+    Enum.each(changesets, &Repo.insert!(&1))
+  end
+
+  def insert_posts do
+    users = Repo.all(User)
+    changesets = for user <- users, post <- posts do
+      build_assoc(user, :posts) |> Post.changeset(post)
     end |> List.flatten
     Enum.each(changesets, &Repo.insert!(&1))
   end
@@ -57,6 +66,17 @@ defmodule Portfolio.TestData do
         description: "Semantic grid system for LESS",
         homepage: "https://github.com/DanielRS/greed",
         content: "",
+        date: Ecto.Date.utc
+      }
+    ]
+  end
+
+  def posts do
+    [
+      %{
+        title: "Post 1",
+        slug: "post-uno",
+        markdown: "**This** is the post *1*",
         date: Ecto.Date.utc
       }
     ]

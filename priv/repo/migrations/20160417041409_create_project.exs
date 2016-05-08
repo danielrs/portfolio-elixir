@@ -1,7 +1,7 @@
 defmodule Portfolio.Repo.Migrations.CreateProject do
   use Ecto.Migration
 
-  def change do
+  def up do
     create table(:projects) do
       add :title, :string, null: false
       add :description, :string, null: false
@@ -12,9 +12,11 @@ defmodule Portfolio.Repo.Migrations.CreateProject do
 
       timestamps
     end
+    alter table(:projects), do: modify :user_id, :integer, null: false
     create index(:projects, [:user_id])
-    alter table(:projects) do
-      modify :user_id, :integer, null: false
-    end
+  end
+
+  def down do
+    drop table(:projects)
   end
 end

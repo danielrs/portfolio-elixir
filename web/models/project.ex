@@ -13,7 +13,7 @@ defmodule Portfolio.Project do
     timestamps
   end
 
-  @required_fields ~w(title description homepage date)
+  @required_fields ~w(title description homepage date user_id)
   @optional_fields ~w(content)
 
   @doc """
@@ -29,14 +29,7 @@ defmodule Portfolio.Project do
   end
 
   def order_by_date(query \\ %Project{}) do
-    projects = from p in query,
-               order_by: [desc: p.date]
-  end
-
-  defp cast_date(date) do
-    case Ecto.Date.cast(date) do
-      {:ok, new_date} -> new_date
-      _ -> date
-    end
+    from p in query,
+    order_by: [desc: p.date]
   end
 end

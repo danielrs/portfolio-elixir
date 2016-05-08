@@ -23,6 +23,13 @@ defmodule Portfolio.Web do
       import Ecto
       import Ecto.Changeset
       import Ecto.Query, only: [from: 1, from: 2]
+
+      defp cast_date(date) do
+        case Ecto.Date.cast(date) do
+          {:ok, new_date} -> new_date
+          _ -> date
+        end
+      end
     end
   end
 

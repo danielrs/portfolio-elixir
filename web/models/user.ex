@@ -11,6 +11,7 @@ defmodule Portfolio.User do
     field :password, :string, virtual: true
     field :password_hash, :string
     has_many :projects, Portfolio.Project
+    has_many :posts, Portfolio.Post
 
     timestamps
   end

@@ -1,4 +1,4 @@
-defmodule Portfolio.ProjectsController do
+defmodule Portfolio.ProjectShowcaseController do
   use Portfolio.Web, :controller
   alias Portfolio.User
   alias Portfolio.Project
