@@ -61,6 +61,6 @@ defmodule Portfolio.Post do
     string
     |> String.downcase
     |> String.replace(~r/\s/, "-")
-    |> String.replace(~r/[^-\p{L}]/u, "")
+    |> String.replace(~r/[^-\p{L}0-9]/u, "")
   end
 end

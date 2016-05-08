@@ -11,7 +11,7 @@
 # and so on) as they will fail if something goes wrong.
 
 import Ecto
-alias Portfolio.{Repo, User, Project, SeedData}
+alias Portfolio.{Repo, User, Project, Post, SeedData}
 
 defmodule Portfolio.SeedData do
   @moduledoc false
@@ -63,6 +63,33 @@ defmodule Portfolio.SeedData do
       }
     ]
   end
+
+  def posts do
+    [
+      %{
+        title: "Post 1",
+        slug: "post-uno",
+        markdown: "**This** is the post *1*",
+        date: Ecto.Date.utc
+      },
+      %{
+        title: "Post 2",
+        slug: "post-dos",
+        markdown: "**This** is the post *2*",
+        date: Ecto.Date.utc
+      },
+      %{
+        title: "Post 3",
+        markdown: "**This** is the post _3_",
+        date: Ecto.Date.utc
+      },
+      %{
+        title: "Post 4",
+        markdown: "**This** is the post __4__",
+        date: Ecto.Date.utc
+      }
+    ]
+  end
 end
 
 SeedData.users
@@ -71,6 +98,14 @@ SeedData.users
 
 for user <- Repo.all(User), project <- SeedData.projects do
   build_assoc(user, :projects) |> Project.changeset(project)
+end
+|> List.flatten
+|> Enum.each(&Repo.insert!(&1))
+
+for user <- Repo.all(User), post <- SeedData.posts do
+  build_assoc(user, :posts)
+  |> Post.changeset(post)
+  |> Ecto.Changeset.update_change(:slug, &(&1 <> " - " <> user.first_name))
 end
 |> List.flatten
 |> Enum.each(&Repo.insert!(&1))

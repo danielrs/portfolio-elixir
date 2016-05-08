@@ -78,6 +78,22 @@ defmodule Portfolio.TestData do
         slug: "post-uno",
         markdown: "**This** is the post *1*",
         date: Ecto.Date.utc
+      },
+      %{
+        title: "Post 2",
+        slug: "post-dos",
+        markdown: "**This** is the post *2*",
+        date: Ecto.Date.utc
+      },
+      %{
+        title: "Post 3",
+        markdown: "**This** is the post _3_",
+        date: Ecto.Date.utc
+      },
+      %{
+        title: "Post 4",
+        markdown: "**This** is the post __4__",
+        date: Ecto.Date.utc
       }
     ]
   end
