@@ -1,35 +1,62 @@
 defmodule Portfolio.TestData do
 
   import Ecto
+  import Ecto.Changeset, only: [update_change: 3]
+
   alias Portfolio.Repo
+  alias Portfolio.Role
   alias Portfolio.User
   alias Portfolio.Project
   alias Portfolio.Post
 
-  def insert_all do
-    insert_users
-    insert_projects
+  def insert_roles do
+    roles
+    |> Enum.map(&Role.changeset(%Role{}, &1))
+    |> Enum.each(&Repo.insert!(&1))
   end
 
   def insert_users do
-    changesets = for user <- users, do: User.changeset(%User{}, user)
-    Enum.each(changesets, &Repo.insert!(&1))
+    for user <- users do
+      role = Repo.get_by!(Role, name: user.role_name)
+      User.changeset(%User{role_id: role.id}, user)
+    end
+    |> Enum.each(&Repo.insert!(&1))
   end
 
   def insert_projects do
-    users = Repo.all(User)
-    changesets = for user <- users, project <- projects do
+    for user <- Repo.all(User), project <- projects do
       build_assoc(user, :projects) |> Project.changeset(project)
-    end |> List.flatten
-    Enum.each(changesets, &Repo.insert!(&1))
+    end
+    |> List.flatten
+    |> Enum.each(&Repo.insert!(&1))
   end
 
   def insert_posts do
-    users = Repo.all(User)
-    changesets = for user <- users, post <- posts do
-      build_assoc(user, :posts) |> Post.changeset(post)
-    end |> List.flatten
-    Enum.each(changesets, &Repo.insert!(&1))
+    for user <- Repo.all(User), post <- posts do
+      build_assoc(user, :posts)
+      |> Post.changeset(post)
+      |> update_change(:slug, &(&1 <> " - " <> user.first_name))
+    end
+    |> List.flatten
+    |> Enum.each(&Repo.insert!(&1))
+  end
+
+  def roles do
+    [
+      %{id: 1, name: "admin", admin: true},
+      %{id: 2, name: "user", admin: false}
+    ]
+  end
+
+  def user_admin do
+    %{
+      first_name: "Daniel",
+      last_name: "Rivas",
+      email: "daniel.rivas@email.com",
+      password: "ONk0s13S",
+      password_confirmation: "ONk0s13S",
+      role_name: "admin"
+    }
   end
 
   def user do
@@ -37,12 +64,14 @@ defmodule Portfolio.TestData do
       first_name: "John",
       last_name: "Doe",
       email: "john.doe@email.com",
-      password: "12345678"
+      password: "12345678",
+      password_confirmation: "12345678",
+      role_name: "user"
     }
   end
 
   def users do
-    [user]
+    [user_admin, user]
   end
 
   def projects do

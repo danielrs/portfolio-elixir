@@ -9,14 +9,16 @@ defmodule Portfolio.User do
     field :last_name, :string
     field :email, :string
     field :password, :string, virtual: true
+    field :password_confirmation, :string, virtual: true
     field :password_hash, :string
+    belongs_to :role, Portfolio.Role
     has_many :projects, Portfolio.Project
     has_many :posts, Portfolio.Post
 
     timestamps
   end
 
-  @required_fields ~w(first_name last_name email password)
+  @required_fields ~w(first_name last_name email password password_confirmation role_id)
   @optional_fields ~w(password_hash)
 
   @doc """

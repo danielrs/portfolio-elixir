@@ -9,4 +9,4 @@ render(
   <Provider store={store}>
     {router(store)}
   </Provider>
-  , document.getElementById('dashboard-container'));
+  , document.getElementById('dashboard'));

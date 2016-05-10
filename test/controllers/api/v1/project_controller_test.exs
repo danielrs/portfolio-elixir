@@ -8,6 +8,7 @@ defmodule Portfolio.ProjectControllerTest do
   @invalid_attrs %{}
 
   setup %{conn: conn} do
+    TestData.insert_roles
     TestData.insert_users
     auth_response = post conn, session_path(conn, :create), [session: TestData.user]
     %{"data" => %{"jwt" => jwt, "user" => %{"id" => user_id}}} = auth_response.resp_body |> Poison.decode!

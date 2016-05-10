@@ -52,7 +52,7 @@ class ProjectShowView extends React.Component {
 }
 
 const mapStateToProps = function(state) {
-  return state.project.focusedProject;
+  return state.project.focused;
 };
 
 export default connect(mapStateToProps)(ProjectShowView);

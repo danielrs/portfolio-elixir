@@ -29,7 +29,7 @@ class ProjectDeleteUndo extends React.Component {
 }
 
 const mapStateToProps = function(state) {
-  return {project: state.project.deletedProject};
+  return {project: state.project.deleted};
 }
 
 export default connect(mapStateToProps)(ProjectDeleteUndo);

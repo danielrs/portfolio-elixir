@@ -60,7 +60,7 @@ class ProjectEditView extends React.Component {
 
 const mapStateToProps = function(state) {
   return {
-    project: state.project.focusedProject,
+    project: state.project.focused,
     errors: state.project.errors
   };
 };

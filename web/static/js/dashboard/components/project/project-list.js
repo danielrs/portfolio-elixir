@@ -1,5 +1,4 @@
 import React from 'react';
-import {connect} from 'react-redux';
 import {push} from 'react-router-redux';
 import {Link} from 'react-router';
 import Actions from '../../actions/project';
@@ -45,8 +44,8 @@ class ProjectListItem extends React.Component {
           {this.props.project.description}
         </div>
         <div className="project-card__footer">
-          <Button type="link-primary" onClick={this._handleEdit}><Glyph icon="pencil" /></Button>
-          <Button type="link-danger" onClick={this._handleDelete}><Glyph icon="trashcan" /></Button>
+          <Button type="link-primary" onClick={this._handleEdit}><Glyph icon="pencil" /> Edit</Button>
+          <Button type="link-danger" onClick={this._handleDelete}><Glyph icon="trashcan" /> Delete</Button>
         </div>
       </Card>
     );
@@ -56,11 +55,6 @@ class ProjectListItem extends React.Component {
 class ProjectList extends React.Component {
   static propTypes = {
     projects: React.PropTypes.arrayOf(projectSpec)
-  }
-
-  componentDidMount() {
-    const {dispatch} = this.props;
-    dispatch(Actions.fetchProjects());
   }
 
   render() {
@@ -86,8 +80,4 @@ class ProjectList extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return state.project;
-}
-
-export default connect(mapStateToProps)(ProjectList);
+export default ProjectList;

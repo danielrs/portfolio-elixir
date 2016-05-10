@@ -10,7 +10,7 @@ const initialState = {
 
 export default function postReducer(state = initialState, action) {
   switch (action.type) {
-    case Constants.POSTS_FETHCING:
+    case Constants.POSTS_FETCHING:
       return {...state, fetching: true};
     case Constants.POSTS_RECEIVED:
       return {...state, posts: action.posts, fetching: false};

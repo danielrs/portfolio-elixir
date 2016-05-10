@@ -5,6 +5,7 @@ defmodule Portfolio.SessionControllerTest do
   alias Portfolio.TestData
 
   setup %{conn: conn} do
+    TestData.insert_roles
     TestData.insert_users
     {:ok, %{conn: conn}}
   end

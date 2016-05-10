@@ -14,7 +14,7 @@
   </head>
 
   <body >
-    <div id="dashboard-container">
+    <div id="dashboard">
       <%= render @view_module, @view_template, assigns %>
     </div>
 

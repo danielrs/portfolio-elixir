@@ -1,0 +1,28 @@
+.project-card {
+  margin-bottom: @magic-number;
+  padding: 0;
+
+  &__header {
+    padding: @magic-number;
+  }
+
+  &__body {
+    padding: @magic-number;
+  }
+
+  &__footer {
+    background: @color-light-gray;
+    border-top: 1px solid @color-dark-gray;
+    text-align: center;
+  }
+}
+
+.project-list {
+  .grid(@gutter: @magic-number);
+  .row;
+  .project-card {
+    @media screen and (max-width: (@break-m - 1)) { .column(1, 1); }
+    @media screen and (min-width: @break-m) and (max-width: (@break-l - 1)) { .column(1, 2); }
+    @media screen and (min-width: @break-l) { .column(1, 3); }
+  }
+}
