@@ -7,11 +7,13 @@ const PostActions = {
   fetchPosts: function() {
     return dispatch => {
       dispatch({type: Constants.POSTS_FETCHING});
-      Request.get('/api/v1/posts')
-      .then(function(response) {
-        dispatch({type: Constants.POSTS_RECEIVED, posts: response.data});
-      })
-      .catch(function(error) {});
+      setTimeout(() => {
+        Request.get('/api/v1/posts')
+        .then(function(response) {
+          dispatch({type: Constants.POSTS_RECEIVED, posts: response.data});
+        })
+        .catch(function(error) {});
+      }, 1000);
     };
   },
 

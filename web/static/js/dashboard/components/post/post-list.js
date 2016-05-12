@@ -6,6 +6,7 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import {Button, Dropdown, Glyph, Table} from 'elemental';
 
 const postSpec = React.PropTypes.shape({
+  index: React.PropTypes.number.isRequired,
   id: React.PropTypes.number.isRequired,
   title: React.PropTypes.string.isRequired,
   slug: React.PropTypes.string.isRequired,

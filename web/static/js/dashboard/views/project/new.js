@@ -21,6 +21,7 @@ class ProjectNewView extends React.Component {
   _handleSubmit = (e) => {
     e.preventDefault();
     const {dispatch} = this.props;
+    this.setState({isOpen: false});
     dispatch(Actions.newProject(this.refs.form.getFormData()));
   }
 

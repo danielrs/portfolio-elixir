@@ -7,25 +7,15 @@ import {Button, Dropdown, Glyph, Table, Spinner} from 'elemental';
 import Enum from '../../utils/enum';
 import ProjectList from '../../components/project/project-list';
 import ProjectDeleteUndo from '../../components/project/project-delete-undo.js';
-import Fetchable from '../../components/layout/fetchable';
+import Loader from '../../components/layout/loader';
 
-const DropdownActions  = new Enum([
-  'EDIT',
-  'DELETE'
-]);
-
-const DROPDOWN_ITEMS = [
-  {label: 'Edit', value: DropdownActions.EDIT},
-  {label: 'Delete', value: DropdownActions.DELETE}
-];
-
-class ProjectIndexView extends Fetchable {
+class ProjectIndexView extends React.Component {
   componentDidMount() {
     const {dispatch} = this.props;
     dispatch(Actions.fetchProjects());
   }
 
-  renderFetched() {
+  render() {
     return (
       <div>
         <div className="header-content">
@@ -36,9 +26,9 @@ class ProjectIndexView extends Fetchable {
           </Button>
         </div>
         <ProjectDeleteUndo />
-        <div className="main-container">
+        <Loader loaded={this.props.loaded}>
           <ProjectList dispatch={this.props.dispatch} projects={this.props.projects} />
-        </div>
+        </Loader>
         {this.props.children}
       </div>
     );

@@ -28,6 +28,19 @@ class ProjectEditView extends React.Component {
     dispatch(Actions.fetchProject(this.props.params.id));
   }
 
+  _handleSubmit = (e) => {
+    const {dispatch} = this.props;
+    this.setState({isOpen: false});
+    dispatch(Actions.editProject(this.props.params.id, this.refs.form.getFormData()));
+    dispatch(replace('/dashboard/projects'));
+  }
+
+  _handleCancel = (e) => {
+    const {dispatch} = this.props;
+    this.setState({isOpen: false});
+    dispatch(replace('/dashboard/projects'));
+  }
+
   render() {
     return (
       <Modal isOpen={this.state.isOpen}>
@@ -41,20 +54,6 @@ class ProjectEditView extends React.Component {
         </ModalFooter>
       </Modal>
     );
-  }
-
-  _handleChange = (e) => {
-  }
-
-  _handleSubmit = (e) => {
-    const {dispatch} = this.props;
-    dispatch(Actions.editProject(this.props.params.id, this.refs.form.getFormData()));
-  }
-
-  _handleCancel = (e) => {
-    const {dispatch} = this.props;
-    this.setState({isOpen: false});
-    dispatch(replace('/dashboard/projects'));
   }
 }
 

@@ -7,9 +7,9 @@ import {Button, Dropdown, Glyph, Table} from 'elemental';
 import Enum from '../../utils/enum';
 import PostList from '../../components/post/post-list';
 // import ProjectDeleteUndo from '../../components/project/project-delete-undo.js';
-import Fetchable from '../../components/layout/fetchable';
+import Loader from '../../components/layout/loader';
 
-class PostIndexView extends Fetchable {
+class PostIndexView extends React.Component {
   componentDidMount() {
     const {dispatch} = this.props;
     dispatch(Actions.fetchPosts());
@@ -19,7 +19,7 @@ class PostIndexView extends Fetchable {
     return {__html: post.html};
   }
 
-  renderFetched() {
+  render() {
     return (
       <div>
         <div className="header-content">
@@ -30,7 +30,9 @@ class PostIndexView extends Fetchable {
           </Button>
         </div>
         <div className="main-container">
-          <PostList dispatch={this.props.dispatch} posts={this.props.posts} />
+          <Loader loaded={this.props.loaded}>
+            <PostList dispatch={this.props.dispatch} posts={this.props.posts} />
+          </Loader>
         </div>
         {this.props.children}
       </div>

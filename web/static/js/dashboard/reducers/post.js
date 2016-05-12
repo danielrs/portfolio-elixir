@@ -1,8 +1,9 @@
 import Constants from '../constants';
+import {zipIndex} from '../utils';
 
 const initialState = {
   posts: [],
-  fetching: false,
+  loaded: false,
   focused: {},
   deleted: {},
   errors: []
@@ -11,13 +12,13 @@ const initialState = {
 export default function postReducer(state = initialState, action) {
   switch (action.type) {
     case Constants.POSTS_FETCHING:
-      return {...state, fetching: true};
+      return {...state, loaded: false};
     case Constants.POSTS_RECEIVED:
-      return {...state, posts: action.posts, fetching: false};
+      return {...state, posts: zipIndex(action.posts), loaded: true};
     case Constants.POSTS_POST_FETCHING:
-      return {...state, fetching: true};
+      return {...state, loaded: false};
     case Constants.POSTS_POST_RECEIVED:
-      return {...state, focused: action.post, fetching: false};
+      return {...state, focused: action.post, loaded: true};
     case Constants.POSTS_POST_DELETED:
       return {...state, deleted: action.post};
     case Constants.POSTS_POST_UNDO:
