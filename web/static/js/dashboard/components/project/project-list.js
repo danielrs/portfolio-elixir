@@ -5,6 +5,7 @@ import Actions from '../../actions/project';
 import {Button, Dropdown, Glyph, Table, Row, Col, Card} from 'elemental';
 import Enum from '../../utils/enum';
 import {TransitionMotion, spring, presets} from 'react-motion';
+import StaggeredList from '../../components/layout/staggered-list';
 
 const projectSpec = React.PropTypes.shape({
   index: React.PropTypes.number.isRequired,
@@ -61,82 +62,42 @@ class ProjectList extends React.Component {
     springConfig: presets.stiff
   }
 
-  componentDidMount() {
-    this.setState({mounted: false});
-  }
-
-  spring(x) {
-    return spring(x, this.props.springConfig);
-  }
-
   _willEnter() {
     return {opacity: 0, offset: 100};
   }
 
-  _willLeave = () => {
-    return {opacity: this.spring(0), offset: this.spring(100)};
+  _willRest() {
+    return {opacity: 1, offset: 0};
   }
 
-  _getDefaultStyles = () => {
-    let defaultStyles = [];
-    this.props.projects.forEach((project, i) => {
-      defaultStyles[i] = {
+  _willLeave() {
+    return {opacity: 0, offset: 100};
+  }
+
+  _styles = () => {
+    return this.props.projects.map(project => {
+      return {
         key: project.id.toString(),
-        data: {...project, _rested: false},
+        data: project,
         style: this._willEnter()
       };
     });
-    return defaultStyles;
-  }
-
-  _targetStyle = {
-    opacity: 1,
-    offset: 0
-  }
-
-  _getStyles = (prevStyles) => {
-    let targetStyles = this._getDefaultStyles().map(config => {
-      return {
-        ...config,
-        style: {opacity: this.spring(this._targetStyle.opacity), offset: this.spring(this._targetStyle.offset)}
-      };
-    });
-
-    if (prevStyles.length == targetStyles.length) {
-      prevStyles.forEach((_, i) => {
-        targetStyles[i].data._rested = prevStyles[i].data._rested;
-        if (prevStyles[i - 1] && !targetStyles[i].data._rested) {
-          targetStyles[i].style = {
-            opacity: this.spring(prevStyles[i - 1].style.opacity),
-            offset: this.spring(prevStyles[i - 1].style.offset)
-          };
-        }
-        if (prevStyles[i].style.opacity == this._targetStyle.opacity
-            && prevStyles[i].style.offset == this._targetStyle.offset) {
-          targetStyles[i].data._rested = true;
-        }
-      });
-    }
-
-    return targetStyles;
   }
 
   render() {
 
     return (
-      <TransitionMotion
+      <StaggeredList
         willEnter={this._willEnter}
+        willRest={this._willRest}
         willLeave={this._willLeave}
-        defaultStyles={this._getDefaultStyles()}
-        styles={this._getStyles}>
-        {function(interpolatedStyles) {
-          return (
-            <div className="project-list">
-              {interpolatedStyles.map(this._renderProject)}
-            </div>
-          );
-        }.bind(this)}
-      </TransitionMotion>
+        styles={this._styles()}>
+        {interpolatedStyles =>
+          <div className="project-list">
+            {interpolatedStyles.map(this._renderProject)}
+          </div>
+        }
+      </StaggeredList>
     );
   }
 
