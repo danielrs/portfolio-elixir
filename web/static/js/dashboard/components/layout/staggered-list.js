@@ -1,4 +1,5 @@
 import React from 'react';
+import type {Element as ReactElement} from 'react';
 import {TransitionMotion, spring, presets} from 'react-motion';
 
 class StaggeredList extends React.Component {

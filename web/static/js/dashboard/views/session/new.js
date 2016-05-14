@@ -7,7 +7,7 @@ import {Button, Form, FormField, FormIconField, FormInput, Modal, ModalHeader, M
 class SessionNewView extends React.Component {
   render() {
     return (
-      <Modal isOpen={true} width="small" className="login-modal">
+      <Modal isOpen={true} width={420} className="login-modal">
         <ModalHeader text="Login" />
         <ModalBody>
           <Form>
