@@ -1,7 +1,6 @@
 import Constants from '../constants';
 import Request from '../utils/http-request';
 import {replace} from 'react-router-redux';
-import moment from 'moment';
 
 const ProjecActions = {
   fetchProjects: function() {
@@ -24,7 +23,7 @@ const ProjecActions = {
       .then(function(response) {
         dispatch({
           type: Constants.PROJECTS_PROJECT_RECEIVED,
-          project: {...response.data, date: moment(response.data.date)}
+          project: response.data
         });
       })
       .catch(function(error) {});
@@ -38,7 +37,7 @@ const ProjecActions = {
         dispatch(this.fetchProjects());
         dispatch({
           type: Constants.PROJECTS_PROJECT_RECEIVED,
-          project: {...response.data, date: moment(response.data.date)}
+          project: response.data
         });
       })
       .catch(error => {

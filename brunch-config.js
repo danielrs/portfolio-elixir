@@ -68,7 +68,7 @@ exports.config = {
   },
 
   npm: {
-    styles: {'react-datepicker': ['dist/react-datepicker.css']}
+    styles: {'react-date-picker': ['index.css']}
   }
 
 };

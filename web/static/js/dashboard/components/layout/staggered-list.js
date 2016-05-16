@@ -1,72 +1,64 @@
 import React from 'react';
-import type {Element as ReactElement} from 'react';
-import {TransitionMotion, spring, presets} from 'react-motion';
+import {TransitionMotion} from 'react-motion';
+import Enum from '../../utils/enum';
+
+const ItemState = new Enum([
+  'ENTERING',
+  'RESTING',
+  'LEAVING'
+]);
 
 class StaggeredList extends React.Component {
   static propTypes = {
-    children: React.PropTypes.func.isRequired,
-    spring: React.PropTypes.func,
-    willEnter: React.PropTypes.func.isRequired,
-    willRest: React.PropTypes.func.isRequired,
-    willLeave: React.PropTypes.func.isRequired,
-    styles: React.PropTypes.array.isRequired
+    chainedStyles: React.PropTypes.any,
+    isResting: React.PropTypes.func
   }
 
   static defaultProps = {
-    spring: x => spring(x, presets.stiff)
+    chainedStyles:  _ => [],
+    isResting: _ => false
   }
 
-  _mapSpring = (styles) => {
-    let copy = Object.assign({}, styles);
-    Object.keys(copy).forEach(key => {
-      copy[key] = this.props.spring(copy[key])
+  _indexate = (styles) => {
+    const fixedStyles = styles || []
+    return fixedStyles.map((config, i) => {
+      const state = this.props.isResting(config) && ItemState.RESTING || ItemState.ENTERING;
+      return {
+        key: config.key,
+        data: Object.assign({}, config.data, {__index__: i, __state__: state}),
+        style: config.style
+      };
     });
-    return copy;
-  }
-
-  _willLeave = () => {
-    return this._mapSpring(this.props.willLeave());
   }
 
   _getStyles = (prevStyles) => {
-    let targetStyles = this.props.styles.map(config => {
-      return {
-        key: config.key,
-        data: Object.assign({__mounted__: false}, config.data),
-        style: this._mapSpring(this.props.willRest())
-      };
-    });
+    // Prepare styles
+    let targetStyles;
+    if (Array.isArray(this.props.styles)) targetStyles = this.props.styles;
+    else targetStyles = this.props.styles(prevStyles);
+    targetStyles = this._indexate(targetStyles);
 
-    if (prevStyles.length == targetStyles.length) {
-      prevStyles.forEach((_, i) => {
-        // Interpolate previoues styles
-        targetStyles[i].data.__mounted__ = prevStyles[i].data.__mounted__;
-        if (prevStyles[i - 1] && !targetStyles[i].data.__mounted__) {
-          Object.keys(prevStyles[i - 1].style).forEach(key => {
-            targetStyles[i].style[key] = this.props.spring(prevStyles[i - 1].style[key]);
-          });
-        }
-        // Check if element finished interpolation
-        let finished = true;
-        Object.keys(prevStyles[i].style).forEach(key => {
-          if (prevStyles[i].style[key] != this.props.willRest()[key])
-            finished = false;
-        });
-        targetStyles[i].data.__mounted__ = finished;
+    // Prepare prevStyles
+    const prevIndexed = this._indexate(prevStyles);
+    const prevEntering = prevIndexed.filter(config => config.data.__state__ == ItemState.ENTERING);
+    const prevResting = prevIndexed.filter(config => config.data.__state__ == ItemState.RESTING);
+    const prevLeaving = prevIndexed.filter(config => config.data.__state__ == ItemState.LEAVING);
+
+    // Combine user prev with ours
+    if (targetStyles.length == prevIndexed.length) {
+      const userPrevStyles = this.props.chainedStyles(prevEntering);
+      userPrevStyles.forEach(config => {
+        targetStyles[config.data.__index__].style = config.style;
       });
     }
 
-    console.log(this.props);
     return targetStyles;
   }
 
   render() {
+    const props = {...this.props, styles: this._getStyles}
     return (
-      <TransitionMotion
-        willEnter={this.props.willEnter}
-        willLeave={this._willLeave}
-        defaultStyles={this.props.styles}
-        styles={this._getStyles}>
+      <TransitionMotion {...props}>
         {this.props.children}
       </TransitionMotion>
     );

@@ -1,33 +1,54 @@
 import React from 'react';
-import DatePicker from 'react-datepicker';
-import moment from 'moment';
-import {renderErrorsFor} from '../../utils';
+import DatePicker from 'react-date-picker';
+import {renderErrorsFor, dateToISO8601} from '../../utils';
 import {Form, FormField, FormInput} from 'elemental';
 
 class ProjectForm extends React.Component {
 
   static propTypes = {
-    title: React.PropTypes.string,
-    description: React.PropTypes.string,
-    homepage: React.PropTypes.string,
-    content: React.PropTypes.string,
-    date: React.PropTypes.any,
+    project: React.PropTypes.shape({
+      title: React.PropTypes.string,
+      description: React.PropTypes.string,
+      homepage: React.PropTypes.string,
+      content: React.PropTypes.string,
+      date: React.PropTypes.any,
+    }),
     onChange: React.PropTypes.func.isRequired
   }
 
   static defaultProps = {
+    project: {},
     onChange: function() {},
   }
 
-  state = {changed: false, date: moment()}
+  // We don't use state for date since we need to be updated immediately (state updates after render step)
+  date = dateToISO8601(new Date())
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({date: nextProps.date || moment()});
+  getFormData() {
+    const data = {
+      project: {
+        title: this.refs.title.refs.input.value,
+        description: this.refs.description.refs.input.value,
+        homepage: this.refs.homepage.refs.input.value,
+        content: this.refs.content.refs.input.value,
+        date: this.date
+      }
+    };
+    return data;
+  }
+
+  _handleChange = (e) => {
+    this.props.onChange(e);
+  }
+
+  _handleDateChange = (date) => {
+    this.date = date;
+    this._handleChange(date);
   }
 
   render() {
     return (
-      <Form key={this.props.id}>
+      <Form key={this.props.project.id}>
         <FormField>
           <FormInput
             type="text"
@@ -35,7 +56,7 @@ class ProjectForm extends React.Component {
             name="title"
             placeholder="Title"
             onChange={this._handleChange}
-            defaultValue={this.props.title} />
+            defaultValue={this.props.project.title} />
         </FormField>
         <FormField>
           <FormInput
@@ -44,7 +65,7 @@ class ProjectForm extends React.Component {
             name="description"
             placeholder="Description"
             onChange={this._handleChange}
-            defaultValue={this.props.description} />
+            defaultValue={this.props.project.description} />
         </FormField>
         <FormField>
           <FormInput
@@ -53,7 +74,7 @@ class ProjectForm extends React.Component {
             name="homepage"
             placeholder="URL"
             onChange={this._handleChange}
-            defaultValue={this.props.homepage} />
+            defaultValue={this.props.project.homepage} />
         </FormField>
         <FormField>
           <FormInput
@@ -62,37 +83,14 @@ class ProjectForm extends React.Component {
             name="content"
             placeholder="Content"
             onChange={this._handleChange}
-            defaultValue={this.props.content}
+            defaultValue={this.props.project.content}
             multiline />
         </FormField>
         <FormField>
-          <DatePicker ref="date" selected={this.state.date} onChange={this._handleDateChange} />
+          <DatePicker ref="date" defaultDate={this.props.project.date || this.date} onChange={this._handleDateChange} />
         </FormField>
       </Form>
     );
-  }
-
-  getFormData() {
-    console.log(this.refs.title.refs.input.value);
-    const data = {
-      project: {
-        title: this.refs.title.refs.input.value,
-        description: this.refs.description.refs.input.value,
-        homepage: this.refs.homepage.refs.input.value,
-        content: this.refs.content.refs.input.value,
-        date: this.state.date.format('YYYY-MM-DD')
-      }
-    };
-    return data;
-  }
-
-  _handleChange = (e) => {
-    this.props.onChange(e);
-    this.setState({changed: true});
-  }
-
-  _handleDateChange = (date) => {
-    this.setState({date: date});
   }
 }
 

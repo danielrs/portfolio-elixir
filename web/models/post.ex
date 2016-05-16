@@ -27,9 +27,9 @@ defmodule Portfolio.Post do
     model
     |> cast(params, @required_fields, @optional_fields)
     |> cast_slug
-    |> unique_constraint(:slug)
+    |> cast_html
     |> update_change(:date, &cast_date(&1))
-    |> put_html
+    |> unique_constraint(:slug, "Slug already taken")
   end
 
   def order_by_date(query \\ %Post{}) do
@@ -49,7 +49,7 @@ defmodule Portfolio.Post do
     end
   end
 
-  defp put_html(changeset) do
+  defp cast_html(changeset) do
     if markdown = get_change(changeset, :markdown) do
       changeset |> put_change(:html, Earmark.to_html(markdown))
     else

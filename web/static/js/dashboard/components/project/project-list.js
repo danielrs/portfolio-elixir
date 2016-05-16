@@ -53,25 +53,28 @@ class ProjectListItem extends React.Component {
 
 class ProjectList extends React.Component {
   static propTypes = {
-    projects: React.PropTypes.arrayOf(projectSpec),
-    springConfig: React.PropTypes.any
+    projects: React.PropTypes.arrayOf(projectSpec)
   }
 
   static defaultProps = {
-    projects: [],
-    springConfig: presets.stiff
+    projects: []
   }
 
-  _willEnter() {
+  _willEnter = () => {
     return {opacity: 0, offset: 100};
   }
 
-  _willRest() {
-    return {opacity: 1, offset: 0};
+  _willLeave = () => {
+    return {opacity: spring(0, presets.stiff), offset: spring(100, presets.stiff)};
   }
 
-  _willLeave() {
-    return {opacity: 0, offset: 100};
+  _defaultStyles() {
+    return this.props.projects.map(project => {
+      return {
+        key: project.id.toString(),
+        style: {opacity: 0, offset: 100}
+      };
+    });
   }
 
   _styles = () => {
@@ -79,7 +82,21 @@ class ProjectList extends React.Component {
       return {
         key: project.id.toString(),
         data: project,
-        style: this._willEnter()
+        style: {opacity: spring(1, presets.stiff), offset: spring(0, presets.stiff)}
+      };
+    });
+  }
+
+  _chainedStyles = (prevStyles) => {
+    return prevStyles.map((config, i) => {
+      return {
+        ...config,
+        style: i === 0
+          ? {opacity: spring(1, presets.stiff), offset: spring(0, presets.stiff)}
+          : {
+            opacity: spring(prevStyles[i - 1].style.opacity, presets.stiff),
+            offset: spring(prevStyles[i - 1].style.offset, presets.stiff)
+          }
       };
     });
   }
@@ -89,9 +106,13 @@ class ProjectList extends React.Component {
     return (
       <StaggeredList
         willEnter={this._willEnter}
-        willRest={this._willRest}
+        isResting={config => {
+          return config.style.opacity == 1 && config.style.offset == 0
+        }}
         willLeave={this._willLeave}
-        styles={this._styles()}>
+        defaultStyles={this._defaultStyles()}
+        styles={this._styles()}
+        chainedStyles={this._chainedStyles}>
         {interpolatedStyles =>
           <div className="project-list">
             {interpolatedStyles.map(this._renderProject)}
