@@ -13,11 +13,13 @@ class ProjectForm extends React.Component {
       content: React.PropTypes.string,
       date: React.PropTypes.any,
     }),
+    errors: React.PropTypes.object,
     onChange: React.PropTypes.func.isRequired
   }
 
   static defaultProps = {
     project: {},
+    errors: {},
     onChange: function() {},
   }
 
@@ -49,34 +51,37 @@ class ProjectForm extends React.Component {
   render() {
     return (
       <Form key={this.props.project.id}>
-        <FormField>
+        <FormField className={this.props.errors.title ? 'is-invalid' : ''}>
           <FormInput
             type="text"
             ref="title"
             name="title"
-            placeholder="Title"
+            placeholder="Title*"
             onChange={this._handleChange}
             defaultValue={this.props.project.title} />
+          {renderErrorsFor(this.props.errors, 'title')}
         </FormField>
-        <FormField>
+        <FormField className={this.props.errors.description ? 'is-invalid' : ''}>
           <FormInput
             type="text"
             ref="description"
             name="description"
-            placeholder="Description"
+            placeholder="Description*"
             onChange={this._handleChange}
             defaultValue={this.props.project.description} />
+          {renderErrorsFor(this.props.errors, 'description')}
         </FormField>
-        <FormField>
+        <FormField className={this.props.errors.homepage ? 'is-invalid' : ''}>
           <FormInput
             type="text"
             ref="homepage"
             name="homepage"
-            placeholder="URL"
+            placeholder="URL*"
             onChange={this._handleChange}
             defaultValue={this.props.project.homepage} />
+          {renderErrorsFor(this.props.errors, 'homepage')}
         </FormField>
-        <FormField>
+        <FormField className={this.props.errors.content ? 'is-invalid' : ''}>
           <FormInput
             type="text"
             ref="content"
@@ -85,9 +90,11 @@ class ProjectForm extends React.Component {
             onChange={this._handleChange}
             defaultValue={this.props.project.content}
             multiline />
+          {renderErrorsFor(this.props.errors, 'content')}
         </FormField>
-        <FormField>
+        <FormField className={this.props.errors.date ? 'is-invalid' : ''}>
           <DatePicker ref="date" defaultDate={this.props.project.date || this.date} onChange={this._handleDateChange} />
+          {renderErrorsFor(this.props.errors, 'date')}
         </FormField>
       </Form>
     );

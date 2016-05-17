@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router';
-import {replace} from 'react-router-redux';
+import {push} from 'react-router-redux';
 import {connect} from 'react-redux';
 import Constants from '../../constants';
 import Actions from '../../actions/project';
@@ -14,21 +14,20 @@ class ProjectNewView extends React.Component {
 
   componentDidMount() {
     const {dispatch} = this.props;
-    dispatch(Actions.formReset());
+    dispatch(Actions.errorReset());
     this.setState({isOpen: true});
   }
 
   _handleSubmit = (e) => {
     e.preventDefault();
     const {dispatch} = this.props;
-    this.setState({isOpen: false});
     dispatch(Actions.newProject(this.refs.form.getFormData()));
   }
 
   _handleCancel = (e) => {
     const {dispatch} = this.props;
     this.setState({isOpen: false});
-    dispatch(replace('/dashboard/projects'));
+    dispatch(push('/dashboard/projects'));
   }
 
   render() {

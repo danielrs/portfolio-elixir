@@ -1,9 +1,11 @@
+import React from 'react';
+
 export function renderErrorsFor(errors, ref) {
   if (!errors) return false;
   if (errors[ref]) {
     return errors[ref].map((error, i) => {
       return (
-        <div key={i} className="error">
+        <div key={i} className="form-validation is-invalid">
           {error}
         </div>
       );

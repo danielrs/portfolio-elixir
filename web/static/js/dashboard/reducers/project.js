@@ -6,7 +6,7 @@ const initialState = {
   loaded: false,
   focused: {},
   deleted: {},
-  errors: []
+  errors: {}
 }
 
 function addProject(projects, project) {
@@ -33,8 +33,8 @@ export default function projectReducer(state = initialState, action) {
       return {...state, deleted: {}};
     case Constants.PROJECTS_PROJECT_ERROR:
       return {...state, errors: action.errors};
-    case Constants.PROJECTS_PROJECT_FORM_RESET:
-      return {...state, errors: []};
+    case Constants.PROJECTS_PROJECT_ERROR_RESET:
+      return {...state, errors: {}};
     default:
       return state;
   }

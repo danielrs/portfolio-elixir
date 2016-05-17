@@ -11,7 +11,7 @@ class ProjectDeleteUndo extends React.Component {
 
   _handleClick = (e) => {
     const {dispatch} = this.props;
-    dispatch(Actions.undoDelete(this.props.project));
+    dispatch(Actions.newProject({project: this.props.project}));
   }
 
   _renderUndo() {

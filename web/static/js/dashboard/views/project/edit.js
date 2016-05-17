@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router';
 import {connect} from 'react-redux';
-import {replace} from 'react-router-redux';
+import {push} from 'react-router-redux';
 import Constants from '../../constants';
 import Actions from '../../actions/project';
 import ProjectForm from '../../components/project/form';
@@ -25,50 +25,25 @@ class ProjectEditView extends React.Component {
 
   fetchProject() {
     const {dispatch} = this.props;
-    dispatch(Actions.formReset());
+    dispatch(Actions.errorReset());
     dispatch(Actions.fetchProject(this.props.params.id));
   }
 
   _handleSubmit = (e) => {
     const {dispatch} = this.props;
-    this.setState({isOpen: false});
-    console.log(this.refs.form.getFormData());
     dispatch(Actions.editProject(this.props.params.id, this.refs.form.getFormData()));
-    dispatch(replace(`/dashboard/projects/${this.props.params.id}`));
   }
 
-  _handleCancel = (e) => {
+  _handleShow = (e) => {
     const {dispatch} = this.props;
     this.setState({isOpen: false});
-    dispatch(replace(`/dashboard/projects/${this.props.params.id}`));
+    dispatch(push(`/dashboard/projects/${this.props.params.id}`));
   }
 
   _handleClose = (e) => {
     const {dispatch} = this.props;
     this.setState({isOpen: false});
-    dispatch(replace('/dashboard/projects'));
-  }
-
-  _handleChange = (e) => {
-
-    function scrubProject(project) {
-      Object.keys(project).forEach(key => {if (!project[key]) project[key] = ''});
-      return Object.assign({}, project);
-    }
-
-    function equalProjects(a, b) {
-      const scrubbedA = scrubProject(a);
-      const scrubbedB = scrubProject(b);
-      console.log(a);
-      console.log(b);
-      return  scrubbedA.title == b.title
-              && scrubbedA.description == scrubbedB.description
-              && scrubbedA.homepage == scrubbedB.homepage
-              && scrubbedA.content == scrubbedB.content
-              && scrubbedA.date == scrubbedB.date;
-    }
-
-    this.setState({changed: !equalProjects(this.props.project, this.refs.form.getFormData().project)});
+    dispatch(push('/dashboard/projects'));
   }
 
   render() {
@@ -76,11 +51,11 @@ class ProjectEditView extends React.Component {
       <Modal isOpen={this.state.isOpen}>
         <ModalHeader text={"Editing " + this.props.project.title} showCloseButton onClose={this._handleClose} />
         <ModalBody>
-          <ProjectForm ref="form" project={this.props.project} errors={this.props.errors} onChange={this._handleChange} />
+          <ProjectForm ref="form" project={this.props.project} errors={this.props.errors} />
         </ModalBody>
         <ModalFooter>
-          <Button type="hollow-primary" onClick={this._handleSubmit} disabled={!this.state.changed}>Save</Button>
-          <Button type="link-cancel" onClick={this._handleCancel}>Show</Button>
+          <Button type="hollow-primary" onClick={this._handleSubmit}>Save</Button>
+          <Button type="link-cancel" onClick={this._handleShow}>Show</Button>
           <Button type="link-cancel" onClick={this._handleClose}>Close</Button>
         </ModalFooter>
       </Modal>

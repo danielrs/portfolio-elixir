@@ -1,6 +1,6 @@
 import Constants from '../constants';
 import Request from '../utils/http-request';
-import {replace} from 'react-router-redux';
+import {push} from 'react-router-redux';
 
 const ProjecActions = {
   fetchProjects: function() {
@@ -30,28 +30,6 @@ const ProjecActions = {
     };
   },
 
-  editProject: function(id, data) {
-    return dispatch => {
-      Request.patch(`/api/v1/projects/${id}`, data)
-      .then(response => {
-        dispatch(this.fetchProjects());
-        dispatch({
-          type: Constants.PROJECTS_PROJECT_RECEIVED,
-          project: response.data
-        });
-      })
-      .catch(error => {
-        error.response.json()
-        .then(errorJSON => {
-          dispatch({
-            type: Constants.PROJECTS_PROJECT_ERROR,
-            errors: errorJSON.errors
-          });
-        });
-      });
-    };
-  },
-
   newProject: function(data) {
     return dispatch => {
       Request.post('/api/v1/projects', data)
@@ -61,11 +39,37 @@ const ProjecActions = {
           project: response.data
         });
         dispatch(this.fetchProjects());
-        dispatch(replace('/dashboard/projects'));
+        dispatch(push(`/dashboard/projects/${response.data.id}`));
       })
       .catch(error => {
         error.response.json()
         .then(function(errorJSON) {
+          dispatch({
+            type: Constants.PROJECTS_PROJECT_ERROR,
+            errors: errorJSON.errors
+          });
+        });
+      });
+    };
+  },
+
+  editProject: function(id, data) {
+    return dispatch => {
+      Request.patch(`/api/v1/projects/${id}`, data)
+      .then(response => {
+        dispatch(this.fetchProjects());
+        dispatch({
+          type: Constants.PROJECTS_PROJECT_RECEIVED,
+          project: response.data
+        });
+        dispatch({
+          type: Constants.PROJECTS_PROJECT_ERROR_RESET
+        });
+        dispatch(push(`/dashboard/projects/${id}`));
+      })
+      .catch(error => {
+        error.response.json()
+        .then(errorJSON => {
           dispatch({
             type: Constants.PROJECTS_PROJECT_ERROR,
             errors: errorJSON.errors
@@ -91,16 +95,9 @@ const ProjecActions = {
     };
   },
 
-  undoDelete: function(data) {
+  errorReset: function() {
     return dispatch => {
-      dispatch(this.newProject({project: data}));
-      dispatch({type: Constants.PROJECTS_PROJECT_UNDO});
-    };
-  },
-
-  formReset: function() {
-    return dispatch => {
-      dispatch({type: Constants.PROJECTS_PROJECT_FORM_RESET});
+      dispatch({type: Constants.PROJECTS_PROJECT_ERROR_RESET});
     };
   }
 };
