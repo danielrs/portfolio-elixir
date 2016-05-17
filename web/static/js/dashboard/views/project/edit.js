@@ -49,7 +49,7 @@ class ProjectEditView extends React.Component {
   render() {
     return (
       <Modal isOpen={this.state.isOpen}>
-        <ModalHeader text={"Editing " + this.props.project.title} showCloseButton onClose={this._handleClose} />
+        <ModalHeader text={'Editing ' + this.props.project.title} showCloseButton onClose={this._handleClose} />
         <ModalBody>
           <ProjectForm ref="form" project={this.props.project} errors={this.props.errors} />
         </ModalBody>

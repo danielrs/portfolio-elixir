@@ -39,17 +39,20 @@ class ProjectShowView extends React.Component {
   }
 
   render() {
-    const editUrl = '/dashboard/projects/' + this.props.params.id + '/edit';
+    const content = this.props.project.content
+      ? <div className="project__content">{this.props.project.content}</div>
+      : '';
     return (
       <Modal isOpen={this.state.isOpen}>
-        <ModalHeader text={this.props.project.title} showCloseButton onClose={this._handleClose} />
-        <ModalBody>
-          <h1>{this.props.project.title}</h1>
-          <div>{this.props.project.description}</div>
-          <a href="{this.props.project.homepage}">{this.props.project.homepage}</a>
-          <div>
-            {this.props.project.content}
-          </div>
+        <ModalHeader text={'Showing ' + this.props.project.title} showCloseButton onClose={this._handleClose} />
+        <ModalBody className="project">
+          <h1 className="project__title">
+            {this.props.project.title + ' '}
+            <span className="project__date">{this.props.project.date}</span>
+          </h1>
+          <div className="project__description">{this.props.project.description}</div>
+          <a className="project__homepage" href={this.props.project.homepage}>{this.props.project.homepage}</a>
+          {content}
         </ModalBody>
         <ModalFooter>
           <Button type="hollow-primary" onClick={this._handleEdit}>Edit</Button>
