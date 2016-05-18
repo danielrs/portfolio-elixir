@@ -3,8 +3,13 @@ import {connect} from 'react-redux';
 import Constants from '../../constants';
 import Actions from '../../actions/session';
 import {Button, Form, FormField, FormIconField, FormInput, Modal, ModalHeader, ModalBody, ModalFooter} from 'elemental';
+import {setDocumentTitle} from '../../utils';
 
 class SessionNewView extends React.Component {
+  componentDidMount() {
+    setDocumentTitle('Login');
+  }
+
   render() {
     return (
       <Modal isOpen={true} width={420} className="login-modal">

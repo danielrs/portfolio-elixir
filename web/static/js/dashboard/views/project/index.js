@@ -4,10 +4,10 @@ import {connect} from 'react-redux';
 import Constants from '../../constants';
 import Actions from '../../actions/project';
 import {Button, Dropdown, Glyph, Table, Spinner} from 'elemental';
-import Enum from '../../utils/enum';
 import ProjectList from '../../components/project/project-list';
 import ProjectDeleteUndo from '../../components/project/project-delete-undo.js';
 import Loader from '../../components/layout/loader';
+import DocumentTitle from '../../components/layout/document-title';
 
 class ProjectIndexView extends React.Component {
   componentDidMount() {
@@ -17,7 +17,7 @@ class ProjectIndexView extends React.Component {
 
   render() {
     return (
-      <div>
+      <DocumentTitle title="Projects" component="ul">
         <div className="header-content">
           <Button component={<Link to="/dashboard/projects/new"/>} type="hollow-primary" size="sm">
             <Glyph icon="plus" />
@@ -30,7 +30,7 @@ class ProjectIndexView extends React.Component {
           <ProjectList dispatch={this.props.dispatch} projects={this.props.projects} />
         </Loader>
         {this.props.children}
-      </div>
+      </DocumentTitle>
     );
   }
 }

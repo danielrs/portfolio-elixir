@@ -16,36 +16,21 @@ const ProjecActions = {
     };
   },
 
-  fetchProject: function(id) {
-    return dispatch => {
-      dispatch({type: Constants.PROJECTS_PROJECT_FETCHING});
-      Request.get(`/api/v1/projects/${id}`)
-      .then(function(response) {
-        dispatch({
-          type: Constants.PROJECTS_PROJECT_RECEIVED,
-          project: response.data
-        });
-      })
-      .catch(function(error) {});
-    };
-  },
-
   newProject: function(data) {
     return dispatch => {
       Request.post('/api/v1/projects', data)
       .then(response => {
         dispatch({
-          type: Constants.PROJECTS_PROJECT_NEW,
+          type: Constants.PROJECTS_NEW,
           project: response.data
         });
         dispatch(this.fetchProjects());
-        dispatch(push(`/dashboard/projects/${response.data.id}`));
       })
       .catch(error => {
         error.response.json()
         .then(function(errorJSON) {
           dispatch({
-            type: Constants.PROJECTS_PROJECT_ERROR,
+            type: Constants.PROJECTS_ERROR,
             errors: errorJSON.errors
           });
         });
@@ -53,25 +38,50 @@ const ProjecActions = {
     };
   },
 
-  editProject: function(id, data) {
+  fetchProject: function(id) {
+    return dispatch => {
+      dispatch({type: Constants.CURRENT_PROJECT_FETCHING});
+      Request.get(`/api/v1/projects/${id}`)
+      .then(function(response) {
+        dispatch({
+          type: Constants.CURRENT_PROJECT_RECEIVED,
+          project: response.data
+        });
+      })
+      .catch(function(error) {});
+    };
+  },
+
+  showProject: function(id) {
+    return dispatch => {
+      dispatch(push(`/dashboard/projects/${id}`));
+    };
+  },
+
+  editProject: function(id) {
+    return dispatch => {
+      dispatch({type: Constants.CURRENT_PROJECT_EDIT});
+      dispatch(push(`/dashboard/projects/${id}/edit`));
+    };
+  },
+
+  updateProject: function(id, data) {
     return dispatch => {
       Request.patch(`/api/v1/projects/${id}`, data)
       .then(response => {
         dispatch(this.fetchProjects());
         dispatch({
-          type: Constants.PROJECTS_PROJECT_RECEIVED,
+          type: Constants.CURRENT_PROJECT_UPDATE,
           project: response.data
         });
-        dispatch({
-          type: Constants.PROJECTS_PROJECT_ERROR_RESET
-        });
+        dispatch(this.errorReset());
         dispatch(push(`/dashboard/projects/${id}`));
       })
       .catch(error => {
         error.response.json()
         .then(errorJSON => {
           dispatch({
-            type: Constants.PROJECTS_PROJECT_ERROR,
+            type: Constants.PROJECTS_ERROR,
             errors: errorJSON.errors
           });
         });
@@ -84,10 +94,10 @@ const ProjecActions = {
       Request.delete(`/api/v1/projects/${id}`)
       .then(response => {
         dispatch({
-          type: Constants.PROJECTS_PROJECT_DELETED,
+          type: Constants.PROJECTS_DELETE,
           project: data
         });
-        // dispatch(this.fetchProjects());
+        dispatch(this.fetchProjects());
       })
       .catch(error => {
         console.log(error);
@@ -97,7 +107,7 @@ const ProjecActions = {
 
   errorReset: function() {
     return dispatch => {
-      dispatch({type: Constants.PROJECTS_PROJECT_ERROR_RESET});
+      dispatch({type: Constants.PROJECTS_ERROR_RESET});
     };
   }
 };

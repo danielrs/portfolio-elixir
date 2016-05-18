@@ -4,11 +4,6 @@ import {Pill} from 'elemental';
 import Actions from '../../actions/project';
 
 class ProjectDeleteUndo extends React.Component {
-  render() {
-    if (this.props.project && this.props.project.id) return this._renderUndo();
-    else return this._renderDisabled();
-  }
-
   _handleClick = (e) => {
     const {dispatch} = this.props;
     dispatch(Actions.newProject({project: this.props.project}));
@@ -25,6 +20,11 @@ class ProjectDeleteUndo extends React.Component {
 
   _renderDisabled() {
     return false;
+  }
+
+  render() {
+    if (this.props.project && this.props.project.id) return this._renderUndo();
+    else return this._renderDisabled();
   }
 }
 

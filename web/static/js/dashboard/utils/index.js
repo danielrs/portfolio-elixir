@@ -1,5 +1,11 @@
 import React from 'react';
 
+export function Enum(values) {
+  for (let value of values) {
+    this[value] = value;
+  }
+}
+
 export function renderErrorsFor(errors, ref) {
   if (!errors) return false;
   if (errors[ref]) {

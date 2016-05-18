@@ -1,22 +1,14 @@
 {
   "repository": {},
   "dependencies": {
-    "babel-brunch": "^6.0.2",
-    "babel-preset-react": "^6.5.0",
-    "babel-preset-stage-0": "^6.5.0",
-    "brunch": "~2.6.6",
-    "clean-css-brunch": "~1.8.0",
-    "css-brunch": "~1.7.0",
     "elemental": "^0.5.14",
     "isomorphic-fetch": "^2.2.1",
-    "javascript-brunch": "~1.8.0",
-    "less-brunch": "^2.6.0",
-    "lesshat": "^3.0.2",
     "phoenix": "file:deps/phoenix",
     "phoenix_html": "file:deps/phoenix_html",
     "react": "^15.0.1",
     "react-addons-css-transition-group": "^15.0.2",
     "react-date-picker": "^4.0.10",
+    "react-document-title": "^2.0.1",
     "react-dom": "^15.0.1",
     "react-motion": "^0.4.3",
     "react-redux": "^4.4.5",
@@ -25,7 +17,19 @@
     "react-simple-router": "^0.1.7",
     "redux": "^3.4.0",
     "redux-logger": "^2.6.1",
-    "redux-thunk": "^2.0.1",
-    "uglify-js-brunch": "~1.7.0"
+    "redux-thunk": "^2.0.1"
+  },
+  "devDependencies": {
+    "auto-reload-brunch": "^2.0.0",
+    "babel-brunch": "^6.0.2",
+    "babel-preset-react": "^6.5.0",
+    "babel-preset-stage-0": "^6.5.0",
+    "brunch": "^2.7.7",
+    "clean-css-brunch": "^2.0.0",
+    "css-brunch": "^2.0.0",
+    "javascript-brunch": "^2.0.0",
+    "less-brunch": "^2.6.0",
+    "lesshat": "^3.0.2",
+    "uglify-js-brunch": "^2.0.0"
   }
 }

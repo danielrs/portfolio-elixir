@@ -6,6 +6,7 @@ import Constants from '../../constants';
 import Actions from '../../actions/project';
 import ProjectForm from '../../components/project/form';
 import {Button, Modal, ModalHeader, ModalBody, ModalFooter} from 'elemental';
+import DocumentTitle from '../../components/layout/document-title';
 
 class ProjectNewView extends React.Component {
   state = {
@@ -24,7 +25,7 @@ class ProjectNewView extends React.Component {
     dispatch(Actions.newProject(this.refs.form.getFormData()));
   }
 
-  _handleCancel = (e) => {
+  _handleClose = (e) => {
     const {dispatch} = this.props;
     this.setState({isOpen: false});
     dispatch(push('/dashboard/projects'));
@@ -32,16 +33,18 @@ class ProjectNewView extends React.Component {
 
   render() {
     return (
-      <Modal isOpen={this.state.isOpen}>
-        <ModalHeader text="Create project" showCloseButton onClose={this._handleCancel}/>
-        <ModalBody>
-          <ProjectForm ref="form" errors={this.props.errors} />
-        </ModalBody>
-        <ModalFooter>
-          <Button type="hollow-primary" onClick={this._handleSubmit}>Create</Button>
-          <Button type="link-cancel" onClick={this._handleCancel}>Cancel</Button>
-        </ModalFooter>
-      </Modal>
+      <DocumentTitle title="Create project">
+        <Modal isOpen={this.state.isOpen}>
+          <ModalHeader text="Create project" showCloseButton onClose={this._handleCancel}/>
+          <ModalBody>
+            <ProjectForm ref="form" errors={this.props.errors} />
+          </ModalBody>
+          <ModalFooter>
+            <Button type="hollow-primary" onClick={this._handleSubmit}>Create</Button>
+            <Button type="link-cancel" onClick={this._handleClose}>Close</Button>
+          </ModalFooter>
+        </Modal>
+      </DocumentTitle>
     );
   }
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import {TransitionMotion} from 'react-motion';
-import Enum from '../../utils/enum';
+import {Enum} from '../../utils';
 
 const ItemState = new Enum([
   'ENTERING',

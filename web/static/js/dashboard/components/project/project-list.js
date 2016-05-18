@@ -3,7 +3,6 @@ import {push} from 'react-router-redux';
 import {Link} from 'react-router';
 import Actions from '../../actions/project';
 import {Button, Dropdown, Glyph, Table, Row, Col, Card} from 'elemental';
-import Enum from '../../utils/enum';
 import {TransitionMotion, spring, presets} from 'react-motion';
 import StaggeredList from '../../components/layout/staggered-list';
 
