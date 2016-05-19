@@ -6,7 +6,7 @@ import Actions from '../../actions/project';
 class ProjectDeleteUndo extends React.Component {
   _handleClick = (e) => {
     const {dispatch} = this.props;
-    dispatch(Actions.newProject({project: this.props.project}));
+    dispatch(Actions.undoDelete({project: this.props.project}));
   }
 
   _renderUndo() {

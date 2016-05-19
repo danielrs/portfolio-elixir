@@ -46,7 +46,7 @@ class ProjectShowView extends React.Component {
 
   render() {
     return (
-      <DocumentTitle title={this.props.project.title}>
+      <DocumentTitle title={this.props.project.title || '...'}>
         <ModalLoader loaded={this.props.loaded} isOpen={this.state.isOpen}>
           <ModalHeader text={'Showing ' + this.props.project.title} showCloseButton onClose={this._handleClose} />
           <ModalBody className="project">

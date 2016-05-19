@@ -7,7 +7,6 @@ import {TransitionMotion, spring, presets} from 'react-motion';
 import StaggeredList from '../../components/layout/staggered-list';
 
 const projectSpec = React.PropTypes.shape({
-  index: React.PropTypes.number.isRequired,
   id: React.PropTypes.number.isRequired,
   title: React.PropTypes.string.isRequired,
   description: React.PropTypes.string.isRequired,
@@ -22,9 +21,14 @@ class ProjectListItem extends React.Component {
     project: projectSpec,
   }
 
+  _handleShow = e => {
+    const {dispatch} = this.props;
+    dispatch(Actions.showProject(this.props.project.id));
+  }
+
   _handleEdit = (e) => {
     const {dispatch} = this.props;
-    dispatch(push(`/dashboard/projects/${this.props.project.id}/edit`));
+    dispatch(Actions.editProject(this.props.project.id));
   }
 
   _handleDelete = (e) => {
@@ -36,7 +40,7 @@ class ProjectListItem extends React.Component {
     return (
       <Card
         key={this.props.project.id} className="project-card" style={this.props.style} >
-        <div className="project-card__body">
+        <div className="project-card__body" onClick={this._handleShow}>
           <h3 className="project-card__title">{this.props.project.title}</h3>
           <span className="project-card__date">{this.props.project.date}</span>
           <p>{this.props.project.description}</p>

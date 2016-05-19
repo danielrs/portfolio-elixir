@@ -51,14 +51,16 @@ class ProjectEditView extends React.Component {
 
   render() {
     return (
-      <DocumentTitle title={'Editing ' + this.props.project.title}>
+      <DocumentTitle title={'Editing ' + (this.props.project.title || '...')}>
         <ModalLoader loaded={this.props.loaded} isOpen={this.state.isOpen}>
           <ModalHeader text={'Editing ' + this.props.project.title} showCloseButton onClose={this._handleClose} />
           <ModalBody>
             <ProjectForm ref="form" project={this.props.project} errors={this.props.errors} />
           </ModalBody>
           <ModalFooter>
-            <Button type="hollow-primary" onClick={this._handleSubmit}>Save</Button>
+            <Button type="hollow-primary" onClick={this._handleSubmit} disabled={this.props.submiting}>
+              {this.props.submiting ? 'Saving...' : 'Save'}
+            </Button>
             <Button type="link-cancel" onClick={this._handleShow}>Show</Button>
             <Button type="link-cancel" onClick={this._handleClose}>Close</Button>
           </ModalFooter>
@@ -71,6 +73,7 @@ class ProjectEditView extends React.Component {
 const mapStateToProps = function(state) {
   return {
     ...state.project.current,
+    submiting: state.project.submiting,
     errors: state.project.errors
   };
 };

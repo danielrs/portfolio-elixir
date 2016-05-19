@@ -18,6 +18,7 @@ const ProjecActions = {
 
   newProject: function(data) {
     return dispatch => {
+      dispatch({type: Constants.PROJECTS_SUBMITING});
       Request.post('/api/v1/projects', data)
       .then(response => {
         dispatch({
@@ -25,6 +26,7 @@ const ProjecActions = {
           project: response.data
         });
         dispatch(this.fetchProjects());
+        dispatch(push('/dashboard/projects'));
       })
       .catch(error => {
         error.response.json()
@@ -67,6 +69,7 @@ const ProjecActions = {
 
   updateProject: function(id, data) {
     return dispatch => {
+      dispatch({type: Constants.PROJECTS_SUBMITING});
       Request.patch(`/api/v1/projects/${id}`, data)
       .then(response => {
         dispatch(this.fetchProjects());
@@ -102,6 +105,13 @@ const ProjecActions = {
       .catch(error => {
         console.log(error);
       });
+    };
+  },
+
+  undoDelete: function(data) {
+    return dispatch => {
+      dispatch(this.newProject(data));
+      dispatch({type: Constants.PROJECTS_UNDO});
     };
   },
 

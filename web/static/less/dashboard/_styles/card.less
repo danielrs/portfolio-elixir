@@ -5,6 +5,11 @@
 
   &__body {
     padding: @magic-number;
+    cursor: pointer;
+
+    &:hover {
+      background: darken(@color-white, 2%);
+    }
 
     h1, h2, h3, h4 {
       font-family: "Lato", sans-serif;
@@ -28,7 +33,7 @@
 
   &__footer {
     padding: .5em;
-    background: @color-light-gray;
+    background: darken(@color-white, 2%);
     border-top: 1px solid @color-dark-gray;
     text-align: center;
   }

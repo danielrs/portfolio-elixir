@@ -2,7 +2,6 @@ import React from 'react';
 import {Link} from 'react-router';
 import {connect} from 'react-redux';
 import Navigation from '../../components/layout/navigation';
-import Container from '../../components/layout/container';
 import DocumentTitle from '../../components/layout/document-title';
 
 class MainLayoutView extends React.Component {
@@ -11,15 +10,15 @@ class MainLayoutView extends React.Component {
       <DocumentTitle title="Dashboard" suffix="">
         <div className="dashboard">
           <header role="heading">
-            <Container>
+            <div className="container">
               <h1><Link to="/dashboard">Dashboard</Link></h1>
               <Navigation />
-            </Container>
+            </div>
           </header>
           <main role="main">
-            <Container>
+            <div className="container">
               {this.props.children}
-            </Container>
+            </div>
           </main>
         </div>
       </DocumentTitle>

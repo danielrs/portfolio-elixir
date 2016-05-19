@@ -40,7 +40,9 @@ class ProjectNewView extends React.Component {
             <ProjectForm ref="form" errors={this.props.errors} />
           </ModalBody>
           <ModalFooter>
-            <Button type="hollow-primary" onClick={this._handleSubmit}>Create</Button>
+            <Button type="hollow-primary" onClick={this._handleSubmit} disabled={this.props.submiting}>
+              {this.props.submiting ? 'Creating...' : 'Create'}
+            </Button>
             <Button type="link-cancel" onClick={this._handleClose}>Close</Button>
           </ModalFooter>
         </Modal>
@@ -51,6 +53,7 @@ class ProjectNewView extends React.Component {
 
 const mapStateToProps = function(state) {
   return {
+    submiting: state.project.submiting,
     errors: state.project.errors
   };
 };
