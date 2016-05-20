@@ -17,7 +17,7 @@ class ProjectIndexView extends React.Component {
 
   render() {
     return (
-      <DocumentTitle title="Projects" component="ul">
+      <DocumentTitle title="Projects">
         <div className="header-content">
           <Button component={<Link to="/dashboard/projects/new"/>} type="hollow-primary" size="sm">
             <Glyph icon="plus" />

@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDocumenTitle from 'react-document-title';
 
 class DocumentTitle extends React.Component {
   static propTypes = {
@@ -12,14 +13,21 @@ class DocumentTitle extends React.Component {
     component: 'div'
   }
 
-  render() {
-    document.title = this.props.title + this.props.suffix;
+  _renderChildren() {
     if (React.Children.count(this.props.children) == 1)
       return React.Children.only(this.props.children);
     else if (React.Children.count(this.props.children) > 1)
       return React.createElement(this.props.component, {}, this.props.children);
     else
       return null;
+  }
+
+  render() {
+    return (
+      <ReactDocumenTitle title={this.props.title + this.props.suffix}>
+        {this._renderChildren()}
+      </ReactDocumenTitle>
+    );
   }
 }
 

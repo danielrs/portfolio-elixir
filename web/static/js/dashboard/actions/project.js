@@ -62,6 +62,7 @@ const ProjecActions = {
 
   editProject: function(id) {
     return dispatch => {
+      dispatch(this.errorReset());
       dispatch({type: Constants.CURRENT_PROJECT_EDIT});
       dispatch(push(`/dashboard/projects/${id}/edit`));
     };
