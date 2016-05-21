@@ -11,10 +11,12 @@ import Loader from '../../components/layout/loader';
 import ProjectForm from '../../components/project/form';
 import Collapse from 'react-collapse';
 import {presets} from 'react-motion';
+import ConfirmButton from '../../components/layout/confirm-button';
 
 class ProjectShowView extends React.Component {
   state = {
-    isOpen: false
+    isOpen: false,
+    changed: false
   }
 
   componentDidMount() {
@@ -39,6 +41,7 @@ class ProjectShowView extends React.Component {
   _handleEdit = (e) => {
     const {dispatch} = this.props;
     dispatch(Actions.editProject(this.props.params.id));
+    this.setState({changed: false});
   }
 
   _handleClose = (e) => {
@@ -72,6 +75,10 @@ class ProjectShowView extends React.Component {
     );
   }
 
+  _handleChange = e => {
+    this.setState({changed: true});
+  }
+
   _handleSave = e => {
     const {dispatch} = this.props;
     dispatch(Actions.updateProject(this.props.params.id, this.refs.form.getFormData()));
@@ -88,15 +95,23 @@ class ProjectShowView extends React.Component {
         <ModalHeader text={'Editing ' + this.props.project.title} showCloseButton onClose={this._handleClose} />
         <ModalBody>
           <Collapse isOpened={true}>
-            <ProjectForm ref="form" project={this.props.project} errors={this.props.errors} />
+            <ProjectForm ref="form" project={this.props.project} errors={this.props.errors} onChange={this._handleChange} />
           </Collapse>
         </ModalBody>
         <ModalFooter key={Math.random()}>
           <Button type="hollow-primary" onClick={this._handleSave} disabled={this.props.submiting}>
             {this.props.submiting ? 'Saving...' : 'Save'}
           </Button>
-          <Button type="link-cancel" onClick={this._handleShow}>Show</Button>
-          <Button type="link-cancel" onClick={this._handleClose}>Close</Button>
+          <ConfirmButton
+            component={<Button type="link-text">Show</Button>}
+            componentConfirm={<Button type="link-danger">Show without saving?</Button>}
+            mustConfirm={() => this.state.changed}
+            onConfirm={this._handleShow} />
+          <ConfirmButton
+            component={<Button type="link-cancel">Close</Button>}
+            componentConfirm={<Button type="link-danger">Close without saving?</Button>}
+            mustConfirm={() => this.state.changed}
+            onConfirm={this._handleClose} />
         </ModalFooter>
       </div>
     );
