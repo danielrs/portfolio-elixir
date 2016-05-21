@@ -102,16 +102,18 @@ class ProjectShowView extends React.Component {
           <Button type="hollow-primary" onClick={this._handleSave} disabled={this.props.submiting}>
             {this.props.submiting ? 'Saving...' : 'Save'}
           </Button>
-          <ConfirmButton
-            component={<Button type="link-text">Show</Button>}
-            componentConfirm={<Button type="link-danger">Show without saving?</Button>}
-            mustConfirm={() => this.state.changed}
-            onConfirm={this._handleShow} />
-          <ConfirmButton
-            component={<Button type="link-cancel">Close</Button>}
-            componentConfirm={<Button type="link-danger">Close without saving?</Button>}
-            mustConfirm={() => this.state.changed}
-            onConfirm={this._handleClose} />
+          <ConfirmButton mustConfirm={this.state.changed} onConfirm={this._handleShow}>
+            {confirming => confirming
+              ?  <Button type="link-danger">Show without saving?</Button>
+              : <Button type="link-text">Show</Button>
+            }
+          </ConfirmButton>
+          <ConfirmButton mustConfirm={this.state.changed} onConfirm={this._handleClose}>
+            {confirming => confirming
+              ? <Button type="link-danger">Close without saving?</Button>
+              : <Button type="link-cancel">Close</Button>
+            }
+          </ConfirmButton>
         </ModalFooter>
       </div>
     );

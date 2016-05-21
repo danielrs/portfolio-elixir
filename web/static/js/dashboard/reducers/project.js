@@ -34,6 +34,8 @@ export default function projectReducer(state = initialState, action) {
       return {...state, deleted: action.project};
     case Constants.PROJECTS_UNDO:
       return {...state, deleted: initialState.deleted};
+    case Constants.PROJECTS_UNDO_RESET:
+      return {...state, deleted: {}};
 
     case Constants.PROJECTS_ERROR:
       return {...state, errors: action.errors, submiting: false};

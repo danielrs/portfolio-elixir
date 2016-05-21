@@ -1,17 +1,20 @@
 import {Enum} from '../utils';
 
 const Constants = new Enum([
+  // Login
   'USER_SIGNED_IN',
   'USER_SIGNED_OUT',
   'USER_CURRENT_USER',
   'USER_ERROR',
 
+  // Projects
   'PROJECTS_FETCHING',
   'PROJECTS_RECEIVED',
   'PROJECTS_SUBMITING',
   'PROJECTS_NEW',
   'PROJECTS_DELETE',
   'PROJECTS_UNDO',
+  'PROJECTS_UNDO_RESET',
 
   'CURRENT_PROJECT_FETCHING',
   'CURRENT_PROJECT_RECEIVED',

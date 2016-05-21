@@ -24,8 +24,8 @@ class ProjectIndexView extends React.Component {
             {' '}
             Create project
           </Button>
+          <ProjectDeleteUndo />
         </div>
-        <ProjectDeleteUndo />
         <Loader loaded={this.props.loaded}>
           <ProjectList dispatch={this.props.dispatch} projects={this.props.projects} />
         </Loader>

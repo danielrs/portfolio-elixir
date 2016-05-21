@@ -111,8 +111,14 @@ const ProjecActions = {
 
   undoDelete: function(data) {
     return dispatch => {
-      dispatch(this.newProject(data));
       dispatch({type: Constants.PROJECTS_UNDO});
+      dispatch(this.newProject(data));
+    };
+  },
+
+  undoReset: function() {
+    return dispatch => {
+      dispatch({type: Constants.PROJECTS_UNDO_RESET});
     };
   },
 

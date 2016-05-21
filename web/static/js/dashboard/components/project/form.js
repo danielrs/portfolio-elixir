@@ -24,7 +24,7 @@ class ProjectForm extends React.Component {
   }
 
   // We don't use state for date since we need to be updated immediately (state updates after render step)
-  date = dateToISO8601(new Date())
+  date = this.props.project.date || dateToISO8601(new Date())
 
   getFormData() {
     const data = {
