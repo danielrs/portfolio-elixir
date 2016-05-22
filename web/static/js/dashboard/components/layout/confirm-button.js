@@ -3,7 +3,7 @@ import React from 'react';
 class ConfirmButton extends React.Component {
   static propTypes = {
     component: React.PropTypes.node,
-    mustConfirm: React.PropTypes.bool.isRequired,
+    mustConfirm: React.PropTypes.func.isRequired,
     timeout: React.PropTypes.number.isRequired,
     onConfirm: React.PropTypes.func,
     children: React.PropTypes.func.isRequired
@@ -11,7 +11,7 @@ class ConfirmButton extends React.Component {
 
   static defaultProps = {
     component: 'span',
-    mustConfirm: true,
+    mustConfirm: () => true,
     timeout: 2000,
     onConfirm: _ => undefined
   }
@@ -26,7 +26,7 @@ class ConfirmButton extends React.Component {
   }
 
   _handleClick = e => {
-    if (!this.state.clicked && this.props.mustConfirm) {
+    if (!this.state.clicked && this.props.mustConfirm()) {
       this.setState({
         clicked: true,
         timeoutId: setTimeout(() => this.setState({clicked: false}), this.props.timeout)

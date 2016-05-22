@@ -1,22 +1,22 @@
 import React from 'react';
-import {Link} from 'react-router';
 import {connect} from 'react-redux';
 import {push} from 'react-router-redux';
+import Collapse from 'react-collapse';
+import {presets} from 'react-motion';
+
+import DocumentTitle from '../../components/layout/document-title';
+import ModalLoader from '../../components/layout/modal-loader';
+import ConfirmButton from '../../components/layout/confirm-button';
+import ProjectForm from '../../components/project/form';
+
 import Constants from '../../constants';
 import Actions from '../../actions/project';
 import {Button, ModalHeader, ModalBody, ModalFooter} from 'elemental';
-import ModalLoader from '../../components/layout/modal-loader';
-import DocumentTitle from '../../components/layout/document-title';
-import Loader from '../../components/layout/loader';
-import ProjectForm from '../../components/project/form';
-import Collapse from 'react-collapse';
-import {presets} from 'react-motion';
-import ConfirmButton from '../../components/layout/confirm-button';
 
 class ProjectShowView extends React.Component {
   state = {
     isOpen: false,
-    changed: false
+    changed:  false
   }
 
   componentDidMount() {
@@ -26,6 +26,11 @@ class ProjectShowView extends React.Component {
 
   componentWillUnmount() {
     document.body.style.overflow = null;
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    // Not render if 'changed ' changed to true
+    return !(!this.state.changed && nextState.changed);
   }
 
   componentDidUpdate(prevProps) {
@@ -38,10 +43,10 @@ class ProjectShowView extends React.Component {
     dispatch(Actions.fetchProject(this.props.params.id));
   }
 
+  // Show Modal
   _handleEdit = (e) => {
     const {dispatch} = this.props;
     dispatch(Actions.editProject(this.props.params.id));
-    this.setState({changed: false});
   }
 
   _handleClose = (e) => {
@@ -75,18 +80,22 @@ class ProjectShowView extends React.Component {
     );
   }
 
+  // Edit Modal
   _handleChange = e => {
+    this.changed = true;
     this.setState({changed: true});
   }
 
   _handleSave = e => {
     const {dispatch} = this.props;
     dispatch(Actions.updateProject(this.props.params.id, this.refs.form.getFormData()));
+    this.setState({changed: false});
   }
 
   _handleShow = e => {
     const {dispatch} = this.props;
     dispatch(Actions.showProject(this.props.params.id));
+    this.setState({changed: false});
   }
 
   _renderEdit() {
@@ -102,13 +111,13 @@ class ProjectShowView extends React.Component {
           <Button type="hollow-primary" onClick={this._handleSave} disabled={this.props.submiting}>
             {this.props.submiting ? 'Saving...' : 'Save'}
           </Button>
-          <ConfirmButton mustConfirm={this.state.changed} onConfirm={this._handleShow}>
+          <ConfirmButton mustConfirm={() => this.state.changed} onConfirm={this._handleShow}>
             {confirming => confirming
               ?  <Button type="link-danger">Show without saving?</Button>
               : <Button type="link-text">Show</Button>
             }
           </ConfirmButton>
-          <ConfirmButton mustConfirm={this.state.changed} onConfirm={this._handleClose}>
+          <ConfirmButton mustConfirm={() => this.state.changed} onConfirm={this._handleClose}>
             {confirming => confirming
               ? <Button type="link-danger">Close without saving?</Button>
               : <Button type="link-cancel">Close</Button>
@@ -119,6 +128,7 @@ class ProjectShowView extends React.Component {
     );
   }
 
+  // Render show or edit modal
   render() {
     return (
       <DocumentTitle title={(this.props.children ? 'Editing ' : '') + (this.props.project.title || '...')}>

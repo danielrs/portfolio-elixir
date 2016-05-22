@@ -93,7 +93,7 @@ class ProjectForm extends React.Component {
           {renderErrorsFor(this.props.errors, 'content')}
         </FormField>
         <FormField className={this.props.errors.date ? 'is-invalid' : ''}>
-          <DatePicker ref="date" defaultDate={this.props.project.date || this.date} onChange={this._handleDateChange} />
+          <DatePicker ref="date" defaultDate={this.date} onChange={this._handleDateChange} />
           {renderErrorsFor(this.props.errors, 'date')}
         </FormField>
       </Form>
