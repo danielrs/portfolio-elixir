@@ -7,7 +7,7 @@ import Constants from '../../constants';
 import Actions from '../../actions/project';
 import Loader from '../../components/layout/loader';
 import DocumentTitle from '../../components/layout/document-title';
-import Filter from '../../components/layout/filter';
+import FilterForm from '../../components/layout/filter-form';
 import ProjectDeleteUndo from '../../components/project/project-delete-undo.js';
 import ProjectList from '../../components/project/project-list';
 
@@ -20,23 +20,17 @@ const sortOptions = [
 ];
 
 class ProjectIndexView extends React.Component {
-  state = {
-    filter: {}
-  }
+  _handleChange = filter => {}
 
-  componentDidMount() {
+  _handleFilterChange = filter => {
     const {dispatch} = this.props;
-    dispatch(Actions.fetchProjects(this.state.filter));
-  }
-
-  _handleChange = filter => {
-    this.setState({filter: filter});
+    dispatch(Actions.filter(filter));
   }
 
   _handleSubmit = e => {
     e.preventDefault();
     const {dispatch} = this.props;
-    dispatch(Actions.fetchProjects(this.state.filter));
+    dispatch(Actions.filter(this.props.filter));
   }
 
   render() {
@@ -48,7 +42,12 @@ class ProjectIndexView extends React.Component {
             {' '}
             Create project
           </Button>
-          <Filter sortOptions={sortOptions} onChange={this._handleChange} onSubmit={this._handleSubmit} />
+          <FilterForm
+            sortOptions={sortOptions}
+            onLoad={this._handleFilterChange}
+            onChange={this._handleChange}
+            onFilterChange={this._handleFilterChange}
+            onSubmit={this._handleSubmit} noSearch noSubmit />
           <ProjectDeleteUndo />
         </div>
         <Loader loaded={this.props.loaded}>

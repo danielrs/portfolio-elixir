@@ -32,12 +32,10 @@ function parseJSON(response) {
 export default {
   get: function(url, params = {}) {
     const queryString = Object.keys(params).reduce((acc, key) => {
-      return acc.concat(
-        ''
-        + encodeURIComponent(key)
-        + '='
-        + encodeURIComponent(params[key])
-      );
+      const encodedKey = encodeURIComponent(key);
+      const encodedValue = encodeURIComponent(params[key]);
+      if (encodedValue.length == 0) return acc;
+      else return acc.concat('' + encodedKey + '=' + encodedValue);
     }, []).join('&');
 
     console.log(queryString);

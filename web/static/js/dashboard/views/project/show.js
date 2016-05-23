@@ -1,7 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {push} from 'react-router-redux';
-import Collapse from 'react-collapse';
 import {presets} from 'react-motion';
 
 import DocumentTitle from '../../components/layout/document-title';
@@ -59,18 +58,16 @@ class ProjectShowView extends React.Component {
       <div>
         <ModalHeader text={'Showing ' + this.props.project.title} showCloseButton onClose={this._handleClose} />
         <ModalBody className="project">
-          <Collapse isOpened={true}>
-            <h1 className="project__title">
-              {this.props.project.title + ' '}
-              <span className="project__date">{this.props.project.date}</span>
-            </h1>
-            <div className="project__description">{this.props.project.description}</div>
-            <a className="project__homepage" href={this.props.project.homepage}>{this.props.project.homepage}</a>
-            {this.props.project.content
-              ? <div className="project__content">{this.props.project.content}</div>
-              : ''
-            }
-          </Collapse>
+          <h1 className="project__title">
+            {this.props.project.title + ' '}
+            <span className="project__date">{this.props.project.date}</span>
+          </h1>
+          <div className="project__description">{this.props.project.description}</div>
+          <a className="project__homepage" href={this.props.project.homepage}>{this.props.project.homepage}</a>
+          {this.props.project.content
+            ? <div className="project__content">{this.props.project.content}</div>
+            : ''
+          }
         </ModalBody>
         <ModalFooter key={Math.random()}>
           <Button type="hollow-primary" onClick={this._handleEdit}>Edit</Button>
@@ -103,9 +100,7 @@ class ProjectShowView extends React.Component {
       <div>
         <ModalHeader text={'Editing ' + this.props.project.title} showCloseButton onClose={this._handleClose} />
         <ModalBody>
-          <Collapse isOpened={true}>
-            <ProjectForm ref="form" project={this.props.project} errors={this.props.errors} onChange={this._handleChange} />
-          </Collapse>
+          <ProjectForm ref="form" project={this.props.project} errors={this.props.errors} onChange={this._handleChange} />
         </ModalBody>
         <ModalFooter key={Math.random()}>
           <Button type="hollow-primary" onClick={this._handleSave} disabled={this.props.submiting}>

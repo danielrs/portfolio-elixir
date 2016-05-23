@@ -1,4 +1,5 @@
 import React from 'react';
+import Collapse from 'react-collapse';
 import {Modal, ModalBody} from 'elemental';
 import Loader from './loader';
 
@@ -14,9 +15,11 @@ class ModalLoader extends React.Component {
   _renderLoading() {
     return (
       <Modal {...this.props}>
-        <ModalBody>
-          <Loader loaded={this.props.loaded} />
-        </ModalBody>
+        <Collapse isOpened={true}>
+          <ModalBody>
+            <Loader loaded={this.props.loaded} />
+          </ModalBody>
+        </Collapse>
       </Modal>
     );
   }
@@ -24,7 +27,9 @@ class ModalLoader extends React.Component {
   _renderLoaded() {
     return (
       <Modal {...this.props}>
-        {this.props.children}
+        <Collapse isOpened={true}>
+          {this.props.children}
+        </Collapse>
       </Modal>
     );
   }

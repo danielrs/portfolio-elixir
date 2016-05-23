@@ -3,10 +3,10 @@ import Request from '../utils/http-request';
 import {push} from 'react-router-redux';
 
 const ProjecActions = {
-  fetchProjects: function(filter) {
-    return dispatch => {
+  fetchProjects: function() {
+    return (dispatch, getState) => {
       dispatch({type: Constants.PROJECTS_FETCHING});
-      Request.get('/api/v1/projects', filter)
+      Request.get('/api/v1/projects', getState().project.filter)
       .then(function(response) {
         dispatch({type: Constants.PROJECTS_RECEIVED, projects: response.data});
       })
@@ -117,6 +117,13 @@ const ProjecActions = {
   undoReset: function() {
     return dispatch => {
       dispatch({type: Constants.PROJECTS_UNDO_RESET});
+    };
+  },
+
+  filter: function(filter) {
+    return dispatch => {
+      dispatch({type: Constants.PROJECTS_FILTER, filter: filter});
+      dispatch(this.fetchProjects());
     };
   },
 

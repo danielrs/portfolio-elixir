@@ -2,6 +2,13 @@ import Constants from '../constants';
 
 const initialState = {
   projects: [],
+
+  filter: {
+    sort_by: 'date',
+    order: 'desc',
+    search: ''
+  },
+
   loaded: false,
   submiting: false,
 
@@ -36,6 +43,8 @@ export default function projectReducer(state = initialState, action) {
       return {...state, deleted: initialState.deleted};
     case Constants.PROJECTS_UNDO_RESET:
       return {...state, deleted: {}};
+    case Constants.PROJECTS_FILTER:
+      return {...state, filter: action.filter};
 
     case Constants.PROJECTS_ERROR:
       return {...state, errors: action.errors, submiting: false};
