@@ -29,7 +29,7 @@ class FilterForm extends React.Component {
   }
 
   _handleSortChange = value => {
-    const newState = {...this.state, sortBy: value};
+    const newState = {...this.state, sort_by: value};
     this.setState(newState);
     this.props.onChange(newState);
   }
