@@ -1,18 +1,42 @@
 import React from 'react';
 import {Link} from 'react-router';
 import {connect} from 'react-redux';
+import {Button, Dropdown, Glyph, Table, Spinner} from 'elemental';
+
 import Constants from '../../constants';
 import Actions from '../../actions/project';
-import {Button, Dropdown, Glyph, Table, Spinner} from 'elemental';
-import ProjectList from '../../components/project/project-list';
-import ProjectDeleteUndo from '../../components/project/project-delete-undo.js';
 import Loader from '../../components/layout/loader';
 import DocumentTitle from '../../components/layout/document-title';
+import Filter from '../../components/layout/filter';
+import ProjectDeleteUndo from '../../components/project/project-delete-undo.js';
+import ProjectList from '../../components/project/project-list';
+
+const sortOptions = [
+  {label: 'Date', value: 'date'},
+  {label: 'Title', value: 'title'},
+  {label: 'Description', value: 'description'},
+  {label: 'Homepage', value: 'homepage'},
+  {label: 'Content', value: 'content'}
+];
 
 class ProjectIndexView extends React.Component {
+  state = {
+    filter: {}
+  }
+
   componentDidMount() {
     const {dispatch} = this.props;
-    dispatch(Actions.fetchProjects());
+    dispatch(Actions.fetchProjects(this.state.filter));
+  }
+
+  _handleChange = filter => {
+    this.setState({filter: filter});
+  }
+
+  _handleSubmit = e => {
+    e.preventDefault();
+    const {dispatch} = this.props;
+    dispatch(Actions.fetchProjects(this.state.filter));
   }
 
   render() {
@@ -24,6 +48,7 @@ class ProjectIndexView extends React.Component {
             {' '}
             Create project
           </Button>
+          <Filter sortOptions={sortOptions} onChange={this._handleChange} onSubmit={this._handleSubmit} />
           <ProjectDeleteUndo />
         </div>
         <Loader loaded={this.props.loaded}>

@@ -2,6 +2,9 @@ defmodule Portfolio.Project do
   use Portfolio.Web, :model
   alias Portfolio.Project
 
+  @behaviour Portfolio.Filterable
+  def fields, do: ~w(date title description homepage)
+
   schema "projects" do
     field :title, :string
     field :description, :string
@@ -28,8 +31,18 @@ defmodule Portfolio.Project do
     |> update_change(:date, &cast_date(&1))
   end
 
-  def order_by_date(query \\ %Project{}) do
+  def order_by(query \\ %Project{}, params) do
+    case params.order do
+      "desc" ->
+        query |> Ecto.Query.order_by(desc: ^String.to_atom(params.sort_by))
+      _ ->
+        query |> Ecto.Query.order_by(asc: ^String.to_atom(params.sort_by))
+    end
+  end
+
+  def search_by(query \\ %Project{}, params) do
+    search_string = "%" <> params.search <> "%"
     from p in query,
-    order_by: [desc: p.date]
+    where: ilike(p.title, ^search_string) or ilike(p.description, ^search_string)
   end
 end

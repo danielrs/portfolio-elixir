@@ -3,35 +3,9 @@ import {connect} from 'react-redux';
 import Constants from '../../constants';
 import Actions from '../../actions/session';
 import {Button, Form, FormField, FormIconField, FormInput, Modal, ModalHeader, ModalBody, ModalFooter} from 'elemental';
-import {setDocumentTitle} from '../../utils';
+import DocumentTitle from '../../components/layout/document-title';
 
 class SessionNewView extends React.Component {
-  componentDidMount() {
-    setDocumentTitle('Login');
-  }
-
-  render() {
-    return (
-      <Modal isOpen={true} width={420} className="login-modal">
-        <ModalHeader text="Login" />
-        <ModalBody>
-          <Form>
-            <FormField>
-              {this._renderError()}
-            </FormField>
-            <FormIconField iconKey="mail" iconFill="default">
-              <FormInput ref="email" type="text" placeholder="Email" size="lg" autofocus />
-            </FormIconField>
-            <FormIconField iconKey="lock" iconFill="default">
-              <FormInput ref="password" type="password" placeholder="Password" size="lg" />
-            </FormIconField>
-            <Button type="primary" onClick={this._handleSubmit} width="100%">Login</Button>
-          </Form>
-        </ModalBody>
-      </Modal>
-    );
-  }
-
   _handleSubmit = (e) => {
     e.preventDefault();
     const {dispatch} = this.props;
@@ -45,6 +19,30 @@ class SessionNewView extends React.Component {
       <div className="error">
         {error}
       </div>
+    );
+  }
+
+  render() {
+    return (
+      <DocumentTitle title="Login">
+        <Modal isOpen={true} width={420} className="login-modal">
+          <ModalHeader text="Login" />
+          <ModalBody>
+            <Form>
+              <FormField>
+                {this._renderError()}
+              </FormField>
+              <FormIconField iconKey="mail" iconFill="default">
+                <FormInput ref="email" type="text" placeholder="Email" size="lg" autofocus />
+              </FormIconField>
+              <FormIconField iconKey="lock" iconFill="default">
+                <FormInput ref="password" type="password" placeholder="Password" size="lg" />
+              </FormIconField>
+              <Button type="primary" onClick={this._handleSubmit} width="100%">Login</Button>
+            </Form>
+          </ModalBody>
+        </Modal>
+      </DocumentTitle>
     );
   }
 }

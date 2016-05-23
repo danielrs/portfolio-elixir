@@ -8,8 +8,7 @@ defmodule Portfolio.ProjectShowcaseController do
 
   def index(conn, _params) do
     user = Repo.get_by(User, email: "ers.daniel@gmail.com")
-    projects = user && assoc(user, :projects) |> Project.order_by_date |> Repo.all || []
-
+    projects = user && assoc(user, :projects) |> Project.order_by(%{sort: "date", order: "desc"}) |> Repo.all
     render conn, "index.html", projects: projects
   end
 end

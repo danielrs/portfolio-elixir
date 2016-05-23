@@ -30,12 +30,23 @@ function parseJSON(response) {
 }
 
 export default {
-  get: function(url) {
+  get: function(url, params = {}) {
+    const queryString = Object.keys(params).reduce((acc, key) => {
+      return acc.concat(
+        ''
+        + encodeURIComponent(key)
+        + '='
+        + encodeURIComponent(params[key])
+      );
+    }, []).join('&');
+
+    console.log(queryString);
+
     const config = {
       method: 'GET',
       headers: buildHeaders()
     }
-    return fetch(url, config)
+    return fetch(url + '?' + queryString, config)
     .then(checkStatus)
     .then(parseJSON);
   },

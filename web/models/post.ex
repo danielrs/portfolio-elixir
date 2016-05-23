@@ -2,6 +2,9 @@ defmodule Portfolio.Post do
   use Portfolio.Web, :model
   alias Portfolio.Post
 
+  @behaviour Portfolio.Filterable
+  def fields, do: ~w(title slug date)
+
   schema "posts" do
     field :title, :string
     field :slug, :string

@@ -3,6 +3,7 @@ defmodule Portfolio.PostController do
 
   alias Portfolio.Post
 
+  plug Portfolio.Plug.Filter, Post when action in [:index]
   plug :scrub_params, "post" when action in [:create, :update]
 
   def index(conn, _params) do

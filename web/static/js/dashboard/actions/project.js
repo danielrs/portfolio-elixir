@@ -3,16 +3,14 @@ import Request from '../utils/http-request';
 import {push} from 'react-router-redux';
 
 const ProjecActions = {
-  fetchProjects: function() {
+  fetchProjects: function(filter) {
     return dispatch => {
       dispatch({type: Constants.PROJECTS_FETCHING});
-      setTimeout(() => {
-        Request.get('/api/v1/projects')
-        .then(function(response) {
-          dispatch({type: Constants.PROJECTS_RECEIVED, projects: response.data});
-        })
-        .catch(function(error) {});
-      }, 0);
+      Request.get('/api/v1/projects', filter)
+      .then(function(response) {
+        dispatch({type: Constants.PROJECTS_RECEIVED, projects: response.data});
+      })
+      .catch(function(error) {});
     };
   },
 

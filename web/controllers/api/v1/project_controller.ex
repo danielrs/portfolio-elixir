@@ -2,12 +2,14 @@ defmodule Portfolio.ProjectController do
   use Portfolio.Web, :controller
 
   alias Portfolio.Project
+  require Logger
 
+  plug Portfolio.Plug.Filter, Project when action in [:index]
   plug :scrub_params, "project" when action in [:create, :update]
 
-  def index(conn, _params) do
+  def index(conn, params) do
     user = Guardian.Plug.current_resource(conn)
-    projects = assoc(user, :projects) |> Project.order_by_date |> Repo.all
+    projects = assoc(user, :projects) |> Project.order_by(params) |> Project.search_by(params) |> Repo.all
     render(conn, "index.json", projects: projects)
   end
 

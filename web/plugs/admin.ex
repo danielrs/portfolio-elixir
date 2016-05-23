@@ -6,5 +6,4 @@ defmodule Portfolio.Plug.Admin do
   def call(conn, opts) do
     conn |> assign(:admin, true)
   end
-
 end

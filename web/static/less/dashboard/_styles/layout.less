@@ -55,9 +55,24 @@ header[role=heading] {
 }
 
 .header-content {
+  .clearfix;
   margin-bottom: @magic-number;
+
   & > * {
-    vertical-align: middle;
+    display: block;
+  }
+
+  @media (min-width: @break-m) {
+    & > * {
+      display: inline-block;
+      float: left;
+      vertical-align: middle;
+    }
+
+    .search-form {
+      float: right;
+      .FormField { margin-bottom: 0; }
+    }
   }
 }
 
