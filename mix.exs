@@ -18,8 +18,8 @@ defmodule Portfolio.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [mod: {Portfolio, []},
-     applications: [:phoenix, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex, :comeonin]]
+     applications: [:phoenix, :phoenix_ecto, :phoenix_html, :postgrex, :gettext, :cowboy, :logger,
+                    :comeonin, :guardian, :mailgun, :earmark]]
   end
 
   # Specifies which paths to compile per environment.
@@ -31,16 +31,17 @@ defmodule Portfolio.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [{:phoenix, "~> 1.1.4"},
-     {:postgrex, ">= 0.0.0"},
      {:phoenix_ecto, "~> 2.0"},
      {:phoenix_html, "~> 2.4"},
      {:phoenix_live_reload, "~> 1.0", only: :dev},
+     {:postgrex, ">= 0.0.0"},
      {:gettext, "~> 0.9"},
      {:cowboy, "~> 1.0"},
      {:comeonin, "~> 2.4"},
      {:guardian, "~> 0.10.0"},
      {:mailgun, "~> 0.1.2"},
-     {:earmark, "~> 0.2.1"}]
+     {:earmark, "~> 0.2.1"},
+     {:exrm, "~> 0.18.1"}]
   end
 
   # Aliases are shortcut or tasks specific to the current project.

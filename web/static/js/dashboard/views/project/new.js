@@ -22,7 +22,7 @@ class ProjectNewView extends React.Component {
   _handleSubmit = (e) => {
     e.preventDefault();
     const {dispatch} = this.props;
-    dispatch(Actions.newProject(this.refs.form.getFormData()));
+    dispatch(Actions.createProject(this.refs.form.getFormData()));
   }
 
   _handleClose = (e) => {
@@ -33,9 +33,9 @@ class ProjectNewView extends React.Component {
 
   render() {
     return (
-      <DocumentTitle title="Create project">
+      <DocumentTitle title="New project">
         <Modal isOpen={this.state.isOpen}>
-          <ModalHeader text="Create project" showCloseButton onClose={this._handleCancel}/>
+          <ModalHeader text="New project" showCloseButton onClose={this._handleCancel}/>
           <ModalBody>
             <ProjectForm ref="form" errors={this.props.errors} />
           </ModalBody>

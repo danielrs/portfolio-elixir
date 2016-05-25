@@ -1,5 +1,4 @@
 import React from 'react';
-import {Link} from 'react-router';
 import {connect} from 'react-redux';
 import {Button, Dropdown, Glyph, Table, Spinner} from 'elemental';
 
@@ -20,14 +19,19 @@ const sortOptions = [
 ];
 
 class ProjectIndexView extends React.Component {
+  _handleNewProjectClick = () => {
+    const {dispatch} = this.props;
+    dispatch(Actions.newProject());
+  }
+
   _handleChange = filter => {}
 
   _handleFilterChange = filter => {
     const {dispatch} = this.props;
-    dispatch(Actions.filter(filter));
+    dispatch(Actions.filterProjects(filter));
   }
 
-  _handleSubmit = e => {
+  _handleFilterSubmit = e => {
     e.preventDefault();
     const {dispatch} = this.props;
     dispatch(Actions.filter(this.props.filter));
@@ -37,17 +41,17 @@ class ProjectIndexView extends React.Component {
     return (
       <DocumentTitle title="Projects">
         <div className="header-content">
-          <Button component={<Link to="/dashboard/projects/new"/>} type="hollow-primary" size="sm">
+          <Button type="hollow-primary" size="sm" onClick={this._handleNewProjectClick}>
             <Glyph icon="plus" />
             {' '}
-            Create project
+            New project
           </Button>
           <FilterForm
             sortOptions={sortOptions}
             onLoad={this._handleFilterChange}
             onChange={this._handleChange}
             onFilterChange={this._handleFilterChange}
-            onSubmit={this._handleSubmit} noSearch noSubmit />
+            onSubmit={this._handleFilterSubmit} noSearch noSubmit />
           <ProjectDeleteUndo />
         </div>
         <Loader loaded={this.props.loaded}>

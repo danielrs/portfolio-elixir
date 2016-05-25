@@ -1,5 +1,14 @@
 import fetch from 'isomorphic-fetch';
 
+function encodeQueryString(params) {
+  return Object.keys(params).reduce((acc, key) => {
+    const encodedKey = encodeURIComponent(key);
+    const encodedValue = encodeURIComponent(params[key]);
+    if (encodedValue.length == 0) return acc;
+    else return acc.concat('' + encodedKey + '=' + encodedValue);
+  }, []).join('&');
+}
+
 const headers = {
   'Accept': 'application/json',
   'Content-Type': 'application/json'
@@ -25,26 +34,18 @@ function checkStatus(response) {
   }
 }
 
+
 function parseJSON(response) {
   return response.status != 204 ? response.json() : response;
 }
 
 export default {
   get: function(url, params = {}) {
-    const queryString = Object.keys(params).reduce((acc, key) => {
-      const encodedKey = encodeURIComponent(key);
-      const encodedValue = encodeURIComponent(params[key]);
-      if (encodedValue.length == 0) return acc;
-      else return acc.concat('' + encodedKey + '=' + encodedValue);
-    }, []).join('&');
-
-    console.log(queryString);
-
     const config = {
       method: 'GET',
       headers: buildHeaders()
     }
-    return fetch(url + '?' + queryString, config)
+    return fetch(url + '?' + encodeQueryString(params), config)
     .then(checkStatus)
     .then(parseJSON);
   },
