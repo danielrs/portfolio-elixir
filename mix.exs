@@ -19,7 +19,7 @@ defmodule Portfolio.Mixfile do
   def application do
     [mod: {Portfolio, []},
      applications: [:phoenix, :phoenix_ecto, :phoenix_html, :postgrex, :gettext, :cowboy, :logger,
-                    :comeonin, :guardian, :mailgun, :earmark]]
+                    :comeonin]]
   end
 
   # Specifies which paths to compile per environment.

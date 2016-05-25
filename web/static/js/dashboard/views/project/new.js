@@ -1,11 +1,11 @@
 import React from 'react';
-import {Link} from 'react-router';
 import {push} from 'react-router-redux';
 import {connect} from 'react-redux';
+import {Button, Modal, ModalHeader, ModalBody, ModalFooter} from 'elemental';
+
 import Constants from '../../constants';
 import Actions from '../../actions/project';
 import ProjectForm from '../../components/project/form';
-import {Button, Modal, ModalHeader, ModalBody, ModalFooter} from 'elemental';
 import DocumentTitle from '../../components/layout/document-title';
 
 class ProjectNewView extends React.Component {
