@@ -16,7 +16,7 @@ config :portfolio, Portfolio.Endpoint,
   url: [scheme: "https", host: "blooming-headland-10991.herokuapp.com", port: 443],
   force_ssl: [rewrite_on: [:x_forwarded_proto]],
   cache_static_manifest: "priv/static/manifest.json",
-  secrey_key_base: System.get_env('SECRET_KEY_BASE')
+  secrey_key_base: System.get_env("SECRET_KEY_BASE")
 
 # Do not print debug messages in production
 config :logger, level: :info
