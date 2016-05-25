@@ -22,7 +22,6 @@ config :logger, :console,
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env}.exs"
-import_config "config.secret.exs"
 
 # Configure phoenix generators
 config :phoenix, :generators,
@@ -37,3 +36,10 @@ config :guardian, Guardian,
   verify_issuer: true,
   secret_key: "lksdjowiurowieurlkjsdlwwer",
   serializer: Portfolio.GuardianSerializer
+
+# Mailgun configuration
+config :portfolio,
+  mailgun_domain: System.get_env("MAILGUN_DOMAIN"),
+  mailgun_key: System.get_env("MAILGUN_KEY")
+
+# import_config "config.secret.exs"
