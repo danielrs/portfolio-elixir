@@ -35,7 +35,7 @@ class ProjectNewView extends React.Component {
     return (
       <DocumentTitle title="New project">
         <Modal isOpen={this.state.isOpen}>
-          <ModalHeader text="New project" showCloseButton onClose={this._handleCancel}/>
+          <ModalHeader text="New project" showCloseButton onClose={this._handleClose}/>
           <ModalBody>
             <ProjectForm ref="form" errors={this.props.errors} />
           </ModalBody>

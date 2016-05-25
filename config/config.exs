@@ -37,7 +37,7 @@ config :guardian, Guardian,
   secret_key: "lksdjowiurowieurlkjsdlwwer",
   serializer: Portfolio.GuardianSerializer
 
-# Mailgun configuration
+# Other user facing configuration
 config :portfolio,
   mailgun_domain: System.get_env("MAILGUN_DOMAIN"),
   mailgun_key: System.get_env("MAILGUN_KEY")
