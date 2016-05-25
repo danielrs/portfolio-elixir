@@ -13,12 +13,20 @@ use Mix.Config
 # which you typically run after static files are built.
 config :portfolio, Portfolio.Endpoint,
   http: [port: {:system, "PORT"}],
-  url: [host: "example.com", port: 80],
+  url: [scheme: "https", host: "blooming-headland-10991.herokuapp.com", port: 443],
+  force_ssl: [rewrite_on: [:x_forwarded_proto]],
   cache_static_manifest: "priv/static/manifest.json",
-  server: true
+  secrey_key_base: System.get_env('SECRET_KEY_BASE')
 
 # Do not print debug messages in production
 config :logger, level: :info
+
+# Configure database
+config :portfolio, Portfolio.Repo,
+  adapter: Ecto.Adapters.Postgres,
+  url: System.get_env("DATABASE_URL"),
+  pool_size: 20,
+  ssl: true
 
 # ## SSL Support
 #
@@ -63,4 +71,4 @@ config :logger, level: :info
 
 # Finally import the config/prod.secret.exs
 # which should be versioned separately.
-import_config "prod.secret.exs"
+# import_config "prod.secret.exs"
