@@ -1,0 +1,20 @@
+<section class="setup-section">
+  <div class="container">
+    <h1>Welcome!</h1>
+    <p>Looks like there isn't any admin account set up, would you like to do it now? This would let you create projects, blog posts and more.</p>
+    <h2>Start by filling up your credentials</h2>
+    <%= form_for @changeset, setup_path(@conn, :create), [id: "setup-form"], fn f -> %>
+      <fieldset class="form-stack">
+        <%= text_input f, :first_name, placeholder: "First name" %>
+        <%= text_input f, :last_name, placeholder: "Last name" %>
+        <%= email_input f, :email, placeholder: "Email" %>
+        <%= password_input f, :password, placeholder: "Password" %>
+        <%= password_input f, :password_confirmation, placeholder: "Confirm password" %>
+      </fieldset>
+      <p>After submitting the form the admin account will be automatically created, but <strong>be careful</strong>; once the account had been created you won't be able to access this setup ever again.</p>
+      <fieldset class="form-center">
+        <%= submit "Create admin" %>
+      </fieldset>
+    <% end %>
+  </div>
+</section>

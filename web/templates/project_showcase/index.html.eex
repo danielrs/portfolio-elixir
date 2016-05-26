@@ -1,6 +1,10 @@
 <section class="main-section">
   <div class="container">
     <h2>Projects</h2>
-    <%= render "project-list.html", projects: @projects %>
+    <%= if Enum.count(@projects) > 0 do %>
+      <%= render "project-list.html", assigns %>
+    <% else %>
+      <p>No projects to list</p>
+    <% end %>
   </div>
 </section>

@@ -1,5 +1,6 @@
 defmodule Portfolio.Router do
   use Portfolio.Web, :router
+  import Portfolio.Plug.Setup
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -12,6 +13,11 @@ defmodule Portfolio.Router do
   pipeline :browser_user do
     plug Portfolio.Plug.RequestPath
     plug Portfolio.Plug.Social
+    plug :ensure_setup
+  end
+
+  pipeline :browser_setup do
+    plug :ensure_not_setup
   end
 
   pipeline :api do
@@ -22,8 +28,10 @@ defmodule Portfolio.Router do
 
   pipeline :api_auth do
     plug Guardian.Plug.EnsureAuthenticated, handler: Portfolio.SessionController
+    plug Portfolio.Plug.EnsureUserLoaded
   end
 
+  # User scope
   scope "/", Portfolio do
     pipe_through [:browser, :browser_user]
 
@@ -32,10 +40,18 @@ defmodule Portfolio.Router do
     get "/contact", ContactController, :index
     post "/contact", ContactController, :create
     get "/blog", BlogController, :index
+
     get "/dashboard*path", DashboardController, :index
   end
 
-  # Other scopes may use custom stacks.
+  # Setup scope
+  scope "/", Portfolio do
+    pipe_through [:browser, :browser_setup]
+    get "/setup", SetupController, :index
+    post "/setup", SetupController, :create
+  end
+
+  # Api scope
   scope "/api", Portfolio do
     pipe_through :api
 

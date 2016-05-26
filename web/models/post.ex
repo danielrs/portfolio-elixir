@@ -32,7 +32,7 @@ defmodule Portfolio.Post do
     |> cast_slug
     |> cast_html
     |> update_change(:date, &cast_date(&1))
-    |> unique_constraint(:slug, message: "Slug already taken")
+    |> unique_constraint(:slug, message: "already taken")
   end
 
   def order_by_date(query \\ %Post{}) do

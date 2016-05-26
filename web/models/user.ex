@@ -35,7 +35,7 @@ defmodule Portfolio.User do
     |> validate_length(:password, min: 5)
     |> validate_confirmation(:password, message: "Password does not match")
     |> encrypt_password
-    |> unique_constraint(:email, message: "Email already taken")
+    |> unique_constraint(:email, message: "already taken")
   end
 
   def encrypt_password(changeset) do

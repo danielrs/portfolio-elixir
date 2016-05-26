@@ -4,9 +4,10 @@ defmodule Portfolio.Repo.Migrations.CreateRole do
   def change do
     create table(:roles) do
       add :name, :string
-      add :admin, :boolean, default: false
+      add :admin?, :boolean, default: false
 
       timestamps
     end
+    create unique_index(:roles, [:name])
   end
 end
