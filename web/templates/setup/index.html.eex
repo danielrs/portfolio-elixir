@@ -1,17 +1,23 @@
 <section class="setup-section">
-  <div class="container">
+  <div class="container container--extra-small">
     <h1>Welcome!</h1>
-    <p>Looks like there isn't any admin account set up, would you like to do it now? This would let you create projects, blog posts and more.</p>
-    <h2>Start by filling up your credentials</h2>
+    <p>Looks like there isn't any admin account set up, you need to do it now. It will let you create projects, blog posts, and other users</p>
     <%= form_for @changeset, setup_path(@conn, :create), [id: "setup-form"], fn f -> %>
+      <h2>Start by filling up your credentials</h2>
       <fieldset class="form-stack">
         <%= text_input f, :first_name, placeholder: "First name" %>
+        <%= error_tag f, :first_name %>
         <%= text_input f, :last_name, placeholder: "Last name" %>
+        <%= error_tag f, :last_name %>
         <%= email_input f, :email, placeholder: "Email" %>
+        <%= error_tag f, :email %>
         <%= password_input f, :password, placeholder: "Password" %>
+        <%= error_tag f, :password %>
         <%= password_input f, :password_confirmation, placeholder: "Confirm password" %>
+        <%= error_tag f, :password_confirmation %>
       </fieldset>
-      <p>After submitting the form the admin account will be automatically created, but <strong>be careful</strong>; once the account had been created you won't be able to access this setup ever again.</p>
+      <h2>Before submitting</h2>
+      <p>After pressing the button the admin account will be automatically created, but <strong>be careful</strong>; once the account had been created you won't be able to access this setup ever again.</p>
       <fieldset class="form-center">
         <%= submit "Create admin" %>
       </fieldset>

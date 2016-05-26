@@ -3,7 +3,7 @@ defmodule Portfolio.RoleTest do
 
   alias Portfolio.Role
 
-  @valid_attrs %{name: "admin", admin: true}
+  @valid_attrs %{name: "admin", admin?: true}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do

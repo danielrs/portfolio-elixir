@@ -43,8 +43,8 @@ defmodule Portfolio.TestData do
 
   def roles do
     [
-      %{id: 1, name: "admin", admin: true},
-      %{id: 2, name: "user", admin: false}
+      %{name: "admin", admin?: true},
+      %{name: "user", admin?: false}
     ]
   end
 

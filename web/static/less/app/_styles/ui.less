@@ -55,8 +55,13 @@ textarea {
   resize: none;
 }
 
+.help-block {
+  color: tomato;
+}
+
 fieldset {
   margin: 0;
+  margin-bottom: @magic-number;
   padding: 0;
   border: none;
 
@@ -69,6 +74,11 @@ fieldset {
       display: block;
       width: 100%;
       margin-bottom: 0.75em;
+    }
+
+    .help-block {
+      position: relative;
+      top: -0.375em;
     }
   }
 

@@ -39,8 +39,13 @@ config :guardian, Guardian,
 
 # Other user facing configuration
 config :portfolio,
-  showcase_email: "ers.daniel@gmail.com",
-  mailgun_domain: System.get_env("MAILGUN_DOMAIN"),
-  mailgun_key: System.get_env("MAILGUN_KEY")
+  showcase_email: "ers.daniel@gmail.com"
 
-# import_config "config.secret.exs"
+case Mix.env do
+  :prod ->
+    config :portfolio,
+      mailgun_domain: System.get_env("MAILGUN_DOMAIN"),
+      mailgun_key: System.get_env("MAILGUN_KEY")
+  _ ->
+    import_config "config.secret.exs"
+end
