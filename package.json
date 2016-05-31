@@ -27,7 +27,7 @@
     "babel-preset-react": "^6.5.0",
     "babel-preset-stage-0": "^6.5.0",
     "bower": "^1.7.9",
-    "brunch": "^2.7.7",
+    "brunch": "^2.8.0",
     "clean-css-brunch": "^2.0.0",
     "css-brunch": "^2.0.0",
     "javascript-brunch": "^2.0.0",
@@ -36,6 +36,6 @@
     "uglify-js-brunch": "^2.0.0"
   },
   "scripts": {
-    "postinstall": "bower install"
+    "postinstall": "./node_modules/.bin/bower install"
   }
 }
