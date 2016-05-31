@@ -10,6 +10,7 @@
   "earmark": {:hex, :earmark, "0.2.1", "ba6d26ceb16106d069b289df66751734802777a3cbb6787026dd800ffeb850f3", [:mix], []},
   "ecto": {:hex, :ecto, "1.1.5", "5c181b737a650117466b0540aa323198a0fb9d518e52718ac2c299f4047187e1", [:mix], [{:sbroker, "~> 0.7", [hex: :sbroker, optional: true]}, {:postgrex, "~> 0.11.0", [hex: :postgrex, optional: true]}, {:poolboy, "~> 1.4", [hex: :poolboy, optional: false]}, {:poison, "~> 1.0", [hex: :poison, optional: true]}, {:mariaex, "~> 0.5.0 or ~> 0.6.0", [hex: :mariaex, optional: true]}, {:decimal, "~> 1.0", [hex: :decimal, optional: false]}]},
   "erlware_commons": {:hex, :erlware_commons, "0.13.0", "b86d493f3c3e52acba16f0a78900c12525e9eb46db3450b0d25b419aa8221115", [:rebar], []},
+  "ex_machina": {:hex, :ex_machina, "0.6.1", "677120042987c6a0277ac4cfb1b6e4a0e1774122a0d9fd319ba0630d16fd770f", [:mix], []},
   "exrm": {:hex, :exrm, "0.18.8", "8bc43a5da2cd54eb18fdffc6bb1608424f3897f97e816bcf752fb931c0ef1af4", [:mix], [{:relx, "~> 3.1.0", [hex: :relx, optional: false]}, {:conform, "~> 0.16.0", [hex: :conform, optional: false]}]},
   "fs": {:hex, :fs, "0.9.2", "ed17036c26c3f70ac49781ed9220a50c36775c6ca2cf8182d123b6566e49ec59", [:rebar], []},
   "getopt": {:hex, :getopt, "0.8.2", "b17556db683000ba50370b16c0619df1337e7af7ecbf7d64fbf8d1d6bce3109b", [:rebar], []},

@@ -4,6 +4,7 @@ defmodule Portfolio.ProjectController do
   alias Portfolio.Project
   require Logger
 
+  plug :authorize_user_project when action in [:create, :update, :delete]
   plug Portfolio.Plug.Filter, Project when action in [:index]
   plug :scrub_params, "project" when action in [:create, :update]
 
@@ -21,7 +22,7 @@ defmodule Portfolio.ProjectController do
       {:ok, project} ->
         conn
         |> put_status(:created)
-        |> put_resp_header("location", project_path(conn, :show, project))
+        |> put_resp_header("location", user_project_path(conn, :show, project))
         |> render("show.json", project: project)
       {:error, changeset} ->
         conn
@@ -38,8 +39,8 @@ defmodule Portfolio.ProjectController do
 
   def update(conn, %{"id" => id, "project" => project_params}) do
     user = Guardian.Plug.current_resource(conn)
-    project = Repo.get!(Project, id, user_id: user.id) |> Map.take([:id, :user_id])
-    changeset = Project.changeset(struct(Project, project), project_params)
+    project = Repo.get!(Project, id, user_id: user.id)
+    changeset = Project.changeset(project, project_params)
 
     case Repo.update(changeset) do
       {:ok, project} ->
@@ -60,5 +61,17 @@ defmodule Portfolio.ProjectController do
     Repo.delete!(project)
 
     send_resp(conn, :no_content, "")
+  end
+
+  defp authorize_user_project(conn, %{"user_id" => user_id, "id" => id}) do
+    user = Guardian.Plug.current_resource(conn)
+    project = Repo.get!(Project, id, user_id: user_id)
+    if user.admin? or project.user_id == user.id do
+      conn
+    else
+      conn
+      |> put_status(:forbidden)
+      |> render(Portfolio.SessionView, "forbidden.json", error: "Not authorized")
+    end
   end
 end

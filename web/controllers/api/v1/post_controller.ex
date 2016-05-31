@@ -3,24 +3,25 @@ defmodule Portfolio.PostController do
 
   alias Portfolio.Post
 
+  plug :authorize_user_post when action in [:create, :update, :delete]
   plug Portfolio.Plug.Filter, Post when action in [:index]
   plug :scrub_params, "post" when action in [:create, :update]
 
-  def index(conn, _params) do
-    user = Guardian.Plug.current_resource(conn)
+  def index(conn, %{"user_id" => user_id}) do
+    user = Repo.get!(User, user_id)
     posts = assoc(user, :posts) |> Post.order_by_date |> Repo.all
     render(conn, "index.json", posts: posts)
   end
 
-  def create(conn, %{"post" => post_params}) do
-    user = Guardian.Plug.current_resource(conn)
+  def create(conn, %{"user_id" => user_id, "post" => post_params}) do
+    user = Repo.get!(User, user_id)
     changeset = user |> build_assoc(:posts) |> Post.changeset(post_params)
 
     case Repo.insert(changeset) do
       {:ok, post} ->
         conn
         |> put_status(:created)
-        |> put_resp_header("location", post_path(conn, :show, post))
+        |> put_resp_header("location", user_post_path(conn, :show, post))
         |> render("show.json", post: post)
       {:error, changeset} ->
         conn
@@ -29,15 +30,13 @@ defmodule Portfolio.PostController do
     end
   end
 
-  def show(conn, %{"id" => id}) do
-    user = Guardian.Plug.current_resource(conn)
-    post = Repo.get!(Post, id, user_id: user.id)
+  def show(conn, %{"user_id" => user_id, "id" => id}) do
+    post = Repo.get!(Post, id, user_id: user_id)
     render(conn, "show.json", post: post)
   end
 
-  def update(conn, %{"id" => id, "post" => post_params}) do
-    user = Guardian.Plug.current_resource(conn)
-    post = Repo.get!(Post, id, user_id: user.id) |> Map.take([:id, :user_id])
+  def update(conn, %{"user_id" => user_id, "id" => id, "post" => post_params}) do
+    post = Repo.get!(Post, id, user_id: user_id) |> Map.take([:id, :user_id])
     changeset = Post.changeset(struct(Post, post), post_params)
 
     case Repo.update(changeset) do
@@ -50,14 +49,25 @@ defmodule Portfolio.PostController do
     end
   end
 
-  def delete(conn, %{"id" => id}) do
-    user = Guardian.Plug.current_resource(conn)
-    post = Repo.get!(Post, id, user_id: user.id)
+  def delete(conn, %{"user_id" => user_id, "id" => id}) do
+    post = Repo.get!(Post, id, user_id: user_id)
 
     # Here we use delete! (with a bang) because we expect
     # it to always work (and if it does not, it will raise).
     Repo.delete!(post)
 
     send_resp(conn, :no_content, "")
+  end
+
+  defp authorize_user_post(conn, %{"user_id" => user_id, "id" => id}) do
+    user = Guardian.Plug.current_resource(conn)
+    post = Repo.get!(Project, id, user_id: user_id)
+    if user.admin? or post.user_id == user.id do
+      conn
+    else
+      conn
+      |> put_status(:forbidden)
+      |> render(Portfolio.SessionView, "forbidden.json", error: "Not authorized")
+    end
   end
 end

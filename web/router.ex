@@ -61,8 +61,10 @@ defmodule Portfolio.Router do
       scope "/" do
         pipe_through :api_auth
         get "/session", SessionController, :show
-        resources "/projects", ProjectController, except: [:new, :edit]
-        resources "/posts", PostController, except: [:new, :edit]
+        resources "/users", UserController, except: [:new, :edit] do
+          resources "/projects", ProjectController, except: [:new, :edit]
+          resources "/posts", PostController, except: [:new, :edit]
+        end
       end
     end
   end

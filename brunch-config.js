@@ -3,9 +3,11 @@ exports.config = {
   files: {
     javascripts: {
       joinTo: {
-       'js/app.js': /^web\/static\/js\/(app|socket.js)/,
-       'js/dashboard.js': /^web\/static\/js\/dashboard/,
-       'js/vendor.js': /^node_modules|bower_components|web\/static\/vendor/
+        'js/vendor.js': /^bower_components|web\/static\/vendor/
+      },
+      entryPoints: {
+        'web/static/js/app/index.js': 'js/app.js',
+        'web/static/js/dashboard/index.js': 'js/dashboard.js',
       }
     },
     stylesheets: {

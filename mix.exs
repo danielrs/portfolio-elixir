@@ -41,6 +41,7 @@ defmodule Portfolio.Mixfile do
      {:guardian, "~> 0.10.0"},
      {:mailgun, "~> 0.1.2"},
      {:earmark, "~> 0.2.1"},
+     {:ex_machina, "~> 0.6.1", only: :test},
      {:exrm, "~> 0.18.1"}]
   end
 

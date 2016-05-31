@@ -1,6 +1,5 @@
 defmodule Portfolio.User do
   use Portfolio.Web, :model
-  import Comeonin.Bcrypt, only: [hashpwsalt: 1]
 
   @derive {Poison.Encoder, only: [:id, :first_name, :last_name, :email]}
 
@@ -41,7 +40,7 @@ defmodule Portfolio.User do
   def encrypt_password(changeset) do
     if changeset.valid? do
       changeset
-      |> put_change(:password_hash, get_change(changeset, :password) |> hashpwsalt)
+      |> put_change(:password_hash, get_change(changeset, :password) |> Comeonin.Bcrypt.hashpwsalt)
     else
       changeset
     end

@@ -24,11 +24,25 @@ defmodule Portfolio.ConnCase do
       import Ecto
       import Ecto.Changeset
       import Ecto.Query, only: [from: 1, from: 2]
+      import Plug.Conn.Status, only: [code: 1]
 
       import Portfolio.Router.Helpers
 
       # The default endpoint for testing
       @endpoint Portfolio.Endpoint
+
+      defp login_user(conn, user) do
+        auth_conn = post conn, session_path(conn, :create), session: %{email: user.email, password: user.password}
+        status = Map.get(auth_conn, :status)
+        resp_body = auth_conn.resp_body |> Poison.decode!
+
+        if status >= 200 and status < 300 do
+          new_conn = conn |> put_req_header("authorization", get_in(resp_body, ["data", "jwt"]))
+          {:ok, new_conn}
+        else
+          {:error, get_in(resp_body, [:data, :error])}
+        end
+      end
     end
   end
 

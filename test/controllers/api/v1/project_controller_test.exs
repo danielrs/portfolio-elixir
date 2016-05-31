@@ -1,22 +1,25 @@
 defmodule Portfolio.ProjectControllerTest do
   use Portfolio.ConnCase
 
-  alias Portfolio.TestData
+  alias Portfolio.Factory
   alias Portfolio.Project
 
   @valid_attrs %{content: "some content", date: Ecto.Date.utc, description: "some content", homepage: "some content", title: "some content"}
   @invalid_attrs %{}
 
   setup %{conn: conn} do
-    TestData.insert_roles
-    TestData.insert_users
-    auth_response = post conn, session_path(conn, :create), [session: TestData.user]
-    %{"data" => %{"jwt" => jwt, "user" => %{"id" => user_id}}} = auth_response.resp_body |> Poison.decode!
-    new_conn = conn
-               |> put_req_header("accept", "application/json")
-               |> put_req_header("authorization", jwt)
-    {:ok, conn: new_conn, user_id: user_id}
+    nonadmin_role = Factory.insert(:role)
+    admin_role    = Factory.insert(:role, admin?: true)
+    nonadmin_user = Factory.insert(:user, role: nonadmin_role)
+    admin_user    = Factory.insert(:user, role: admin_role)
+
+    {:ok, nonadmin_conn} = login_user(conn, nonadmin_user)
+    {:ok, admin_conn} = login_user(conn, admin_user)
+
+    {:ok, nonadmin_conn: nonadmin_conn, admin_conn: admin_conn}
   end
+
+  # TODO: Finish test for non-admin and admin
 
   test "lists all entries on index before inserting", %{conn: conn} do
     conn = get conn, project_path(conn, :index)
@@ -61,14 +64,14 @@ defmodule Portfolio.ProjectControllerTest do
 
   test "updates and renders chosen resource when data is valid", %{conn: conn, user_id: user_id} do
     project = Repo.insert! project_for_user(user_id)
-    conn = put conn, project_path(conn, :update, project), project: @valid_attrs
+    conn = patch conn, project_path(conn, :update, project), project: @valid_attrs
     assert json_response(conn, 200)["data"]["id"]
     # assert Repo.get_by(Project, @valid_attrs)
   end
 
   test "does not update chosen resource and renders errors when data is invalid", %{conn: conn, user_id: user_id} do
     project = Repo.insert! project_for_user(user_id)
-    conn = put conn, project_path(conn, :update, project), project: @invalid_attrs
+    conn = patch conn, project_path(conn, :update, project), project: @invalid_attrs
     assert json_response(conn, 422)["errors"] != %{}
   end
 
