@@ -13,8 +13,7 @@ use Mix.Config
 # which you typically run after static files are built.
 config :portfolio, Portfolio.Endpoint,
   http: [port: {:system, "PORT"}],
-  url: [scheme: "https", host: "blooming-headland-10991.herokuapp.com", port: 443],
-  force_ssl: [rewrite_on: [:x_forwarded_proto]],
+  url: [host: "danielrs.me"],
   cache_static_manifest: "priv/static/manifest.json"
 
 # Do not print debug messages in production
