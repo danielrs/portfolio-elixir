@@ -14,7 +14,9 @@ use Mix.Config
 config :portfolio, Portfolio.Endpoint,
   http: [port: {:system, "PORT"}],
   url: [host: "danielrs.me"],
-  cache_static_manifest: "priv/static/manifest.json"
+  root: ".",
+  cache_static_manifest: "priv/static/manifest.json",
+  server: true
 
 # Do not print debug messages in production
 config :logger, level: :info
