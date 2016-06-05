@@ -4,38 +4,27 @@ defmodule Portfolio.ProjectControllerTest do
   alias Portfolio.Factory
   alias Portfolio.Project
 
-  @valid_attrs %{content: "some content", date: Ecto.Date.utc, description: "some content", homepage: "some content", title: "some content"}
-  @invalid_attrs %{}
-
   setup %{conn: conn} do
-    nonadmin_role = Factory.insert(:role)
-    admin_role    = Factory.insert(:role, admin?: true)
-    nonadmin_user = Factory.insert(:user, role: nonadmin_role)
-    admin_user    = Factory.insert(:user, role: admin_role)
+    nonadmin_role = Factory.create(:role)
+    admin_role    = Factory.create(:role, admin?: true)
+    nonadmin_user = Factory.create(:user, role: nonadmin_role)
+    admin_user    = Factory.create(:user, role: admin_role)
 
     {:ok, nonadmin_conn} = login_user(conn, nonadmin_user)
     {:ok, admin_conn} = login_user(conn, admin_user)
 
-    {:ok, nonadmin_conn: nonadmin_conn, admin_conn: admin_conn}
+    {:ok, nonadmin_conn: nonadmin_conn, admin_conn: admin_conn, nonadmin_user: nonadmin_user, admin_user: admin_user}
   end
 
-  # TODO: Finish test for non-admin and admin
-
-  test "lists all entries on index before inserting", %{conn: conn} do
-    conn = get conn, project_path(conn, :index)
-    assert json_response(conn, 200)["data"] == []
-  end
-
-  test "lists all entries on index after inserting", %{conn: conn} do
-    TestData.insert_projects
-    conn = get conn, project_path(conn, :index)
+  test "lists all entries on index", %{nonadmin_conn: conn, nonadmin_user: user} do
+    Factory.create(:project, user: user)
+    conn = get conn, user_project_path(conn, :index, user)
     assert json_response(conn, 200)["data"] != []
   end
 
-  test "shows chosen resource", %{conn: conn, user_id: user_id} do
-    TestData.insert_projects
-    [project] = Repo.all(from p in Project, where: p.user_id == ^user_id, limit: 1)
-    conn = get conn, project_path(conn, :show, project)
+  test "shows chosen resource", %{nonadmin_conn: conn, nonadmin_user: user} do
+    project = Factory.create(:project, user: user)
+    conn = get conn, user_project_path(conn, :show, user, project)
     assert json_response(conn, 200)["data"] == %{"id" => project.id,
       "title" => project.title,
       "description" => project.description,
@@ -45,45 +34,43 @@ defmodule Portfolio.ProjectControllerTest do
       "user_id" => project.user_id}
   end
 
-  test "does not show resource and instead throw error when id is nonexistent", %{conn: conn} do
+  test "does not show resource and instead throw error when id is nonexistent", %{nonadmin_conn: conn} do
     assert_error_sent 404, fn ->
-      get conn, project_path(conn, :show, -1)
+      get conn, user_project_path(conn, :show, -1, -1)
     end
   end
 
-  test "creates and renders resource when data is valid", %{conn: conn} do
-    conn = post conn, project_path(conn, :create), project: @valid_attrs
+  @tag focus: true
+  test "creates and renders resource when data is valid", %{nonadmin_conn: conn, nonadmin_user: user} do
+    project_params = Factory.params_for(:project)
+    conn = post conn, user_project_path(conn, :create, user), project: project_params
     assert json_response(conn, 201)["data"]["id"]
-    assert Repo.get_by(Project, @valid_attrs)
+    assert Repo.get_by(Project, project_params)
   end
 
-  test "does not create resource and renders errors when data is invalid", %{conn: conn} do
-    conn = post conn, project_path(conn, :create), project: @invalid_attrs
+  test "does not create resource and renders errors when data is invalid", %{nonadmin_conn: conn, nonadmin_user: user} do
+    conn = post conn, user_project_path(conn, :create, user), project: %{}
     assert json_response(conn, 422)["errors"] != %{}
   end
 
-  test "updates and renders chosen resource when data is valid", %{conn: conn, user_id: user_id} do
-    project = Repo.insert! project_for_user(user_id)
-    conn = patch conn, project_path(conn, :update, project), project: @valid_attrs
+  test "updates and renders chosen resource when data is valid", %{nonadmin_conn: conn, nonadmin_user: user} do
+    project = Factory.create(:project, user: user)
+    project_params = Factory.params_for(:project)
+    conn = patch conn, user_project_path(conn, :update, user, project), project: project_params
     assert json_response(conn, 200)["data"]["id"]
-    # assert Repo.get_by(Project, @valid_attrs)
+    assert Repo.get_by(Project, project_params)
   end
 
-  test "does not update chosen resource and renders errors when data is invalid", %{conn: conn, user_id: user_id} do
-    project = Repo.insert! project_for_user(user_id)
-    conn = patch conn, project_path(conn, :update, project), project: @invalid_attrs
+  test "does not update chosen resource and renders errors when data is invalid", %{nonadmin_conn: conn, nonadmin_user: user} do
+    project = Factory.create(:project, user: user)
+    conn = patch conn, user_project_path(conn, :update, user, project), project: %{}
     assert json_response(conn, 422)["errors"] != %{}
   end
 
-  test "deletes chosen resource", %{conn: conn, user_id: user_id} do
-    project = Repo.insert! project_for_user(user_id)
-    conn = delete conn, project_path(conn, :delete, project)
+  test "deletes chosen resource", %{nonadmin_conn: conn, nonadmin_user: user} do
+    project = Factory.create(:project, user: user)
+    conn = delete conn, user_project_path(conn, :delete, user, project)
     assert response(conn, 204)
     refute Repo.get(Project, project.id)
-  end
-
-  defp project_for_user(user_id) do
-    params = @valid_attrs |> Map.put(:user_id, user_id)
-    struct(Project, params)
   end
 end

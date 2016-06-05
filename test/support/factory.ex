@@ -1,4 +1,7 @@
 defmodule Portfolio.Factory do
+  @moduledoc """
+  Factory for different models. params_for copied from ex_machina repo
+  """
   use ExMachina.Ecto, repo: Portfolio.Repo
 
   alias Portfolio.Repo
@@ -6,6 +9,15 @@ defmodule Portfolio.Factory do
   alias Portfolio.User
   alias Portfolio.Project
   alias Portfolio.User
+  alias Portfolio.Factory
+
+
+  def params_for(factory_name, attrs \\ %{}) do
+    Factory.build(factory_name, attrs)
+    |> drop_ecto_fields
+    |> Enum.filter(fn {_, v} -> v != nil end)
+    |> Enum.into(%{})
+  end
 
   def factory(:role) do
     %Role{
@@ -35,5 +47,16 @@ defmodule Portfolio.Factory do
       date: Ecto.Date.utc,
       user: build(:user)
     }
+  end
+
+  defp drop_ecto_fields(record = %{__struct__: struct, __meta__: %{__struct__: Ecto.Schema.Metadata}}) do
+    record
+    |> Map.from_struct
+    |> Map.delete(:__meta__)
+    |> Map.drop(struct.__schema__(:associations))
+    |> Map.drop(struct.__schema__(:primary_key))
+  end
+  defp drop_ecto_fields(record) do
+    raise ArgumentError, "#{inspect record} is not an Ecto model. Use `build` instead."
   end
 end

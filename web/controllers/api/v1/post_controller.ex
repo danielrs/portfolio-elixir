@@ -3,9 +3,9 @@ defmodule Portfolio.PostController do
 
   alias Portfolio.Post
 
-  plug :authorize_user_post when action in [:create, :update, :delete]
+  plug Portfolio.Plug.UserResourceModification when action in [:create, :update, :delete]
   plug Portfolio.Plug.Filter, Post when action in [:index]
-  plug :scrub_params, "post" when action in [:create, :update]
+  plug :strip_params, "post" when action in [:create, :update]
 
   def index(conn, %{"user_id" => user_id}) do
     user = Repo.get!(User, user_id)

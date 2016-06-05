@@ -16,7 +16,7 @@ defmodule Portfolio.Project do
     timestamps
   end
 
-  @required_fields ~w(title description homepage date user_id)
+  @required_fields ~w(title description homepage date)
   @optional_fields ~w(content)
 
   @doc """

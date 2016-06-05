@@ -17,7 +17,7 @@ defmodule Portfolio.Post do
     timestamps
   end
 
-  @required_fields ~w(title markdown date user_id)
+  @required_fields ~w(title markdown date)
   @optional_fields ~w(slug html published)
 
   @doc """

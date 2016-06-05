@@ -1,4 +1,4 @@
-defmodule Portfolio.Plug.EnsureUserLoaded do
+defmodule Portfolio.Plug.EnsureGuardianResourceLoaded do
   @moduledoc """
   This Plug ensures that an user has been loaded by Guardian's LoadResource Plug, otherwise it returns
   forbidden status

@@ -72,10 +72,10 @@ defmodule Portfolio.UserControllerTest do
   @tag admin: true
   test "creates and renders resources when data is valid", %{admin_conn: conn} do
     role = Factory.create(:role)
-    user_params = Factory.build(:user, role_id: role.id) |> Map.from_struct
+    user_params = Factory.params_for(:user, role_id: role.id)
     conn = post conn, user_path(conn, :create), user: user_params
     assert json_response(conn, code(:created))["data"]["id"]
-    assert Repo.get_by(User, user_params |> Map.take([:first_name, :last_name, :email]))
+    assert Repo.get_by(User, user_params |> Map.drop([:password, :password_confirmation, :password_hash]))
   end
 
   @tag admin: true
@@ -103,9 +103,7 @@ defmodule Portfolio.UserControllerTest do
   @tag admin: true
   test "does not update and renders errors when data is invalid", %{admin_conn: conn} do
     user = Factory.create(:user)
-    updated_role = Factory.create(:role, admin?: true)
-    updated_user = Factory.build(:user, first_name: "", role_id: updated_role.id) |> Map.from_struct
-    conn = patch conn, user_path(conn, :update, user), user: updated_user
+    conn = patch conn, user_path(conn, :update, user), user: %{}
     assert json_response(conn, code(:unprocessable_entity))["errors"] != %{}
   end
 

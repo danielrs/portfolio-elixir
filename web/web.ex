@@ -43,6 +43,8 @@ defmodule Portfolio.Web do
 
       import Portfolio.Router.Helpers
       import Portfolio.Gettext
+
+      import Portfolio.Plug.StripParams, only: [strip_params: 2]
     end
   end
 

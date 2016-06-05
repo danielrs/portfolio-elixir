@@ -28,7 +28,7 @@ defmodule Portfolio.Router do
 
   pipeline :api_auth do
     plug Guardian.Plug.EnsureAuthenticated, handler: Portfolio.SessionController
-    plug Portfolio.Plug.EnsureUserLoaded
+    plug Portfolio.Plug.EnsureGuardianResourceLoaded
   end
 
   # User scope
