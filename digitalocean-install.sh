@@ -1,5 +1,5 @@
 # Install packages as root
-if [ "$EUID" -ne 0]; then
+if [ "$EUID" -ne 0 ]; then
   # Starts su
   echo "the scripts needs the root pasword for installing packages..."
   sudo su -s "$0"
