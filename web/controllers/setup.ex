@@ -16,7 +16,7 @@ defmodule Portfolio.SetupController do
   end
 
   def create(conn, %{"user" => user_params}) do
-    role = Repo.get_by(Role, name: "admin", admin?: true)
+    role = Repo.get_by!(Role, name: "admin", admin?: true)
     changeset = User.changeset(%User{role_id: role.id}, user_params)
 
     Logger.debug inspect(changeset.errors)
