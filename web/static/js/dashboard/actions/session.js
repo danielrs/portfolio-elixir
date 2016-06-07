@@ -31,11 +31,13 @@ const SessionActions = {
     };
   },
 
-  currentUser: function() {
+  currentUser: function(onLogin) {
     return dispatch => {
+      console.log('GETTING USER');
       Request.get('/api/v1/session')
       .then(response => {
         dispatch({type: Constants.USER_CURRENT_USER, user: response.data.user});
+        onLogin();
       })
       .catch(error => {
         dispatch(this.signOut());

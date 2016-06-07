@@ -12,22 +12,22 @@ defmodule Portfolio.SessionControllerTest do
     {:ok, %{conn: conn, user: Map.from_struct(user), invalid_user: Map.from_struct(invalid_user)}}
   end
 
-  test "POST /api/v1/session with valid user credentials succeeds", %{conn: conn, user: user} do
+  test "login with valid user credentials succeeds", %{conn: conn, user: user} do
     conn = post conn, session_path(conn, :create), [session: user]
     assert json_response(conn, code(:created))
   end
 
-  test "POST /api/v1/session with invalid user credentials fails", %{conn: conn, invalid_user: invalid_user}  do
+  test "login with invalid user credentials fails", %{conn: conn, invalid_user: invalid_user}  do
     conn = post conn, session_path(conn, :create), [session: invalid_user]
     assert json_response(conn, code(:unprocessable_entity))
   end
 
-  test "GET /api/v1/session without authenticating fails", %{conn: conn}  do
+  test "trying to get current user without authenticating fails", %{conn: conn}  do
     conn = get conn, session_path(conn, :show)
     assert json_response(conn, code(:forbidden))
   end
 
-  test "GET /api/v1/session after authenticating succeeds", %{conn: conn, user: user}  do
+  test "trying to get current user after authenticating succeeds", %{conn: conn, user: user}  do
     {:ok, conn} = login_user(conn, user)
     conn = get conn, session_path(conn, :show)
     assert json_response(conn, code(:ok))

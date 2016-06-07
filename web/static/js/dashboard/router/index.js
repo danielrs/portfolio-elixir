@@ -23,12 +23,14 @@ export default function router(store) {
     const {dispatch} = store;
     const {session} = store.getState();
     if (!session.user && localStorage.getItem('auth-token')) {
-      dispatch(Actions.currentUser());
+      dispatch(Actions.currentUser(callback));
     }
     else if (!localStorage.getItem('auth-token')) {
       replace('/dashboard/sign_in');
     }
-    callback();
+    else {
+      callback();
+    }
   }
 
   return (

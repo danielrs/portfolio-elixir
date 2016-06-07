@@ -6,7 +6,6 @@ import projectReducer from './project';
 const reducers = combineReducers({
   routing: routerReducer,
   session: sessionReducer,
-
   project: projectReducer
 });
 

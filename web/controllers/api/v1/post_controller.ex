@@ -2,6 +2,7 @@ defmodule Portfolio.PostController do
   use Portfolio.Web, :controller
 
   alias Portfolio.Post
+  alias Portfolio.User
 
   plug Portfolio.Plug.UserResourceModification when action in [:create, :update, :delete]
   plug Portfolio.Plug.Filter, Post when action in [:index]
@@ -21,7 +22,7 @@ defmodule Portfolio.PostController do
       {:ok, post} ->
         conn
         |> put_status(:created)
-        |> put_resp_header("location", user_post_path(conn, :show, post))
+        |> put_resp_header("location", user_post_path(conn, :show, user, post))
         |> render("show.json", post: post)
       {:error, changeset} ->
         conn
@@ -57,17 +58,5 @@ defmodule Portfolio.PostController do
     Repo.delete!(post)
 
     send_resp(conn, :no_content, "")
-  end
-
-  defp authorize_user_post(conn, %{"user_id" => user_id, "id" => id}) do
-    user = Guardian.Plug.current_resource(conn)
-    post = Repo.get!(Project, id, user_id: user_id)
-    if user.admin? or post.user_id == user.id do
-      conn
-    else
-      conn
-      |> put_status(:forbidden)
-      |> render(Portfolio.SessionView, "forbidden.json", error: "Not authorized")
-    end
   end
 end

@@ -13,7 +13,12 @@ defmodule Portfolio.ProjectControllerTest do
     {:ok, nonadmin_conn} = login_user(conn, nonadmin_user)
     {:ok, admin_conn} = login_user(conn, admin_user)
 
-    {:ok, nonadmin_conn: nonadmin_conn, admin_conn: admin_conn, nonadmin_user: nonadmin_user, admin_user: admin_user}
+    {:ok,
+     conn: conn,
+     nonadmin_conn: nonadmin_conn,
+     admin_conn: admin_conn,
+     nonadmin_user: nonadmin_user,
+     admin_user: admin_user}
   end
 
   test "lists all entries on index", %{nonadmin_conn: conn, nonadmin_user: user} do
@@ -40,7 +45,6 @@ defmodule Portfolio.ProjectControllerTest do
     end
   end
 
-  @tag focus: true
   test "creates and renders resource when data is valid", %{nonadmin_conn: conn, nonadmin_user: user} do
     project_params = Factory.params_for(:project)
     conn = post conn, user_project_path(conn, :create, user), project: project_params
@@ -51,6 +55,20 @@ defmodule Portfolio.ProjectControllerTest do
   test "does not create resource and renders errors when data is invalid", %{nonadmin_conn: conn, nonadmin_user: user} do
     conn = post conn, user_project_path(conn, :create, user), project: %{}
     assert json_response(conn, 422)["errors"] != %{}
+  end
+
+  @tag admin: true
+  test "creates and renders resource for another user as admin", %{admin_conn: conn, nonadmin_user: user} do
+    project_params = Factory.params_for(:project, user: user)
+    conn = post conn, user_project_path(conn, :create, user), project: project_params
+    assert json_response(conn, 201)["data"]["id"]
+    assert Repo.get_by(Project, project_params)
+  end
+
+  test "does not create and renders resource for another user as non-admin user", %{nonadmin_conn: conn, admin_user: user} do
+    project_params = Factory.params_for(:project, user: user)
+    conn = post conn, user_project_path(conn, :create, user), project: project_params
+    assert json_response(conn, 403)["error"]
   end
 
   test "updates and renders chosen resource when data is valid", %{nonadmin_conn: conn, nonadmin_user: user} do
@@ -67,10 +85,40 @@ defmodule Portfolio.ProjectControllerTest do
     assert json_response(conn, 422)["errors"] != %{}
   end
 
+  @tag admin: true
+  test "updates and renders chosen resource from another user as admin", %{admin_conn: conn, nonadmin_user: user} do
+    project = Factory.create(:project, user: user)
+    project_params = Factory.params_for(:project)
+    conn = patch conn, user_project_path(conn, :update, user, project), project: project_params
+    assert json_response(conn, 200)["data"]["id"]
+    assert Repo.get_by(Project, project_params)
+  end
+
+  test "does not update chosen resource from another user as non-admin user", %{nonadmin_conn: conn, admin_user: user} do
+    project = Factory.create(:project, user: user)
+    project_params = Factory.params_for(:project)
+    conn = patch conn, user_project_path(conn, :update, user, project), project: project_params
+    assert json_response(conn, 403)["error"]
+  end
+
   test "deletes chosen resource", %{nonadmin_conn: conn, nonadmin_user: user} do
     project = Factory.create(:project, user: user)
     conn = delete conn, user_project_path(conn, :delete, user, project)
     assert response(conn, 204)
     refute Repo.get(Project, project.id)
+  end
+
+  @tag admin: true
+  test "deletes chosen resource from another user as admin", %{admin_conn: conn, nonadmin_user: user} do
+    project = Factory.create(:project, user: user)
+    conn = delete conn, user_project_path(conn, :delete, user, project)
+    assert response(conn, 204)
+    refute Repo.get(Project, project.id)
+  end
+
+  test "does not delete chosen resource from another user as non-admin user", %{nonadmin_conn: conn, admin_user: user} do
+    project = Factory.create(:project, user: user)
+    conn = delete conn, user_project_path(conn, :delete, user, project)
+    assert response(conn, 403)
   end
 end

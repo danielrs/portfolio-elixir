@@ -5,8 +5,9 @@ import {push} from 'react-router-redux';
 const ProjecActions = {
   fetchProjects: function() {
     return (dispatch, getState) => {
+      const {user} = getState().session;
       dispatch({type: Constants.PROJECTS_FETCHING});
-      Request.get('/api/v1/projects', getState().project.filter)
+      Request.get(`/api/v1/users/${user.id}/projects`, getState().project.filter)
       .then(function(response) {
         dispatch({type: Constants.PROJECTS_RECEIVED, projects: response.data});
       })
@@ -23,9 +24,10 @@ const ProjecActions = {
   },
 
   createProject: function(data) {
-    return dispatch => {
+    return (dispatch, getState) => {
+      const {user} = getState().session;
       dispatch({type: Constants.PROJECTS_SUBMITING});
-      Request.post('/api/v1/projects', data)
+      Request.post(`/api/v1/users/${user.id}/projects`, data)
       .then(response => {
         dispatch({
           type: Constants.PROJECTS_NEW,
@@ -47,8 +49,9 @@ const ProjecActions = {
   },
 
   deleteProject: function(id, data) {
-    return dispatch => {
-      Request.delete(`/api/v1/projects/${id}`)
+    return (dispatch, getState) => {
+      const {user} = getState().session;
+      Request.delete(`/api/v1/users/${user.id}/projects/${id}`)
       .then(response => {
         dispatch({
           type: Constants.PROJECTS_DELETE,
@@ -83,9 +86,10 @@ const ProjecActions = {
   },
 
   fetchProject: function(id) {
-    return dispatch => {
+    return (dispatch, getState) => {
+      const {user} = getState().session;
       dispatch({type: Constants.CURRENT_PROJECT_FETCHING});
-      Request.get(`/api/v1/projects/${id}`)
+      Request.get(`/api/v1/users/${user.id}/projects/${id}`)
       .then(function(response) {
         dispatch({
           type: Constants.CURRENT_PROJECT_RECEIVED,
@@ -110,9 +114,10 @@ const ProjecActions = {
   },
 
   updateProject: function(id, data) {
-    return dispatch => {
+    return (dispatch, getState) => {
+      const {user} = getState().session;
       dispatch({type: Constants.PROJECTS_SUBMITING});
-      Request.patch(`/api/v1/projects/${id}`, data)
+      Request.patch(`/api/v1/users/${user.id}/projects/${id}`, data)
       .then(response => {
         dispatch({
           type: Constants.CURRENT_PROJECT_UPDATED,

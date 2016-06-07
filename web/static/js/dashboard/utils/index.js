@@ -1,11 +1,13 @@
 import React from 'react';
 
+// Misc
 export function Enum(values) {
   for (let value of values) {
     this[value] = value;
   }
 }
 
+// Views
 export function renderErrorsFor(errors, ref) {
   if (!errors) return false;
   if (errors[ref]) {
@@ -17,13 +19,6 @@ export function renderErrorsFor(errors, ref) {
       );
     });
   }
-}
-
-export function zipIndex(objArr) {
-  return objArr.map((x, index) => {
-    x.index = index
-    return x;
-  });
 }
 
 export function dateToISO8601(date) {

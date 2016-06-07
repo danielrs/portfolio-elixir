@@ -3,13 +3,13 @@ defmodule Portfolio.Factory do
   Factory for different models. params_for copied from ex_machina repo
   """
   use ExMachina.Ecto, repo: Portfolio.Repo
+  alias Portfolio.Factory
 
   alias Portfolio.Repo
   alias Portfolio.Role
   alias Portfolio.User
   alias Portfolio.Project
-  alias Portfolio.User
-  alias Portfolio.Factory
+  alias Portfolio.Post
 
 
   def params_for(factory_name, attrs \\ %{}) do
@@ -45,6 +45,18 @@ defmodule Portfolio.Factory do
       homepage: "Some homepage",
       content: "",
       date: Ecto.Date.utc,
+      user: build(:user)
+    }
+  end
+
+  def factory(:post) do
+    %Post{
+      title: "Some title",
+      slug: "some-slug",
+      markdown: "# Some markdown",
+      html: "<h1>Some markdown</h1>\n",
+      date: Ecto.Date.utc,
+      published: false,
       user: build(:user)
     }
   end
