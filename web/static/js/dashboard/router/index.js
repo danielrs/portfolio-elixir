@@ -27,6 +27,7 @@ export default function router(store) {
     }
     else if (!localStorage.getItem('auth-token')) {
       replace('/dashboard/sign_in');
+      callback();
     }
     else {
       callback();
