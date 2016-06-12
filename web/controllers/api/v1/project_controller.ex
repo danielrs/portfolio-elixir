@@ -6,12 +6,12 @@ defmodule Portfolio.ProjectController do
   require Logger
 
   plug Portfolio.Plug.UserResourceModification when action in [:create, :update, :delete]
-  plug Portfolio.Plug.Filter, Project when action in [:index]
-  plug :strip_params, "project" when action in [:create, :update]
+  plug :scrub_params, "project" when action in [:create, :update]
 
   def index(conn, %{"user_id" => user_id} = params) do
+    Logger.debug inspect(params)
     user = Repo.get!(User, user_id)
-    projects = assoc(user, :projects) |> Project.order_by(params) |> Project.search_by(params) |> Repo.all
+    projects = assoc(user, :projects) |> Project.filter_by(params) |> Repo.all
     render(conn, "index.json", projects: projects)
   end
 

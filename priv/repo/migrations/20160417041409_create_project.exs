@@ -6,7 +6,7 @@ defmodule Portfolio.Repo.Migrations.CreateProject do
       add :title, :string, null: false
       add :description, :string, null: false
       add :homepage, :string, null: false
-      add :content, :text
+      add :content, :text, default: ""
       add :date, :date, null: false
       add :user_id, references(:users, on_delete: :nothing), null: false
 

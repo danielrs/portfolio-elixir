@@ -1,9 +1,7 @@
 defmodule Portfolio.Project do
   use Portfolio.Web, :model
+  use Portfolio.Filtrable
   alias Portfolio.Project
-
-  @behaviour Portfolio.Filterable
-  def fields, do: ~w(date title description homepage)
 
   schema "projects" do
     field :title, :string
@@ -18,6 +16,7 @@ defmodule Portfolio.Project do
 
   @required_fields ~w(title description homepage date)
   @optional_fields ~w(content)
+  @filtrable_fields ~w(title description homepage date)
 
   @doc """
   Creates a changeset based on the `model` and `params`.
@@ -31,18 +30,14 @@ defmodule Portfolio.Project do
     |> update_change(:date, &cast_date(&1))
   end
 
-  def order_by(query \\ %Project{}, params) do
-    case params.order do
-      "desc" ->
-        query |> Ecto.Query.order_by(desc: ^String.to_atom(params.sort_by))
-      _ ->
-        query |> Ecto.Query.order_by(asc: ^String.to_atom(params.sort_by))
-    end
-  end
-
-  def search_by(query \\ %Project{}, params) do
-    search_string = "%" <> params.search <> "%"
+  def search_by(query, params) do
+    search_string = "%" <> Map.get(params, "search", "") <> "%"
     from p in query,
     where: ilike(p.title, ^search_string) or ilike(p.description, ^search_string)
+  end
+
+  def order_by(query, params) do
+    order_by = Portfolio.Utils.OrderBy.from_string(Map.get(params, "order_by", "-date"), @filtrable_fields)
+    query |> Ecto.Query.order_by(^order_by)
   end
 end

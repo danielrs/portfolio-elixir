@@ -3,7 +3,7 @@ defmodule Portfolio.Repo.Migrations.CreateRole do
 
   def change do
     create table(:roles) do
-      add :name, :string
+      add :name, :string, null: false
       add :admin?, :boolean, default: false
 
       timestamps

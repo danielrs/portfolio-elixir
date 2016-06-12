@@ -32,7 +32,7 @@ class FilterForm extends React.Component {
   }
 
   state = {
-    sort_by: this.props.sortOptions[0] && this.props.sortOptions[0].value || '',
+    order_by: this.props.sortOptions[0] && this.props.sortOptions[0].value || '',
     order: Order.DESC.toLowerCase(),
     search: ''
   }
@@ -42,7 +42,7 @@ class FilterForm extends React.Component {
   }
 
   _handleSortChange = value => {
-    const newState = {...this.state, sort_by: value};
+    const newState = {...this.state, order_by: value};
     this.setState(newState);
     this.props.onChange(newState);
     this.props.onFilterChange(newState);

@@ -1,9 +1,7 @@
 defmodule Portfolio.Post do
   use Portfolio.Web, :model
+  use Portfolio.Filtrable
   alias Portfolio.Post
-
-  @behaviour Portfolio.Filterable
-  def fields, do: ~w(title slug date)
 
   schema "posts" do
     field :title, :string
@@ -19,6 +17,7 @@ defmodule Portfolio.Post do
 
   @required_fields ~w(title markdown date)
   @optional_fields ~w(slug html published)
+  @filtrable_fields ~w(title slug date)
 
   @doc """
   Creates a changeset based on the `model` and `params`.
@@ -33,11 +32,6 @@ defmodule Portfolio.Post do
     |> cast_html
     |> update_change(:date, &cast_date(&1))
     |> unique_constraint(:slug, message: "already taken")
-  end
-
-  def order_by_date(query \\ %Post{}) do
-    from p in query,
-    order_by: [desc: p.date]
   end
 
   defp cast_slug(changeset) do
@@ -65,5 +59,16 @@ defmodule Portfolio.Post do
     |> String.downcase
     |> String.replace(~r/\s/, "-")
     |> String.replace(~r/[^-\p{L}0-9]/u, "")
+  end
+
+  def search_by(query, params) do
+    search_string = "%" <> Map.get(params, "search", "") <> "%"
+    from p in query,
+    where: ilike(p.title, ^search_string) or ilike(p.slug, ^search_string) or ilike(p.markdown, ^search_string)
+  end
+
+  def order_by(query, params) do
+    order_by = Portfolio.Utils.Filter.OrderBy.from_string(Map.get(params, "order_by", "-date"))
+    query |> Ecto.Query.order_by(^order_by)
   end
 end

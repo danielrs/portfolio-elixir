@@ -11,14 +11,7 @@ defmodule Portfolio.Factory do
   alias Portfolio.Project
   alias Portfolio.Post
 
-
-  def params_for(factory_name, attrs \\ %{}) do
-    Factory.build(factory_name, attrs)
-    |> drop_ecto_fields
-    |> Enum.filter(fn {_, v} -> v != nil end)
-    |> Enum.into(%{})
-  end
-
+  # BUILD
   def factory(:role) do
     %Role{
       name: sequence(:name, &"Test Role #{&1}"),
@@ -43,7 +36,7 @@ defmodule Portfolio.Factory do
       title: "Some title",
       description: "Some description",
       homepage: "Some homepage",
-      content: "",
+      content: "Some content",
       date: Ecto.Date.utc,
       user: build(:user)
     }
@@ -61,14 +54,20 @@ defmodule Portfolio.Factory do
     }
   end
 
-  defp drop_ecto_fields(record = %{__struct__: struct, __meta__: %{__struct__: Ecto.Schema.Metadata}}) do
-    record
-    |> Map.from_struct
-    |> Map.delete(:__meta__)
-    |> Map.drop(struct.__schema__(:associations))
-    |> Map.drop(struct.__schema__(:primary_key))
+  # PARAMS
+  def params_for(factory_name, attrs \\ %{}) do
+    do_params_for(factory_name, attrs) |> Map.drop([:__meta__, :inserted_at, :updated_at])
   end
-  defp drop_ecto_fields(record) do
-    raise ArgumentError, "#{inspect record} is not an Ecto model. Use `build` instead."
+
+  defp do_params_for(:user, attrs) do
+    Factory.build(:user, attrs) |> Map.from_struct |> Map.drop([:id, :posts, :projects, :role])
+  end
+
+  defp do_params_for(:project, attrs) do
+    Factory.build(:project, attrs) |> Map.from_struct |> Map.drop([:id, :user_id, :user])
+  end
+
+  defp do_params_for(:post, attrs) do
+    Factory.build(:post, attrs) |> Map.from_struct |> Map.drop([:id, :user_id, :user])
   end
 end

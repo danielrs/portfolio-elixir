@@ -33,7 +33,6 @@ const SessionActions = {
 
   currentUser: function(callback) {
     return dispatch => {
-      console.log('GETTING USER');
       Request.get('/api/v1/session')
       .then(response => {
         dispatch({type: Constants.USER_CURRENT_USER, user: response.data.user});
