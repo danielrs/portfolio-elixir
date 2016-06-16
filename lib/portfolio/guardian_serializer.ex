@@ -3,7 +3,6 @@ defmodule Portfolio.GuardianSerializer do
 
   alias Portfolio.Repo
   alias Portfolio.User
-  alias Portfolio.Role
 
   require Ecto.Query
 
