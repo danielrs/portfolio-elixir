@@ -1,7 +1,7 @@
 <section class="mega-brand">
   <div class="mega-brand__video-wrapper animated fadeIn">
     <video class="mega-brand__video" autoplay loop muted>
-      <source src="videos/typing.webm" type="video/mp4" />
+      <source src="<%= static_path(@conn, "/videos/typing.webm") %>" type="video/mp4" />
       Your browser doesn't support the video tag
     </video>
   </div>

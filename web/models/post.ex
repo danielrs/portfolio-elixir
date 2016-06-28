@@ -66,6 +66,7 @@ defmodule Portfolio.Post do
       where: ilike(p.title, ^search_string)
       or ilike(p.slug, ^search_string)
     end
+
     def order_by(query, order_map) do
       query |> Ecto.Query.order_by(^order_map)
     end

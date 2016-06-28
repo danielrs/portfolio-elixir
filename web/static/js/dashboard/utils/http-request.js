@@ -45,6 +45,7 @@ export default {
       method: 'GET',
       headers: buildHeaders()
     }
+    console.log(params);
     return fetch(url + '?' + encodeQueryString(params), config)
     .then(checkStatus)
     .then(parseJSON);

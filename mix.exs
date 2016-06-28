@@ -30,9 +30,9 @@ defmodule Portfolio.Mixfile do
   #
   # Type `mix help deps` for examples and options.
   defp deps do
-    [{:phoenix, "~> 1.1.4"},
+    [{:phoenix, "~> 1.2"},
      {:phoenix_ecto, "~> 2.0"},
-     {:phoenix_html, "~> 2.4"},
+     {:phoenix_html, "~> 2.6"},
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:postgrex, ">= 0.0.0"},
      {:gettext, "~> 0.9"},
@@ -41,8 +41,7 @@ defmodule Portfolio.Mixfile do
      {:guardian, "~> 0.10.0"},
      {:mailgun, "~> 0.1.2"},
      {:earmark, "~> 0.2.1"},
-     {:ex_machina, "~> 0.6.1", only: :test},
-     {:exrm, "~> 0.18.1"}]
+     {:ex_machina, "~> 0.6.1", only: :test}]
   end
 
   # Aliases are shortcut or tasks specific to the current project.

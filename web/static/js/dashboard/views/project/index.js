@@ -24,9 +24,8 @@ class ProjectIndexView extends React.Component {
     dispatch(Actions.newProject());
   }
 
-  _handleChange = filter => {}
-
   _handleFilterChange = filter => {
+    console.log(filter);
     const {dispatch} = this.props;
     dispatch(Actions.filterProjects(filter));
   }
@@ -34,7 +33,7 @@ class ProjectIndexView extends React.Component {
   _handleFilterSubmit = e => {
     e.preventDefault();
     const {dispatch} = this.props;
-    dispatch(Actions.filter(this.props.filter));
+    dispatch(Actions.filterProjects(this.props.filter));
   }
 
   render() {

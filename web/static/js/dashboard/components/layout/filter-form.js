@@ -33,7 +33,7 @@ class FilterForm extends React.Component {
 
   state = {
     order_by: this.props.sortOptions[0] && this.props.sortOptions[0].value || '',
-    order: Order.DESC.toLowerCase(),
+    order: Order.DESC,
     search: ''
   }
 
@@ -41,18 +41,26 @@ class FilterForm extends React.Component {
     this.props.onLoad(this.state);
   }
 
+  _formatState = state => {
+    const direction = state.order == Order.ASC ? '+' : '-';
+    return {
+      order_by: direction + state.order_by,
+      search: state.search
+    };
+  }
+
   _handleSortChange = value => {
     const newState = {...this.state, order_by: value};
     this.setState(newState);
     this.props.onChange(newState);
-    this.props.onFilterChange(newState);
+    this.props.onFilterChange(this._formatState(newState));
   }
 
   _handleOrderChange = value => {
     const newState = {...this.state, order: value};
     this.setState(newState);
     this.props.onChange(newState);
-    this.props.onFilterChange(newState);
+    this.props.onFilterChange(this._formatState(newState));
   }
 
   _handleSearchChange = e => {
@@ -64,7 +72,7 @@ class FilterForm extends React.Component {
   _handleSearchBlur = e => {
     const newState = {...this.state, search: e.target.value};
     this.setState(newState);
-    this.props.onFilterChange(newState);
+    this.props.onFilterChange(this._formatState(newState));
   }
 
   render() {
