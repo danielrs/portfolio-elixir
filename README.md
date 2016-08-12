@@ -2,7 +2,17 @@
 
 # Portfolio
 
-This is the source code for my personal [website][danielrs.me]. It was made with *Elixir* and *PostgreSQL* for the back-end; and *React.js* and *LESS* for the front-end.
+This is the source code for the skeleton of my personal [website][danielrs.me]. It was made with *Elixir* and *PostgreSQL* for the back-end; and *React.js* and *LESS* for the front-end.
+
+## Todo
+
+### Back-end
+
+* Clean code
+
+### Front-end
+
+* Add admin page for managing blog posts
 
 # Running the app
 
