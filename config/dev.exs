@@ -35,8 +35,8 @@ config :phoenix, :stacktrace_depth, 20
 # Configure your database
 config :portfolio, Portfolio.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
-  password: "postgres",
+  username: "portfolio",
+  password: "portfolio",
   database: "portfolio_dev",
   hostname: "localhost",
   pool_size: 10

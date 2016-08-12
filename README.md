@@ -1,4 +1,10 @@
+[danielrs.me]: http://danielrs.me/
+
 # Portfolio
+
+This is the source code for my personal [website][danielrs.me]. It was made with *Elixir* and *PostgreSQL* for the back-end; and *React.js* and *LESS* for the front-end.
+
+# Running the app
 
 To start your Phoenix app:
 
