@@ -1,3 +1,6 @@
+# VIM files
+*.swp
+
 # App artifacts
 /_build
 /db

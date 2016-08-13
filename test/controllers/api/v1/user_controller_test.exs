@@ -5,10 +5,10 @@ defmodule Portfolio.UserControllerTest do
   alias Portfolio.User
 
   setup %{conn: conn} do
-    nonadmin_role = Factory.create(:role)
-    admin_role    = Factory.create(:role, admin?: true)
-    nonadmin_user = Factory.create(:user, role: nonadmin_role)
-    admin_user    = Factory.create(:user, role: admin_role)
+    nonadmin_role = Factory.insert(:role)
+    admin_role    = Factory.insert(:role, admin?: true)
+    nonadmin_user = Factory.insert(:user, role: nonadmin_role)
+    admin_user    = Factory.insert(:user, role: admin_role)
 
     {:ok, nonadmin_conn} = login_user(conn, nonadmin_user)
     {:ok, admin_conn} = login_user(conn, admin_user)
@@ -28,8 +28,8 @@ defmodule Portfolio.UserControllerTest do
   end
 
   test "show chosen resources as non-admin", %{nonadmin_conn: conn} do
-    role = Factory.create(:role)
-    user = Factory.create(:user, role: role)
+    role = Factory.insert(:role)
+    user = Factory.insert(:user, role: role)
 
     conn = get conn, user_path(conn, :show, user)
     assert json_response(conn, code(:ok))["data"] == %{
@@ -43,8 +43,8 @@ defmodule Portfolio.UserControllerTest do
 
   @tag admin: true
   test "show chosen resources as admin", %{admin_conn: conn} do
-    role = Factory.create(:role)
-    user = Factory.create(:user, role: role)
+    role = Factory.insert(:role)
+    user = Factory.insert(:user, role: role)
 
     conn = get conn, user_path(conn, :show, user)
     assert json_response(conn, code(:ok))["data"] == %{
@@ -71,8 +71,8 @@ defmodule Portfolio.UserControllerTest do
 
   @tag admin: true
   test "creates and renders resources when data is valid", %{admin_conn: conn} do
-    role = Factory.create(:role)
-    user_params = Factory.params_for(:user, role_id: role.id)
+    role = Factory.insert(:role)
+    user_params = Factory.params_for_2(:user, role_id: role.id)
     conn = post conn, user_path(conn, :create), user: user_params
     assert json_response(conn, code(:created))["data"]["id"]
     assert Repo.get_by(User, user_params |> Map.drop([:password, :password_confirmation, :password_hash]))
@@ -85,15 +85,15 @@ defmodule Portfolio.UserControllerTest do
   end
 
   test "doest not update chosen resources when user is not admin", %{nonadmin_conn: conn} do
-    user = Factory.create(:user)
+    user = Factory.insert(:user)
     conn = patch conn, user_path(conn, :update, user), user: %{}
     assert json_response(conn, code(:forbidden))["errors"] != %{}
   end
 
   @tag admin: true
   test "updates and renders chosen resource when data is valid", %{admin_conn: conn} do
-    user = Factory.create(:user)
-    updated_role = Factory.create(:role, admin?: true)
+    user = Factory.insert(:user)
+    updated_role = Factory.insert(:role, admin?: true)
     updated_user = Factory.build(:user, role_id: updated_role.id) |> Map.from_struct
     conn = patch conn, user_path(conn, :update, user), user: updated_user
     assert json_response(conn, code(:ok))["data"]["id"]
@@ -102,20 +102,20 @@ defmodule Portfolio.UserControllerTest do
 
   @tag admin: true
   test "does not update and renders errors when data is invalid", %{admin_conn: conn} do
-    user = Factory.create(:user)
+    user = Factory.insert(:user)
     conn = patch conn, user_path(conn, :update, user), user: %{}
     assert json_response(conn, code(:unprocessable_entity))["errors"] != %{}
   end
 
   test "non-admin cannot delete chosen resource", %{nonadmin_conn: conn} do
-    user = Factory.create(:user)
+    user = Factory.insert(:user)
     conn = delete conn, user_path(conn, :delete, user)
     assert json_response(conn, code(:forbidden))["errors"] != %{}
   end
 
   @tag admin: true
   test "admin deletes chosen resource", %{admin_conn: conn} do
-    user = Factory.create(:user)
+    user = Factory.insert(:user)
     conn = delete conn, user_path(conn, :delete, user)
     assert response(conn, code(:no_content))
     refute Repo.get(User, user.id)

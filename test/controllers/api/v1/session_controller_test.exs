@@ -5,8 +5,8 @@ defmodule Portfolio.SessionControllerTest do
   alias Portfolio.Factory
 
   setup %{conn: conn} do
-    role = Factory.create(:role)
-    user = Factory.create(:user, role: role)
+    role = Factory.insert(:role)
+    user = Factory.insert(:user, role: role)
     invalid_user = Factory.build(:user, password: "This should not match factory password")
 
     {:ok, %{conn: conn, user: Map.from_struct(user), invalid_user: Map.from_struct(invalid_user)}}

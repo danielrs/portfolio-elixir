@@ -5,12 +5,16 @@
 # is restricted to this project.
 use Mix.Config
 
+# General application configuration
+config :portfolio,
+  ecto_repos: [Portfolio.Repo]
+
 # Configures the endpoint
 config :portfolio, Portfolio.Endpoint,
   url: [host: "localhost"],
   root: Path.dirname(__DIR__),
   secret_key_base: "QljouOFRV2gXf+4ncD9uIz+WnaQYZDb0q1qq0PM6wTA/uUFBN/WELd6KtEKMRLGQ",
-  render_errors: [accepts: ~w(html json)],
+  render_errors: [view: Portfolio.ErrorView, accepts: ~w(html json)],
   pubsub: [name: Portfolio.PubSub,
            adapter: Phoenix.PubSub.PG2]
 

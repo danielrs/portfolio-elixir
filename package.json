@@ -1,5 +1,6 @@
 {
   "repository": {},
+  "license": "MIT",
   "dependencies": {
     "elemental": "^0.5.14",
     "isomorphic-fetch": "^2.2.1",
@@ -36,6 +37,8 @@
     "uglify-js-brunch": "^2.0.0"
   },
   "scripts": {
+    "deploy": "./node_modules/.bin/brunch build --production",
+    "watch": "./node_modules/.bin/brunch watch --stdin",
     "postinstall": "./node_modules/.bin/bower install"
   }
 }

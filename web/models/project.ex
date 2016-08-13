@@ -37,7 +37,6 @@ defmodule Portfolio.Project do
       or ilike(p.description, ^search_string)
       or ilike(p.homepage, ^search_string)
     end
-
     def order_by(query, order_map) do
       query |> Ecto.Query.order_by(^order_map)
     end

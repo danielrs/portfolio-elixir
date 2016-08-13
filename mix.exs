@@ -18,7 +18,7 @@ defmodule Portfolio.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [mod: {Portfolio, []},
-     applications: [:phoenix, :phoenix_ecto, :phoenix_html, :postgrex, :gettext, :cowboy, :logger,
+     applications: [:phoenix, :phoenix_pubsub, :phoenix_ecto, :phoenix_html, :postgrex, :gettext, :cowboy, :logger,
                     :comeonin]]
   end
 
@@ -31,7 +31,8 @@ defmodule Portfolio.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [{:phoenix, "~> 1.2.1"},
-     {:phoenix_ecto, "~> 2.0"},
+     {:phoenix_pubsub, "~> 1.0"},
+     {:phoenix_ecto, "~> 3.0"},
      {:phoenix_html, "~> 2.6"},
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:postgrex, ">= 0.0.0"},
@@ -41,7 +42,7 @@ defmodule Portfolio.Mixfile do
      {:guardian, "~> 0.10.0"},
      {:mailgun, "~> 0.1.2"},
      {:earmark, "~> 0.2.1"},
-     {:ex_machina, "~> 0.6.1", only: :test}]
+     {:ex_machina, "~> 1.0", only: :test}]
   end
 
   # Aliases are shortcut or tasks specific to the current project.

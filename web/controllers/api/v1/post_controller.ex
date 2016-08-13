@@ -9,7 +9,7 @@ defmodule Portfolio.PostController do
 
   def index(conn, %{"user_id" => user_id}) do
     user = Repo.get!(User, user_id)
-    posts = assoc(user, :posts) |> Post.order_by_date |> Repo.all
+    posts = assoc(user, :posts) |> Ecto.Query.order_by(desc: :date) |> Repo.all
     render(conn, "index.json", posts: posts)
   end
 

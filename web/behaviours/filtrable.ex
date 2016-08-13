@@ -30,4 +30,20 @@ defmodule Portfolio.Filtrable do
       def order_by(query, _order_map), do: query
     end
   end
+
+
+  # NOTE: Might be useful in the future for a macro that auto-implements `search_by`
+  # def where_clause([], _) do
+  #   quote do
+  #     false
+  #   end
+  # end
+  # def where_clause([field | fields], search_string) do
+  #   quote do
+  #     ilike(p.unquote(field), ^unquote(search_string)) or unquote(Portfolio.Filtrable.where_clause(fields, search_string))
+  #   end
+  # end
+  # def to_atom(value) when is_atom(value), do: value
+  # def to_atom(value) when is_binary(value), do: String.to_atom(value)
+  # def to_atom(value), do: value
 end

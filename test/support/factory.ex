@@ -12,14 +12,14 @@ defmodule Portfolio.Factory do
   alias Portfolio.Post
 
   # BUILD
-  def factory(:role) do
+  def role_factory do
     %Role{
       name: sequence(:name, &"Test Role #{&1}"),
       admin?: false
     }
   end
 
-  def factory(:user) do
+  def user_factory do
     %User{
       first_name: "John",
       last_name: "Doe",
@@ -31,7 +31,7 @@ defmodule Portfolio.Factory do
     }
   end
 
-  def factory(:project) do
+  def project_factory do
     %Project{
       title: "Some title",
       description: "Some description",
@@ -42,7 +42,7 @@ defmodule Portfolio.Factory do
     }
   end
 
-  def factory(:post) do
+  def post_factory do
     %Post{
       title: "Some title",
       slug: "some-slug",
@@ -55,19 +55,18 @@ defmodule Portfolio.Factory do
   end
 
   # PARAMS
-  def params_for(factory_name, attrs \\ %{}) do
-    do_params_for(factory_name, attrs) |> Map.drop([:__meta__, :inserted_at, :updated_at])
+  def params_for_2(factory_name, attrs \\ %{}) do
+    do_params_for_2(factory_name, attrs) |> Map.drop([:__meta__, :inserted_at, :updated_at])
   end
 
-  defp do_params_for(:user, attrs) do
+  defp do_params_for_2(:user, attrs) do
     Factory.build(:user, attrs) |> Map.from_struct |> Map.drop([:id, :posts, :projects, :role])
   end
-
-  defp do_params_for(:project, attrs) do
+  defp do_params_for_2(:project, attrs) do
     Factory.build(:project, attrs) |> Map.from_struct |> Map.drop([:id, :user_id, :user])
   end
-
-  defp do_params_for(:post, attrs) do
+  defp do_params_for_2(:post, attrs) do
     Factory.build(:post, attrs) |> Map.from_struct |> Map.drop([:id, :user_id, :user])
   end
+
 end
