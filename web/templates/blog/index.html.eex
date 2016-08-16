@@ -1,8 +1,8 @@
 <section class="main-section blog-section">
   <div class="container container--blog">
 
-    <%= if not Enum.empty?(@posts) do %>
-      <%= render "post-list.html", assigns %>
+    <%= if not Enum.empty?(@paginator.entries) do %>
+      <%= render "_post-list.html", (assigns |> Map.merge(%{posts: @paginator.entries, paginator?: true})) %>
     <% else %>
       <p>No posts to list</p>
     <% end %>

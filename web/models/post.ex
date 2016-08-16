@@ -8,14 +8,14 @@ defmodule Portfolio.Post do
     field :markdown, :string
     field :html, :string
     field :date, Ecto.Date
-    field :published, :boolean, default: false
+    field :published?, :boolean, default: false
     belongs_to :user, Portfolio.User
 
     timestamps
   end
 
   @required_fields ~w(title markdown date)
-  @optional_fields ~w(slug html published)
+  @optional_fields ~w(slug html published?)
   @filtrable_fields ~w(date title slug markdown)
 
   @doc """

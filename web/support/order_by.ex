@@ -1,4 +1,4 @@
-defmodule Portfolio.Utils.OrderBy do
+defmodule Portfolio.OrderBy do
   @type order :: :desc | :asc
 
   @spec from_string(String.t, [String.t]) :: [{order, String.t}]

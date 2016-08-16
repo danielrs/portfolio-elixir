@@ -1,6 +1,6 @@
 <section class="main-section contact-section">
   <div class="container">
     <h2>Contact me!</h2>
-    <%= render "form.html", assigns %>
+    <%= render "_form.html", assigns %>
   </div>
 </section>

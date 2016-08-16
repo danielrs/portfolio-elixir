@@ -8,7 +8,7 @@ defmodule Portfolio.PostTest do
                  markdown: "# Some Markdown",
                  html: "*I was not generated yet",
                  date: "2010-04-17",
-                 published: true,
+                 published?: true,
                  user_id: 1}
   @invalid_attrs %{}
 

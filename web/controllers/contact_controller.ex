@@ -8,7 +8,7 @@ defmodule Portfolio.ContactController do
 
   def index(conn, _params) do
     changeset = Message.changeset(%Message{})
-    render(conn, "index.html", page_title: "Contact - Daniel Rivas", changeset: changeset)
+    do_render(conn, changeset)
   end
 
   def create(conn, %{"message" => contact_params}) do
@@ -20,8 +20,12 @@ defmodule Portfolio.ContactController do
       |> put_flash(:info, "Message sent")
       |> redirect(to: contact_path(conn, :index))
     else
-      render(conn, "index.html", page_title: "Contact - Daniel Rivas", changeset: changeset)
+      do_render(conn, changeset)
     end
+  end
+
+  defp do_render(conn, changeset) do
+    render(conn, "index.html", page_title: "Contact - Daniel Rivas", changeset: changeset)
   end
 
   defp send_message(changeset) do

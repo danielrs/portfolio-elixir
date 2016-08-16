@@ -49,7 +49,7 @@ defmodule Portfolio.Factory do
       markdown: "# Some markdown",
       html: "<h1>Some markdown</h1>\n",
       date: Ecto.Date.utc,
-      published: false,
+      published?: true,
       user: build(:user)
     }
   end

@@ -4,21 +4,25 @@
   }
 }
 
-article.post {
-  > .post__date {
-    margin-bottom: @magic-number-rem/3;
+.post {
+  margin-bottom: @magic-number*2;
+
+  .post__header {
     font-family: "Lato", sans-serif;
-    font-size: 0.9rem;
-    color: lighten(@color-body, 16%);
-  }
-  > .post__title {
-    margin-bottom: @magic-number-rem/3;
-    font-weight: 400;
-    line-height: @magic-number;
-  }
-  > .post__meta {
     margin-bottom: @magic-number*2;
-    color: lighten(@color-body, 16%);
+    > .post__date {
+      margin-bottom: @magic-number-rem/3;
+      font-size: 0.9rem;
+      color: lighten(@color-body, 16%);
+    }
+    > .post__title {
+      margin-bottom: @magic-number-rem/3;
+      font-weight: 400;
+      line-height: @magic-number;
+    }
+    > .post__meta {
+      color: lighten(@color-body, 16%);
+    }
   }
 
   > .post__body {

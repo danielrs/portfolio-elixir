@@ -33,7 +33,7 @@
   <section class="main-section post-section">
     <div class="container">
       <h2 class="header--main">Latest post</h2>
-      <%= render Portfolio.BlogView, "post-list.html", assigns %>
+      <%= render Portfolio.BlogView, "_post-list.html", assigns %>
       <div class="main-section__link">
         <a href="<%= blog_path(@conn, :index) %>">Go to blog</a>
       </div>

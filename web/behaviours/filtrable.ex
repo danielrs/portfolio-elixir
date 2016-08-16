@@ -15,7 +15,7 @@ defmodule Portfolio.Filtrable do
     quote do
       def filter_by(query, params) do
         search_string = "%" <> Map.get(params, "search", "") <> "%"
-        order_map = Portfolio.Utils.OrderBy.from_string(
+        order_map = Portfolio.OrderBy.from_string(
           Map.get(params, "order_by", Enum.join(unquote(filtrable_fields), ",")),
           unquote(filtrable_fields)
         )

@@ -2,7 +2,7 @@ defmodule Portfolio.RoleCheckerTest do
   use Portfolio.ModelCase
 
   alias Portfolio.Factory
-  alias Portfolio.Utils.RoleChecker
+  alias Portfolio.RoleChecker
 
   test "RoleChecker.admin? is true when user is admin" do
     role = Factory.insert(:role, admin?: true)

@@ -36,7 +36,7 @@ defmodule Portfolio.PostControllerTest do
       "markdown" => post.markdown,
       "html" => post.html,
       "date" => Ecto.Date.to_string(post.date),
-      "published" => post.published,
+      "published?" => post.published?,
       "user_id" => post.user_id}
   end
 

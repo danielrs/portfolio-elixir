@@ -17,7 +17,7 @@ defmodule Portfolio.PostView do
       markdown: post.markdown,
       html: post.html,
       date: post.date,
-      published: post.published,
+      published?: post.published?,
       user_id: post.user_id}
     |> Map.drop(ignores)
   end

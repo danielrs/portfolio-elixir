@@ -1,4 +1,4 @@
-defmodule Portfolio.Utils.RoleChecker do
+defmodule Portfolio.RoleChecker do
   alias Portfolio.Repo
   alias Portfolio.Role
   alias Portfolio.User

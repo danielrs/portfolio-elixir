@@ -1,0 +1,8 @@
+<nav class="paginator">
+  <%= if @paginator.page_number > 1 do %>
+    <a class="paginator__prev" href="<%= @path_func.(@paginator.page_number - 1) %>">&lt; Newer posts</a>
+  <% end %>
+  <%= if @paginator.page_number < @paginator.total_pages do %>
+    <a class="paginator__next" href="<%= @path_func.(@paginator.page_number + 1) %>">Older posts &gt;</a>
+  <% end %>
+</nav>

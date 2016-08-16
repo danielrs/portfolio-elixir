@@ -8,7 +8,7 @@ defmodule Portfolio.Repo.Migrations.CreatePost do
       add :markdown, :text, null: false
       add :html, :text, null: false
       add :date, :date, null: false
-      add :published, :boolean, default: false
+      add :published?, :boolean, default: false
       add :user_id, references(:users, on_delete: :nothing), null: false
 
       timestamps
