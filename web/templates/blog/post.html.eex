@@ -1,0 +1,18 @@
+<article class="post">
+  <div class="post__date"><%= @post.date %></div>
+  <h1 class="post__title">
+    <a href="<%= blog_path(@conn, :show, @post.id, @post.slug) %>"><%= @post.title %></a>
+  </h1>
+
+  <div class="post__meta">
+    <%# <span> %>
+    <%#   by <%= @post.user.first_name <> " " <> @post.user.last_name %1> %>
+    <%# </span> %>
+  </div>
+
+  <%= if assigns[:body?] do %>
+    <div class="post__body">
+      <%= raw(@post.html) %>
+    </div>
+  <% end %>
+</article>

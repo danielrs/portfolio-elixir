@@ -17,13 +17,25 @@
   </div>
 </section>
 
-<%= if Enum.count(@projects) > 0 do %>
+<%= if not Enum.empty?(@projects) do %>
   <section class="main-section project-section">
     <div class="container">
       <h2 class="header--main">Personal projects</h2>
       <%= render Portfolio.ProjectShowcaseView, "project-list.html", assigns %>
       <div class="main-section__link">
         <a href="<%= project_showcase_path(@conn, :index) %>">Go to projects page</a>
+      </div>
+    </div>
+  </section>
+<% end %>
+
+<%= if not Enum.empty?(@posts) do %>
+  <section class="main-section post-section">
+    <div class="container">
+      <h2 class="header--main">Latest post</h2>
+      <%= render Portfolio.BlogView, "post-list.html", assigns %>
+      <div class="main-section__link">
+        <a href="<%= blog_path(@conn, :index) %>">Go to blog</a>
       </div>
     </div>
   </section>

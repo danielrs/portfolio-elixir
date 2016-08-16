@@ -1,0 +1,34 @@
+.blog-section {
+  .container {
+    max-width: @break-m;
+  }
+}
+
+article.post {
+  > .post__date {
+    margin-bottom: @magic-number-rem/3;
+    font-family: "Lato", sans-serif;
+    font-size: 0.9rem;
+    color: lighten(@color-body, 16%);
+  }
+  > .post__title {
+    margin-bottom: @magic-number-rem/3;
+    font-weight: 400;
+    line-height: @magic-number;
+  }
+  > .post__meta {
+    margin-bottom: @magic-number*2;
+    color: lighten(@color-body, 16%);
+  }
+
+  > .post__body {
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: @magic-number * 1.25;
+      margin-bottom: 1em;
+      font-family: "Lato", sans-serif;
+    }
+    pre {
+      margin: @magic-number 0;
+    }
+  }
+}

@@ -23,9 +23,43 @@
     "typing.js": "^0.2.2",
     "normalize-css": "^4.0.0",
     "animate.css": "^3.5.1",
-    "greed": "^0.1.0"
+    "greed": "^0.1.0",
+    "prism": "^1.5.1"
   },
   "resolutions": {
     "jquery": "^2.2.3"
+  },
+  "overrides": {
+    "prism": {
+      "main": [
+        "prism.js",
+        "themes/prism-okaidia.css",
+        "components/prism-bash.js",
+        "components/prism-batch.js",
+        "components/prism-clike.js",
+        "components/prism-c.js",
+        "components/prism-cpp.js",
+        "components/prism-csharp.js",
+        "components/prism-elixir.js",
+        "components/prism-erlang.js",
+        "components/prism-git.js",
+        "components/prism-haskell.js",
+        "components/prism-java.js",
+        "components/prism-less.js",
+        "components/prism-lua.js",
+        "components/prism-makefile.js",
+        "components/prism-markdown.js",
+        "components/prism-ocaml.js",
+        "components/prism-php.js",
+        "components/prism-python.js",
+        "components/prism-ruby.js",
+        "components/prism-rust.js",
+        "components/prism-scala.js",
+        "components/prism-scheme.js",
+        "components/prism-sql.js",
+        "components/prism-stylus.js",
+        "components/prism-vim.js"
+      ]
+    }
   }
 }

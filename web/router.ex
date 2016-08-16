@@ -39,7 +39,10 @@ defmodule Portfolio.Router do
     get "/projects", ProjectShowcaseController, :index
     get "/contact", ContactController, :index
     post "/contact", ContactController, :create
+
     get "/blog", BlogController, :index
+    get "/blog/:id", BlogController, :show_proxy
+    get "/blog/:id/:slug", BlogController, :show
 
     get "/dashboard*path", DashboardController, :index
   end

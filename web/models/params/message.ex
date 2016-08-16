@@ -11,7 +11,7 @@ defmodule Portfolio.Message do
   @required_fields ~w(name email subject text)
   @optional_fields ~w()
 
-  def changeset(model, params \\ :empty) do
+  def changeset(model, params \\ %{}) do
     model
     |> cast(params, @required_fields, @optional_fields)
     |> validate_format(:email, ~r/@/)

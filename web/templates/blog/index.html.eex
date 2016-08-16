@@ -1,5 +1,11 @@
-<section class="main-section">
-  <div class="container">
-    <h2>Blog</h2>
+<section class="main-section blog-section">
+  <div class="container container--blog">
+
+    <%= if not Enum.empty?(@posts) do %>
+      <%= render "post-list.html", assigns %>
+    <% else %>
+      <p>No posts to list</p>
+    <% end %>
+
   </div>
 <section>
