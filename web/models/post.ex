@@ -14,9 +14,9 @@ defmodule Portfolio.Post do
     timestamps
   end
 
-  @required_fields ~w(title markdown date)
-  @optional_fields ~w(slug html published?)
-  @filtrable_fields ~w(date title slug markdown)
+  @required_fields [:title, :markdown, :date]
+  @optional_fields [:slug, :html, :published?]
+  @filtrable_fields [:date, :title, :slug, :markdown]
 
   @doc """
   Creates a changeset based on the `model` and `params`.
@@ -26,7 +26,8 @@ defmodule Portfolio.Post do
   """
   def changeset(model, params \\ :empty) do
     model
-    |> cast(params, @required_fields, @optional_fields)
+    |> cast(params, @required_fields ++ @optional_fields)
+    |> validate_required(@required_fields)
     |> cast_slug
     |> cast_html
     |> update_change(:date, &cast_date(&1))

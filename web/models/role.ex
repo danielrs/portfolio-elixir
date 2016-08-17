@@ -9,8 +9,8 @@ defmodule Portfolio.Role do
     timestamps
   end
 
-  @required_fields ~w(name admin?)
-  @optional_fields ~w()
+  @required_fields [:name, :admin?]
+  @optional_fields []
 
   @valid_names ~w(admin user)
 
@@ -22,7 +22,8 @@ defmodule Portfolio.Role do
   """
   def changeset(model, params \\ :empty) do
     model
-    |> cast(params, @required_fields, @optional_fields)
+    |> cast(params, @required_fields ++ @optional_fields)
+    |> validate_required(@required_fields)
     |> validate_name
     |> unique_constraint(:name, message: "already taken")
   end

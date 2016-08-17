@@ -4,8 +4,6 @@ defmodule Portfolio.SessionController do
 
   alias Portfolio.Session
 
-  plug :scrub_params, "session" when action in [:create]
-
   def show(conn, _params) do
     jwt = Guardian.Plug.current_token(conn)
     user = Guardian.Plug.current_resource(conn)

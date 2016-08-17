@@ -14,9 +14,9 @@ defmodule Portfolio.Project do
     timestamps
   end
 
-  @required_fields ~w(title description homepage date)
-  @optional_fields ~w(content)
-  @filtrable_fields ~w(date title description homepage)
+  @required_fields [:title, :description, :homepage, :date]
+  @optional_fields [:content]
+  @filtrable_fields [:date, :title, :description, :homepage]
 
   @doc """
   Creates a changeset based on the `model` and `params`.
@@ -26,7 +26,8 @@ defmodule Portfolio.Project do
   """
   def changeset(model, params \\ :empty) do
     model
-    |> cast(params, @required_fields, @optional_fields)
+    |> cast(params, @required_fields ++ @optional_fields)
+    |> validate_required(@required_fields)
     |> update_change(:date, &cast_date(&1))
   end
 

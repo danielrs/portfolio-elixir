@@ -7,7 +7,6 @@ defmodule Portfolio.SetupController do
 
   require Logger
 
-  plug :scrub_params, "user" when action in [:create]
   plug :put_layout, "setup.html"
 
   def index(conn, _params) do

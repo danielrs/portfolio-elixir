@@ -6,7 +6,6 @@ defmodule Portfolio.UserController do
 
   plug :authorize_creation when action in [:create]
   plug :authorize_modification when action in [:update, :delete]
-  plug :scrub_params, "user" when action in [:create, :update]
 
   def index(conn, _params) do
     users = User |> Ecto.Query.preload(:role) |> Repo.all

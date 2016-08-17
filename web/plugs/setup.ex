@@ -1,12 +1,10 @@
 defmodule Portfolio.Plug.Setup do
   import Plug.Conn
   import Phoenix.Controller, only: [redirect: 2]
-  import Ecto.Query, only: [from: 1, from: 2]
+  import Ecto.Query, only: [from: 2]
 
   alias Portfolio.Repo
   alias Portfolio.Role
-  alias Portfolio.User
-
 
   def ensure_setup(conn, _opts) do
     if theres_admin? do

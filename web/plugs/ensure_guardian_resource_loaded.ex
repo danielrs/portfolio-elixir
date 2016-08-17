@@ -7,7 +7,7 @@ defmodule Portfolio.Plug.EnsureGuardianResourceLoaded do
 
   def init(default), do: default
 
-  def call(conn, opts) do
+  def call(conn, _opts) do
     if Guardian.Plug.current_resource(conn) do
       conn
     else

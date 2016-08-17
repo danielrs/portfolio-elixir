@@ -17,8 +17,8 @@ defmodule Portfolio.User do
     timestamps
   end
 
-  @required_fields ~w(first_name last_name email password password_confirmation role_id)
-  @optional_fields ~w(password_hash)
+  @required_fields [:first_name, :last_name, :email, :password, :password_confirmation, :role_id]
+  @optional_fields [:password_hash]
 
   @doc """
   Creates a changeset based on the `model` and `params`.
@@ -28,7 +28,8 @@ defmodule Portfolio.User do
   """
   def changeset(model, params \\ :empty) do
     model
-    |> cast(params, @required_fields, @optional_fields)
+    |> cast(params, @required_fields ++ @optional_fields)
+    |> validate_required(@required_fields)
     |> validate_format(:email, ~r/@/)
     |> update_change(:email, &String.downcase(&1))
     |> validate_length(:password, min: 5)

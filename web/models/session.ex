@@ -1,8 +1,7 @@
 defmodule Portfolio.Session do
   use Portfolio.Web, :model
 
-  import Comeonin.Bcrypt, only: [hashpwsalt: 1, checkpw: 2]
-  import Ecto.Query, only: [from: 2]
+  import Comeonin.Bcrypt, only: [checkpw: 2]
 
   alias Portfolio.User
   alias Portfolio.Repo
@@ -12,12 +11,13 @@ defmodule Portfolio.Session do
     field :password, :string, virtual: true
   end
 
-  @required_fields ~w(email password)
-  @optional_fields ~w()
+  @required_fields [:email, :password]
+  @optional_fields []
 
   def changeset(model, params \\ :empty) do
     model
-    |> cast(params, @required_fields, @optional_fields)
+    |> cast(params, @required_fields ++ @optional_fields)
+    |> validate_required(@required_fields)
     |> validate_format(:email, ~r/@/)
     |> validate_length(:password, min: 5)
     |> update_change(:email, &String.downcase(&1))

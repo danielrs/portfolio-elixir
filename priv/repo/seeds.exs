@@ -136,7 +136,7 @@ defmodule Portfolio.SeedData do
         published?: true
       },
       %{
-        title: "Lazy evulation",
+        title: "Lazy evaluation",
         markdown: @lorem,
         date: Ecto.Date.utc,
         published?: true

@@ -5,7 +5,6 @@ defmodule Portfolio.Factory do
   use ExMachina.Ecto, repo: Portfolio.Repo
   alias Portfolio.Factory
 
-  alias Portfolio.Repo
   alias Portfolio.Role
   alias Portfolio.User
   alias Portfolio.Project

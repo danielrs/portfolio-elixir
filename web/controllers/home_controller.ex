@@ -4,7 +4,6 @@ defmodule Portfolio.HomeController do
   alias Portfolio.User
   alias Portfolio.Project
   alias Portfolio.Post
-  alias Portfolio.Paginator
 
   plug Portfolio.Plug.Menu
 

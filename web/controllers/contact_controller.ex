@@ -3,7 +3,6 @@ defmodule Portfolio.ContactController do
   alias Portfolio.Message
   alias Portfolio.Mailer
 
-  plug :scrub_params, "message" when action in [:create]
   plug Portfolio.Plug.Menu
 
   def index(conn, _params) do

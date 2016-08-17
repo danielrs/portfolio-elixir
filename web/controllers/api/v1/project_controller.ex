@@ -6,7 +6,6 @@ defmodule Portfolio.ProjectController do
   require Logger
 
   plug Portfolio.Plug.UserResourceModification when action in [:create, :update, :delete]
-  plug :scrub_params, "project" when action in [:create, :update]
 
   def index(conn, %{"user_id" => user_id} = params) do
     Logger.debug inspect(params)
