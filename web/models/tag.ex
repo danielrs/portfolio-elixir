@@ -17,5 +17,21 @@ defmodule Portfolio.Tag do
     struct
     |> cast(params, @required_fields ++ @optional_fields)
     |> validate_required(@required_fields)
+    |> cast_name
+  end
+
+  defp cast_name(changeset) do
+    if changeset.valid? do
+      changeset |> update_change(:name, &tagify(&1))
+    else
+      changeset
+    end
+  end
+
+  defp tagify(string) when is_binary(string) do
+    string
+    |> String.downcase
+    |> String.replace(~r/\s/, "-")
+    |> String.replace(~r/[^-\p{L}0-9]/u, "")
   end
 end

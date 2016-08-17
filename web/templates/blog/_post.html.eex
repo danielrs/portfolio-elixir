@@ -5,13 +5,22 @@
     <a href="<%= blog_path(@conn, :show, @post.id, @post.slug) %>"><%= @post.title %></a>
   </h1>
 
-  <%= if assigns[:meta?] do %>
-    <div class="post__meta">
-      <span>
-        by <%= @post.user.first_name <> " " <> @post.user.last_name %>
+  <div class="post__meta">
+    <%= if assigns[:author?] do %>
+      by
+      <span class="post__author">
+        <%= @post.user.first_name <> " " <> @post.user.last_name %>
       </span>
-    </div>
-  <% end %>
+    <% end %>
+    <%= if not Enum.empty?(@post.tags) do %>
+      on
+      <span class="post__tags">
+        <%= for tag <- @post.tags do %>
+          <a href="#" class="post__tag tag <%= tag_class(tag.name) %>">#<%= tag.name %></a>
+        <% end %>
+      </span>
+    <% end %>
+  </div>
 
   </header>
 

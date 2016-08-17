@@ -10,6 +10,7 @@ defmodule Portfolio.Post do
     field :date, Ecto.Date
     field :published?, :boolean, default: false
     belongs_to :user, Portfolio.User
+    many_to_many :tags, Portfolio.Tag, join_through: "posts_tags"
 
     timestamps
   end

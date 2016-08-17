@@ -16,6 +16,7 @@ defmodule Portfolio.HomeController do
   defp latest_posts do
     Post
     |> Query.preload(:user)
+    |> Query.preload(:tags)
     |> Query.select([:id, :title, :slug, :date, :published?, :user_id])
     |> Query.where(published?: true)
     |> Ecto.Query.order_by(desc: :date)

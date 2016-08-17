@@ -21,8 +21,12 @@
       line-height: 24em / 20;
       font-weight: 400;
     }
-    > .post__meta {
-      color: lighten(@color-body, 16%);
+  }
+
+  .post__header > .post__meta {
+    > .post__author { font-style: italic; }
+    > .post__tags {
+      word-spacing: .5em;
     }
   }
 
@@ -36,4 +40,28 @@
       margin: @magic-number 0;
     }
   }
+}
+
+.tag {
+  .tag-color(@color) {
+    @light-color: lighten(@color, 16%);
+    color: @light-color;
+    &:visited { color: @light-color; }
+    &:focus { color: @color; }
+    &:hover { color: @color; }
+    &:active { color: @light-color; }
+  }
+
+  .tag-color(@color-body);
+
+  &--color-0 { .tag-color(@color-tag-0); }
+  &--color-1 { .tag-color(@color-tag-1); }
+  &--color-2 { .tag-color(@color-tag-2); }
+  &--color-3 { .tag-color(@color-tag-3); }
+  &--color-4 { .tag-color(@color-tag-4); }
+  &--color-5 { .tag-color(@color-tag-5); }
+  &--color-6 { .tag-color(@color-tag-6); }
+  &--color-7 { .tag-color(@color-tag-7); }
+  &--color-8 { .tag-color(@color-tag-8); }
+  &--color-9 { .tag-color(@color-tag-9); }
 }

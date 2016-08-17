@@ -40,4 +40,17 @@ defmodule Portfolio.BlogControllerTest do
     assert html_response(conn, 200) =~ post.user.first_name <> " " <> post.user.last_name
     assert html_response(conn, 200) =~ post.html
   end
+
+  test "doesn't show any tags when post doesn't has any tags", %{conn: conn} do
+    post = Factory.insert(:post)
+    conn = get conn, blog_path(conn, :show, post.id, post.slug)
+    refute html_response(conn, 200) =~ "post__tags"
+  end
+
+  test "show tags when post has tags", %{conn: conn} do
+    tags = Factory.insert_list(3, :tag)
+    post = Factory.insert(:post, tags: tags)
+    conn = get conn, blog_path(conn, :show, post.id, post.slug)
+    assert html_response(conn, 200) =~ "post__tags"
+  end
 end

@@ -16,7 +16,7 @@ defmodule Portfolio.BlogController do
   end
 
   def show(conn, %{"id" => id}) do
-    post = Post |> Ecto.Query.preload(:user) |> Repo.get!(id)
+    post = Post |> Query.preload(:user) |> Query.preload(:tags) |> Repo.get!(id)
     if post.published? do
       render(conn, "show.html", page_title: post.title <> " - Daniel Rivas", post: post)
     else
@@ -29,6 +29,7 @@ defmodule Portfolio.BlogController do
   defp post_paginator(params) do
     Post
     |> Query.preload(:user)
+    |> Query.preload(:tags)
     |> Query.select([:id, :title, :slug, :date, :published?, :user_id])
     |> Query.where(published?: true)
     |> Query.order_by(desc: :date)

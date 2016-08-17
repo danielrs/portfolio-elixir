@@ -10,14 +10,20 @@
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
 
+:random.seed(:erlang.now)
+
 import Ecto, only: [build_assoc: 2]
 
+alias Ecto.Query
 alias Portfolio.Repo
 alias Portfolio.Role
 alias Portfolio.User
 alias Portfolio.Project
 alias Portfolio.Post
+alias Portfolio.Tag
 alias Portfolio.SeedData
+
+require Ecto.Query
 
 defmodule Portfolio.SeedData do
   @moduledoc false
@@ -173,6 +179,23 @@ defmodule Portfolio.SeedData do
       }
     ]
   end
+
+  def tags do
+    [
+      %{name: "functional-programming"},
+      %{name: "programming"},
+      %{name: "elixir"},
+      %{name: "tutorial"},
+      %{name: "how-to"},
+      %{name: "api"},
+      %{name: "sql"},
+      %{name: "ai"},
+      %{name: "open-gl"},
+      %{name: "game-development"},
+      %{name: "linux"},
+      %{name: "vim"}
+    ]
+  end
 end
 
 # Roles
@@ -211,4 +234,18 @@ if Mix.env != :test do
       |> Repo.insert!
     end
   end
+
+  # Insert tags
+  for tag <- SeedData.tags do
+    Tag.changeset(%Tag{}, tag)
+    |> Repo.insert!
+  end
+
+  # Link all posts to all tags
+  for post <- (Post |> Query.preload(:tags) |> Repo.all) do
+    tag_count = :random.uniform * 100 |> trunc |> rem(4)
+    tags = Repo.all(Tag) |> Enum.take_random(tag_count)
+    post |> Ecto.Changeset.change |> Ecto.Changeset.put_assoc(:tags, tags) |> Repo.update!
+  end
+
 end
