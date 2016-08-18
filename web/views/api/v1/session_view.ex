@@ -1,4 +1,4 @@
-defmodule Portfolio.SessionView do
+defmodule Portfolio.API.V1.SessionView do
   use Portfolio.Web, :view
 
   def render("show.json", %{jwt: jwt, user: user}) do

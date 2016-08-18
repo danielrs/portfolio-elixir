@@ -1,11 +1,11 @@
-defmodule Portfolio.ProjectController do
+defmodule Portfolio.API.V1.ProjectController do
   use Portfolio.Web, :controller
 
   alias Portfolio.User
   alias Portfolio.Project
   require Logger
 
-  plug Portfolio.Plug.UserResourceModification when action in [:create, :update, :delete]
+  plug API.V1.UserResourceModificationPlug when action in [:create, :update, :delete]
 
   def index(conn, %{"user_id" => user_id} = params) do
     Logger.debug inspect(params)

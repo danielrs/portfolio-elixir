@@ -1,12 +1,12 @@
-defmodule Portfolio.ProjectView do
+defmodule Portfolio.API.V1.ProjectView do
   use Portfolio.Web, :view
 
   def render("index.json", %{projects: projects}) do
-    %{data: render_many(projects, Portfolio.ProjectView, "project.json", ignore: :content)}
+    %{data: render_many(projects, API.V1.ProjectView, "project.json", ignore: :content)}
   end
 
   def render("show.json", %{project: project}) do
-    %{data: render_one(project, Portfolio.ProjectView, "project.json")}
+    %{data: render_one(project, API.V1.ProjectView, "project.json")}
   end
 
   def render("project.json", %{project: project} = params) do

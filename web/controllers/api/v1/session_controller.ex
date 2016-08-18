@@ -1,4 +1,4 @@
-defmodule Portfolio.SessionController do
+defmodule Portfolio.API.V1.SessionController do
   use Portfolio.Web, :controller
   require Logger
 
@@ -30,6 +30,6 @@ defmodule Portfolio.SessionController do
   def unauthenticated(conn, _params) do
     conn
     |> put_status(:forbidden)
-    |> render(Portfolio.SessionView, "forbidden.json", error: "Not authenticated")
+    |> render(API.V1.SessionView, "forbidden.json", error: "Not authenticated")
   end
 end

@@ -1,4 +1,4 @@
-defmodule Portfolio.UserController do
+defmodule Portfolio.API.V1.UserController do
   use Portfolio.Web, :controller
 
   alias Portfolio.User
@@ -59,7 +59,7 @@ defmodule Portfolio.UserController do
     else
       conn
       |> put_status(:forbidden)
-      |> render(Portfolio.SessionView, "forbidden.json", error: "You are not authorized to create new users!")
+      |> render(API.V1.SessionView, "forbidden.json", error: "You are not authorized to create new users!")
       |> halt
     end
   end
@@ -72,7 +72,7 @@ defmodule Portfolio.UserController do
     else
       conn
       |> put_status(:forbidden)
-      |> render(Portfolio.SessionView, "forbidden.json", error: "You are not authorized to modify that user!")
+      |> render(API.V1.SessionView, "forbidden.json", error: "You are not authorized to modify that user!")
       |> halt
     end
   end

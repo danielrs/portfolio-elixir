@@ -12,7 +12,7 @@ config :portfolio, Portfolio.Endpoint,
   code_reloader: true,
   check_origin: false,
   watchers: [node: ["node_modules/brunch/bin/brunch", "watch", "--stdin",
-                    cd: Path.expand("../", __DIR__)]]
+                    cd: Path.expand("../web/themes/default", __DIR__)]]
 
 # Watch static and templates for browser reloading.
 config :portfolio, Portfolio.Endpoint,

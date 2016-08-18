@@ -1,4 +1,4 @@
-defmodule Portfolio.PostControllerTest do
+defmodule Portfolio.API.V1.PostControllerTest do
   use Portfolio.ConnCase
 
   alias Portfolio.Factory

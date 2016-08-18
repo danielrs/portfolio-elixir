@@ -1,10 +1,10 @@
-defmodule Portfolio.PostController do
+defmodule Portfolio.API.V1.PostController do
   use Portfolio.Web, :controller
 
   alias Portfolio.Post
   alias Portfolio.User
 
-  plug Portfolio.Plug.UserResourceModification when action in [:create, :update, :delete]
+  plug API.V1.UserResourceModificationPlug when action in [:create, :update, :delete]
 
   def index(conn, %{"user_id" => user_id}) do
     user = Repo.get!(User, user_id)

@@ -1,0 +1,24 @@
+{
+  "name": "greed",
+  "authors": [
+    "Daniel Rivas <ers.daniel+dev@gmail.com>"
+  ],
+  "description": "Semantic grid system for Less pre-processor",
+  "main": "greed.less",
+  "keywords": [
+    "grid",
+    "style",
+    "css",
+    "less",
+    "mixin"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
