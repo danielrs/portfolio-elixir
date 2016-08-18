@@ -1,4 +1,4 @@
-defmodule Portfolio.SessionControllerTest do
+defmodule Portfolio.API.V1.SessionControllerTest do
   use Portfolio.ConnCase
   import Plug.Conn.Status
 
