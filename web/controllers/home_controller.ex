@@ -10,7 +10,7 @@ defmodule Portfolio.HomeController do
   def index(conn, params) do
     user = Repo.get_by(User, email: Application.get_env(:portfolio, :showcase_email))
     projects = user && assoc(user, :projects) |> Project.filter_by(params) |> Repo.all || []
-    render conn, "index.html", page_title: "Daniel Rivas", projects: projects, posts: latest_posts
+    render conn, "index.html", page_title: page_title, projects: projects, posts: latest_posts
   end
 
   defp latest_posts do

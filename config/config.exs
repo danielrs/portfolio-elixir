@@ -43,6 +43,7 @@ config :guardian, Guardian,
 
 # Other user facing configuration
 config :portfolio,
-  showcase_email: "ers.daniel@gmail.com"
+  site_name: "Daniel Rivas",
+  showcase_email: "daniel.rivas@email.com"
 
 import_config "config.secret.exs"

@@ -36,10 +36,9 @@ defmodule Portfolio.Router do
     pipe_through [:browser, :browser_user]
 
     get "/", HomeController, :index
-    get "/projects", ProjectShowcaseController, :index
+    get "/projects", ProjectController, :index
     get "/contact", ContactController, :index
     post "/contact", ContactController, :create
-
     get "/blog", BlogController, :index
     get "/blog/:id", BlogController, :show_proxy
     get "/blog/:id/:slug", BlogController, :show

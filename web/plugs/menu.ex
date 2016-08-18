@@ -33,7 +33,7 @@ defmodule Portfolio.Plug.Menu do
   def init(opts) do
     menu = []
            |> menu_entry("Home", :home_path)
-           |> menu_entry("Projects", :project_showcase_path)
+           |> menu_entry("Projects", :project_path)
            |> menu_entry("Contact", :contact_path)
            |> menu_entry("Blog", :blog_path)
 

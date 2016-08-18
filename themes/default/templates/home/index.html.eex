@@ -7,7 +7,7 @@
   </div>
   <div class="mega-brand__container">
     <div class="mega-brand__header">
-      <h1 class="animated fadeInDown">Daniel Rivas</h1>
+      <h1 class="animated fadeInDown"><%= site_name %></h1>
       <code id="tagline">I'm a programer!</code>
     </div>
     <div class="mega-brand__body">
@@ -21,9 +21,9 @@
   <section class="main-section project-section">
     <div class="container">
       <h2 class="header--main">Personal projects</h2>
-      <%= render Portfolio.ProjectShowcaseView, "project-list.html", assigns %>
+      <%= render Portfolio.ProjectView, "_project-list.html", assigns %>
       <div class="main-section__link">
-        <a href="<%= project_showcase_path(@conn, :index) %>">Go to projects page</a>
+        <a href="<%= project_path(@conn, :index) %>">Go to projects page</a>
       </div>
     </div>
   </section>

@@ -8,7 +8,7 @@ defmodule Portfolio.BlogController do
   plug :fix_slug when action in [:show_proxy, :show]
 
   def index(conn, params) do
-    render conn, "index.html", page_title: "Blog - Daniel Rivas", paginator: post_paginator(params)
+    render conn, "index.html", page_title: page_title("Blog"), paginator: post_paginator(params)
   end
 
   def show_proxy(conn, _params) do
@@ -18,7 +18,7 @@ defmodule Portfolio.BlogController do
   def show(conn, %{"id" => id}) do
     post = Post |> Query.preload(:user) |> Query.preload(:tags) |> Repo.get!(id)
     if post.published? do
-      render(conn, "show.html", page_title: post.title <> " - Daniel Rivas", post: post)
+      render(conn, "show.html", page_title: page_title(post.title), post: post)
     else
       conn
       |> put_flash(:info, "You are not allowed to view unpublished posts")

@@ -4,6 +4,6 @@ defmodule Portfolio.DashboardController do
   plug :put_layout, "dashboard.html"
 
   def index(conn, _params) do
-    render(conn, "index.html")
+    render(conn, "index.html", page_title: page_title("Dashboard"))
   end
 end

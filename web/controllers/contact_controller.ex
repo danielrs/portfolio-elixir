@@ -24,7 +24,7 @@ defmodule Portfolio.ContactController do
   end
 
   defp do_render(conn, changeset) do
-    render(conn, "index.html", page_title: "Contact - Daniel Rivas", changeset: changeset)
+    render(conn, "index.html", page_title: page_title("Contact"), changeset: changeset)
   end
 
   defp send_message(changeset) do
