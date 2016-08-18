@@ -19,7 +19,7 @@ defmodule Portfolio.Mixfile do
   def application do
     [mod: {Portfolio, []},
      applications: [:phoenix, :phoenix_pubsub, :phoenix_ecto, :phoenix_html, :postgrex, :gettext, :cowboy, :logger,
-                    :comeonin]]
+                    :comeonin, :timex]]
   end
 
   # Specifies which paths to compile per environment.
@@ -42,7 +42,8 @@ defmodule Portfolio.Mixfile do
      {:guardian, "~> 0.10.0"},
      {:mailgun, "~> 0.1.2"},
      {:earmark, "~> 0.2.1"},
-     {:ex_machina, "~> 1.0", only: :test}]
+     {:ex_machina, "~> 1.0", only: :test},
+     {:timex, "~> 3.0"}]
   end
 
   # Aliases are shortcut or tasks specific to the current project.

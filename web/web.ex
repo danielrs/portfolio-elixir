@@ -59,6 +59,8 @@ defmodule Portfolio.Web do
       import Portfolio.Router.Helpers
       import Portfolio.ErrorHelpers
       import Portfolio.Gettext
+
+      # import Portfolio.Utils, only: [format_date: 2]
     end
   end
 

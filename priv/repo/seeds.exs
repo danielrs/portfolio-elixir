@@ -31,7 +31,7 @@ defmodule Portfolio.SeedData do
   @lorem """
   Ipsum mollitia nemo nam id minima Facere esse odit praesentium minima error Dolorem a impedit ex distinctio non Earum minima voluptas adipisci dolor at velit possimus. Dicta illo vel inciduntyy.
 
-  # Nemo nam
+  ## Nemo nam
 
   Ipsum mollitia **nemo** nam id minima Facere esse odit praesentium minima error Dolorem a impedit ex distinctio non Earum minima voluptas adipisci dolor at velit possimus. Dicta illo vel inciduntyy.
 

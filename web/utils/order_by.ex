@@ -5,7 +5,7 @@ defmodule Portfolio.OrderBy do
   def from_string(string, valid_fields) do
     string
     |> tokenize
-    |> Enum.filter(fn {_, field} -> contains(valid_fields, field) end)
+    |> Enum.filter(fn {_, field} -> Enum.member?(valid_fields, field) end)
     |> Enum.map(fn {order, field} -> {order, String.to_atom(field)} end)
   end
 
@@ -20,8 +20,4 @@ defmodule Portfolio.OrderBy do
   defp decode_field("+" <> field), do: {:asc, field}
   defp decode_field("-" <> field), do: {:desc, field}
   defp decode_field(field), do: {:desc, field}
-
-  defp contains(enum, item) do
-    Enum.any?(enum, fn x -> x == item end)
-  end
 end
