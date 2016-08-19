@@ -4,7 +4,7 @@ defmodule HairlineTheme.Mixfile do
   @version "0.1.0"
 
   def project do
-    [app: :hairline_theme,
+    [app: :hairline,
      version: @version,
      elixir: "~> 1.3",
      deps: deps(),
