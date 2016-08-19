@@ -18,10 +18,6 @@ config :portfolio, Portfolio.Endpoint,
   pubsub: [name: Portfolio.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
-# Theme configuration
-config :portfolio,
-  static_path: Path.expand("../priv/static", __DIR__)
-
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
@@ -45,9 +41,11 @@ config :guardian, Guardian,
   secret_key: "lksdjowiurowieurlkjsdlwwer",
   serializer: Portfolio.GuardianSerializer
 
-# Other user facing configuration
+# Theme configuration
 config :portfolio,
   site_name: "Daniel Rivas",
-  showcase_email: "daniel.rivas@email.com"
+  showcase_email: "daniel.rivas@email.com",
+  theme: :hairline,
+  static_path: Path.expand("../priv/static", __DIR__)
 
 import_config "config.secret.exs"

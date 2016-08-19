@@ -1,0 +1,17 @@
+# VIM files
+*.swp
+
+# App artifacts
+/_build
+/db
+/deps
+/*.ez
+/rel
+
+# Generate on crash by the VM
+erl_crash.dump
+
+# Static artifacts
+node_modules/
+bower_components/
+brunch-config.js

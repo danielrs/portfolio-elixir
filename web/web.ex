@@ -62,7 +62,7 @@ defmodule Portfolio.Web do
 
   def view do
     quote do
-      use Phoenix.View, root: "themes/default/templates"
+      use Phoenix.View, root: unquote("themes/" <> get_theme <> "/web/templates")
 
       # Import convenience functions from controllers
       import Phoenix.Controller, only: [get_csrf_token: 0, get_flash: 2, view_module: 1]
@@ -102,5 +102,16 @@ defmodule Portfolio.Web do
   """
   defmacro __using__(which) when is_atom(which) do
     apply(__MODULE__, which, [])
+  end
+
+  @doc """
+  gets the configured theme for the portfolio
+  """
+  defp get_theme do
+    unless Application.get_env(:portfolio, :theme) do
+      raise "No theme configured!"
+    end
+    Application.get_env(:portfolio, :theme)
+    |> to_string
   end
 end
