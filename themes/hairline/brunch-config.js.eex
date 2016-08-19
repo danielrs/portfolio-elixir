@@ -29,7 +29,7 @@ exports.config = {
       'static',
       'test/static'
     ],
-    public: '../../priv/static'
+    public: '<%= static_path %>'
   },
 
   // Plugin configuration

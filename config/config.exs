@@ -18,6 +18,10 @@ config :portfolio, Portfolio.Endpoint,
   pubsub: [name: Portfolio.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
+# Theme configuration
+config :portfolio,
+  static_path: Path.expand("../priv/static", __DIR__)
+
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",

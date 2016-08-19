@@ -43,7 +43,8 @@ defmodule Portfolio.Mixfile do
      {:mailgun, "~> 0.1.2"},
      {:earmark, "~> 0.2.1"},
      {:ex_machina, "~> 1.0", only: :test},
-     {:timex, "~> 3.0"}]
+     {:timex, "~> 3.0"},
+     {:hairline_theme, path: "./themes/hairline"}]
   end
 
   # Aliases are shortcut or tasks specific to the current project.
