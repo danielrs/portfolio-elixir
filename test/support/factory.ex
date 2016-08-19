@@ -69,7 +69,7 @@ defmodule Portfolio.Factory do
     Factory.build(:user, attrs) |> Map.from_struct |> Map.drop([:id, :posts, :projects, :role])
   end
   defp do_params_for_2(:project, attrs) do
-    Factory.build(:project, attrs) |> Map.from_struct |> Map.drop([:id, :user_id, :user])
+    Factory.build(:project, attrs) |> Map.from_struct |> Map.drop([:id, :user_id, :user, :tags])
   end
   defp do_params_for_2(:post, attrs) do
     Factory.build(:post, attrs) |> Map.from_struct |> Map.drop([:id, :user_id, :user, :tags])

@@ -9,7 +9,9 @@ defmodule Portfolio.Project do
     field :homepage, :string
     field :content, :string, default: ""
     field :date, Ecto.Date, default: Ecto.Date.utc
+
     belongs_to :user, Portfolio.User
+    many_to_many :tags, Portfolio.Tag, join_through: "projects_tags"
 
     timestamps
   end

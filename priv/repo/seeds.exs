@@ -241,11 +241,18 @@ if Mix.env != :test do
     |> Repo.insert!
   end
 
-  # Link all posts to all tags
+  tags = Repo.all(Tag)
+  # Link all posts to some tags
   for post <- (Post |> Query.preload(:tags) |> Repo.all) do
     tag_count = :random.uniform * 100 |> trunc |> rem(4)
-    tags = Repo.all(Tag) |> Enum.take_random(tag_count)
-    post |> Ecto.Changeset.change |> Ecto.Changeset.put_assoc(:tags, tags) |> Repo.update!
+    post_tags = tags |> Enum.take_random(tag_count)
+    post |> Ecto.Changeset.change |> Ecto.Changeset.put_assoc(:tags, post_tags) |> Repo.update!
   end
 
+  # Links all projects to some tags
+  for project <- (Project |> Query.preload(:tags) |> Repo.all) do
+    tag_count = :random.uniform * 100 |> trunc |> rem(4)
+    project_tags = tags |> Enum.take_random(tag_count)
+    project |> Ecto.Changeset.change |> Ecto.Changeset.put_assoc(:tags, project_tags) |> Repo.update!
+  end
 end
