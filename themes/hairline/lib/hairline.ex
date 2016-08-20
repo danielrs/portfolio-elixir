@@ -4,8 +4,5 @@ defmodule Portfolio.Themes.Hairline do
   end
 
   brunch_config = EEx.eval_file "brunch-config.js.eex", [static_path: Application.get_env(:portfolio, :static_path)]
-
-  {:ok, brunch_file} = File.open "brunch-config.js", [:write]
-  IO.binwrite brunch_file, brunch_config
-  File.close brunch_file
+  File.write! "brunch-config.js", brunch_config, [:write]
 end

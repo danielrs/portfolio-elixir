@@ -6,5 +6,6 @@ defmodule Portfolio.Repo.Migrations.CreatePostsTags do
       add :post_id, references(:posts), null: false
       add :tag_id, references(:tags), null: false
     end
+    create unique_index(:posts_tags, [:post_id, :tag_id])
   end
 end

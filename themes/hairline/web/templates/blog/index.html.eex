@@ -1,6 +1,15 @@
 <section class="main-section blog-section">
   <div class="container container--blog">
 
+    <%= if @conn.params["tag"] do %>
+      <div class="tag-info">
+        <span>
+          Showing <%= render "_tag.html", conn: @conn, tag: %{name: @conn.params["tag"]} %> posts.
+          <a href="<%= blog_path(@conn, :index) %>">Clear</a>
+        </span>
+      </div>
+    <% end %>
+
     <%= if not Enum.empty?(@paginator.entries) do %>
       <%= render "_post-list.html", (assigns |> Map.merge(%{posts: @paginator.entries, paginator?: true})) %>
     <% else %>

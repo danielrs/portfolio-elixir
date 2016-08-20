@@ -2,13 +2,15 @@ defmodule Portfolio.BlogController do
   use Portfolio.Web, :controller
   alias Ecto.Query
   alias Portfolio.Post
+  alias Portfolio.Tag
   alias Portfolio.Paginator
 
   plug Portfolio.Plug.Menu
   plug :fix_slug when action in [:show_proxy, :show]
 
   def index(conn, params) do
-    render conn, "index.html", page_title: page_title("Blog"), paginator: post_paginator(params)
+    paginator = get_posts(params) |> paginate_posts(params)
+    render conn, "index.html", page_title: page_title("Blog"), paginator: paginator
   end
 
   def show_proxy(conn, _params) do
@@ -26,13 +28,26 @@ defmodule Portfolio.BlogController do
     end
   end
 
-  defp post_paginator(params) do
-    Post
+  defp get_posts(params) do
+    tag_name = Map.get(params, "tag")
+
+    if tag_name do
+      from p in Post,
+        join: pt in "posts_tags", on: pt.post_id == p.id,
+        join: t in Tag, on: t.id == pt.tag_id,
+        where: t.name == ^tag_name
+    else
+      Post
+    end
+  end
+
+  defp paginate_posts(query, params) do
+    query
     |> Query.preload(:user)
     |> Query.preload(:tags)
     |> Query.select([:id, :title, :slug, :date, :published?, :user_id])
     |> Query.where(published?: true)
-    |> Query.order_by(desc: :date)
+    |> Query.order_by(desc: :date, desc: :inserted_at, asc: :title)
     |> Paginator.new(params)
   end
 

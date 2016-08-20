@@ -4,7 +4,7 @@
 
 <%= if assigns[:paginator] && assigns[:paginator?] do %>
   <%= render Portfolio.SharedView, "_paginator.html", paginator: @paginator, path_func: fn page_number -> %>
-    <%= blog_path(@conn, :index, page: page_number) %>
+    <%= blog_path(@conn, :index, Map.merge(@conn.params, %{page: page_number})) %>
   <% end %>
 <% end %>
 

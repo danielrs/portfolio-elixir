@@ -4,6 +4,9 @@ defmodule Portfolio.Tag do
   schema "tags" do
     field :name, :string
 
+    many_to_many :projects, Portfolio.Project, join_through: "projects_tags"
+    many_to_many :posts, Portfolio.Post, join_through: "posts_tags"
+
     timestamps()
   end
 
@@ -32,6 +35,6 @@ defmodule Portfolio.Tag do
     string
     |> String.downcase
     |> String.replace(~r/\s/, "-")
-    |> String.replace(~r/[^-\p{L}0-9]/u, "")
+    |> String.replace(~r/[^-+\p{L}0-9]/u, "")
   end
 end

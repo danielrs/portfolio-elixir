@@ -16,7 +16,7 @@
         on
         <span class="post__tags">
           <%= for tag <- @post.tags do %>
-            <a href="#" class="post__tag tag <%= tag_class(tag.name) %>">#<%= tag.name %></a>
+            <%= render "_tag.html", conn: @conn, tag: tag %>
           <% end %>
         </span>
       <% end %>

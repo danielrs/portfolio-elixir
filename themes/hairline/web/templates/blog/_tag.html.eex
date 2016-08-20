@@ -1,0 +1,3 @@
+<a href="<%= blog_path(@conn, :index, tag: @tag.name) %>" class="post__tag tag <%= tag_class(@tag.name) %>">
+  #<%= @tag.name %>
+</a>
