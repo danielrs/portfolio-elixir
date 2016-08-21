@@ -5,17 +5,17 @@ defmodule Portfolio.ErrorViewTest do
   import Phoenix.View
 
   test "renders 404.html" do
-    assert render_to_string(Portfolio.ErrorView, "404.html", []) ==
+    assert render_to_string(Portfolio.ErrorView, "404.html", []) =~
            "Page not found"
   end
 
   test "render 500.html" do
-    assert render_to_string(Portfolio.ErrorView, "500.html", []) ==
+    assert render_to_string(Portfolio.ErrorView, "500.html", []) =~
            "Server internal error"
   end
 
   test "render any other" do
-    assert render_to_string(Portfolio.ErrorView, "505.html", []) ==
+    assert render_to_string(Portfolio.ErrorView, "505.html", []) =~
            "Server internal error"
   end
 end
