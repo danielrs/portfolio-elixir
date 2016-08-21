@@ -36,13 +36,18 @@ defmodule Portfolio.SeedData do
   Ipsum mollitia **nemo** nam id minima Facere esse odit praesentium minima error Dolorem a impedit ex distinctio non Earum minima voluptas adipisci dolor at velit possimus. Dicta illo vel inciduntyy.
 
   ```
-  def fac(n) do
-    if n <= 1, do: 1
-    else: n * fac(n - 1)
-  end
+  defmodule Math do
+    @moduledoc \"\"\"
+    This module defines some useful math functions
+    \"\"\"
+    def fac(n) do
+      if n <= 1, do: 1
+      else: n * fac(n - 1)
+    end
 
-  def fib do
-    Stream.unfold({0, 1}, fn {a, b} -> {a, {b, a + b}} end)
+    def fib do
+      Stream.unfold({0, 1}, fn {a, b} -> {a, {b, a + b}} end)
+    end
   end
   ```
   {: .language-elixir }
