@@ -11,7 +11,6 @@ config :portfolio, Portfolio.Endpoint,
   debug_errors: true,
   code_reloader: true,
   check_origin: false,
-  other: Application.get_env(:portfolio, :theme),
   watchers: [node: ["node_modules/brunch/bin/brunch", "watch", "--stdin",
                     cd: Path.expand("../themes/hairline", __DIR__)]]
 

@@ -2,11 +2,11 @@ defmodule Portfolio.ErrorView do
   use Portfolio.Web, :view
 
   def render("404.html", _assigns) do
-    "Page not found"
+    render "not_found.html", page_title: "404 not found"
   end
 
   def render("500.html", _assigns) do
-    "Server internal error"
+    render "internal_error.html", page_title: "Internal error"
   end
 
   # In case no render clause matches or no
