@@ -61,6 +61,7 @@ defmodule Portfolio.Post do
     |> String.downcase
     |> String.replace(~r/\s/, "-")
     |> String.replace(~r/[^-\p{L}0-9]/u, "")
+    |> String.replace(~r/-+/, "-")
   end
 
   deffilter @filtrable_fields do
