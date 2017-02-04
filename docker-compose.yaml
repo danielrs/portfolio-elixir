@@ -20,7 +20,9 @@ services:
 
     # the main image, this is the application
     web:
-        command: bash -c "mix deps.get && mix phoenix.server"
+        command: bash
+        stdin_open: true
+        tty: true
         build: "."
         ports:
             - "4000:4000"

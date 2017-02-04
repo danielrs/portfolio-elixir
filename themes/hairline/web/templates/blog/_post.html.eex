@@ -11,14 +11,10 @@
         <span class="post__author">
           <%= @post.user.first_name <> " " <> @post.user.last_name %>
         </span>
-      <% end %>
-      <%= if not Enum.empty?(@post.tags) do %>
         on
-        <span class="post__tags">
-          <%= for tag <- @post.tags do %>
-            <%= render "_tag.html", conn: @conn, tag: tag %>
-          <% end %>
-        </span>
+        <%= render "_tag-list.html", conn: @conn, tags: @post.tags %>
+      <% else %>
+        <%= render "_tag-list.html", conn: @conn, tags: @post.tags %>
       <% end %>
     </div>
   </header>

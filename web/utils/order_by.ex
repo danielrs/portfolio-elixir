@@ -1,4 +1,14 @@
 defmodule Portfolio.OrderBy do
+  @moduledoc """
+  This module contains functions for parsing query strings such as:
+
+  `-field1,+field2`
+
+  Into a list of tuples for easy handling:
+
+  `[{:desc, "field1"}, {:asc, "field2"}]`
+  """
+
   @type order :: :desc | :asc
 
   @spec from_string(String.t, [String.t]) :: [{order, String.t}]

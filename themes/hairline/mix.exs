@@ -30,6 +30,6 @@ defmodule HairlineTheme.Mixfile do
      licenses: ["MIT"],
      links: %{github: "https://github.com/DanielRS/hairline-theme"},
      files: ~w(static templates) ++
-            ~w(bower.json brunch-config.js LICENSE mix.exs package.json README.md)]
+            ~w(bower.json brunch-config.js.eex LICENSE mix.exs package.json README.md)]
   end
 end

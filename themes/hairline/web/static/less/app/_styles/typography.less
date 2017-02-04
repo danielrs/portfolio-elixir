@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Lato:400,400i,700,700i|Lora:400,400i,700,700i|Inconsolata:400,700|Pacifico);
+@import url('https://fonts.googleapis.com/css?family=Droid+Serif:400,400i,700|Inconsolata:400,700|Lato:400,400i,700|Pacifico');
 
 h1, h2, h3, h4, h5, h6,
 ul, ol, li,
@@ -8,8 +8,8 @@ p {
 }
 
 html, body {
-  font-family: "Lora", Georgia, serif;
-  font-size: 1.1em;
+  font-family: "Droid Serif", Georgia, serif;
+  font-size: 1.05em;
   line-height: 1.6em;
   color: @color-body;
 }
@@ -65,4 +65,9 @@ ul {
 // Paragraphs
 p {
   margin-bottom: @magic-number;
+}
+
+// Utility classes
+.text-align--center {
+  text-align: center;
 }

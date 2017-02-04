@@ -1,0 +1,7 @@
+<%= if not Enum.empty?(@tags) do %>
+  <span class="post__tags">
+    <%= for tag <- @tags do %>
+      <%= render "_tag.html", conn: @conn, tag: tag %>
+    <% end %>
+  </span>
+<% end %>

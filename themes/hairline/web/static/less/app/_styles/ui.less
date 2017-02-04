@@ -5,12 +5,12 @@ input[type=submit] {
   @color: lighten(@color-body, 8%);
   @color-active: @color-body;
 
+  display: inline-block;
   padding: .5em 1em;
-  border: 2px solid @color;
+  border: 1px solid @color;
+  border-radius: 2px;
   outline: none;
   font-family: "Lato", FontAwesome;
-  font-weight: bold;
-  text-transform: uppercase;
   color: @color;
   background: transparent;
   .transition(border-color @animation-fast, color @animation-fast, background @animation-fast);
@@ -26,9 +26,17 @@ input[type=submit] {
     background: @color-active;
   }
 
+  &.button--small {
+    padding: .25em .75em;
+  }
+
   &.button--wide {
     padding: .5em 3em;
   }
+}
+
+a.button {
+  text-decoration: none;
 }
 
 input[type=text],
