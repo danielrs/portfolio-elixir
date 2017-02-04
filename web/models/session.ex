@@ -14,7 +14,7 @@ defmodule Portfolio.Session do
   @required_fields [:email, :password]
   @optional_fields []
 
-  def changeset(model, params \\ :empty) do
+  def changeset(model, params \\ :%{}) do
     model
     |> cast(params, @required_fields ++ @optional_fields)
     |> validate_required(@required_fields)

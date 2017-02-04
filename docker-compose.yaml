@@ -23,6 +23,8 @@ services:
         command: bash
         stdin_open: true
         tty: true
+        user: $USER
+
         build: "."
         ports:
             - "4000:4000"
