@@ -11,7 +11,7 @@
         <span class="post__author">
           <%= @post.user.first_name <> " " <> @post.user.last_name %>
         </span>
-        on
+        &bull;
         <%= render "_tag-list.html", conn: @conn, tags: @post.tags %>
       <% else %>
         <%= render "_tag-list.html", conn: @conn, tags: @post.tags %>

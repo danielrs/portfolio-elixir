@@ -1,9 +1,10 @@
 FROM trenpixster/elixir:1.3.4
 
-# Install curl inotify-tools (for phoenix)
+# Install curl, inotify-tools (for phoenix), and silversearcher
 RUN apt-get update && apt-get install -y \
     curl \
     inotify-tools \
+    silversearcher-ag \
     && rm -rf /var/lib/apt/lists/*
 
 # Creates app folder and user

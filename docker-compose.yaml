@@ -23,7 +23,7 @@ services:
         command: bash
         stdin_open: true
         tty: true
-        user: $USER
+        user: $UID
 
         build: "."
         ports:
