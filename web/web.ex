@@ -105,7 +105,7 @@ defmodule Portfolio.Web do
   end
 
   @doc """
-  gets the configured theme for the portfolio
+  Returns the current theme for the portfolio.
   """
   defp get_theme do
     unless Application.get_env(:portfolio, :theme) do

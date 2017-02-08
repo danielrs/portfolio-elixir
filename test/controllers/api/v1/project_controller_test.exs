@@ -81,7 +81,7 @@ defmodule Portfolio.API.V1.ProjectControllerTest do
 
   test "does not update chosen resource and renders errors when data is invalid", %{nonadmin_conn: conn, nonadmin_user: user} do
     project = Factory.insert(:project, user: user)
-    conn = patch conn, user_project_path(conn, :update, user, project), project: %{}
+    conn = patch conn, user_project_path(conn, :update, user, project), project: %{title: ""}
     assert json_response(conn, 422)["errors"] != %{}
   end
 

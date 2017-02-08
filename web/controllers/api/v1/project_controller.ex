@@ -37,8 +37,8 @@ defmodule Portfolio.API.V1.ProjectController do
   end
 
   def update(conn, %{"user_id" => user_id, "id" => id, "project" => project_params}) do
-    project = Repo.get!(Project, id, user_id: user_id) |> Map.take([:id, :user_id])
-    changeset = Project.changeset(struct(Project, project), project_params)
+    project = Repo.get!(Project, id, user_id: user_id)
+    changeset = Project.changeset(project, project_params)
 
     case Repo.update(changeset) do
       {:ok, project} ->

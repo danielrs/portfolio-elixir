@@ -2,6 +2,8 @@ defmodule Portfolio.Post do
   use Portfolio.Web, :model
   use Portfolio.Filtrable
 
+  require Logger
+
   schema "posts" do
     field :title, :string
     field :slug, :string
@@ -26,7 +28,7 @@ defmodule Portfolio.Post do
   If no params are provided, an invalid changeset is returned
   with no validation performed.
   """
-  def changeset(model, params \\ :%{}) do
+  def changeset(model, params \\ %{}) do
     model
     |> cast(params, @required_fields ++ @optional_fields)
     |> validate_required(@required_fields)
@@ -38,10 +40,15 @@ defmodule Portfolio.Post do
 
   defp cast_slug(changeset) do
     if changeset.valid? do
-      if get_change(changeset, :slug) do
-        changeset |> update_change(:slug, &slugify(&1))
-      else
-        changeset |> put_change(:slug, get_change(changeset, :title) |> slugify)
+      cond do
+        get_change(changeset, :slug) ->
+          changeset |> update_change(:slug, &(&1 |> slugify))
+        title = get_change(changeset, :title) ->
+          changeset |> put_change(:slug, title |> slugify)
+        title = get_field(changeset, :title) ->
+          changeset |> put_change(:slug, title |> slugify)
+        true ->
+          changeset |> add_error(:slug, "unable to extrapolate from title")
       end
     else
       changeset
@@ -49,8 +56,12 @@ defmodule Portfolio.Post do
   end
 
   defp cast_html(changeset) do
-    if markdown = get_change(changeset, :markdown) do
-      changeset |> put_change(:html, Earmark.to_html(markdown))
+    if changeset.valid? do
+      if markdown = get_change(changeset, :markdown) do
+        changeset |> put_change(:html, Earmark.as_html!(markdown))
+      else
+        changeset
+      end
     else
       changeset
     end

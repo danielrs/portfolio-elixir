@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Pill} from 'elemental';
-import Actions from '../../actions/project';
+import Actions from '../../../actions/project';
 
 class ProjectDeleteUndo extends React.Component {
   static propTypes = {

@@ -33,8 +33,8 @@ defmodule Portfolio.API.V1.UserController do
   end
 
   def update(conn, %{"id" => id, "user" => user_params}) do
-    user = Repo.get!(User, id) |> Map.take([:id, :role_id])
-    changeset = User.changeset(struct(User, user), user_params)
+    user = Repo.get!(User, id)
+    changeset = User.changeset(user, user_params)
 
     case Repo.update(changeset) do
       {:ok, user} ->

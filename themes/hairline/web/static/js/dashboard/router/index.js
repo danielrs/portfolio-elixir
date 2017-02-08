@@ -16,6 +16,10 @@ import ProjectIndexView from '../views/project/index';
 import ProjectNewView from '../views/project/new';
 import ProjectShowView from '../views/project/show';
 
+import PostIndexView from '../views/post/index';
+import PostNewView from '../views/post/new';
+import PostShowView from '../views/post/show';
+
 export default function router(store) {
   const history = syncHistoryWithStore(browserHistory, store);
 
@@ -44,6 +48,12 @@ export default function router(store) {
         <Route path="projects" component={ProjectIndexView}>
           <Route path="new" component={ProjectNewView} />
           <Route path=":id" component={ProjectShowView}>
+            <Route path="edit" component={_ => (<noscript />)} />
+          </Route>
+        </Route>
+        <Route path="posts" component={PostIndexView}>
+          <Route path="new" component={PostNewView} />
+          <Route path=":id" component={PostShowView}>
             <Route path="edit" component={_ => (<noscript />)} />
           </Route>
         </Route>

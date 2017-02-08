@@ -12,8 +12,8 @@ config :logger, level: :warn
 # Configure your database
 config :portfolio, Portfolio.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: "portfolio",
-  password: "portfolio",
-  database: "portfolio_test",
-  hostname: "localhost",
+  username: "devdb",
+  password: "devdb",
+  database: "testdb",
+  hostname: "devdb",
   pool: Ecto.Adapters.SQL.Sandbox

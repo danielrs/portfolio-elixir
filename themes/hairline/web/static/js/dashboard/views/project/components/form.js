@@ -1,6 +1,6 @@
 import React from 'react';
 import DatePicker from 'react-date-picker';
-import {renderErrorsFor, dateToISO8601} from '../../utils';
+import {renderErrorsFor, dateToISO8601} from '../../../utils';
 import {Form, FormField, FormInput} from 'elemental';
 
 class ProjectForm extends React.Component {

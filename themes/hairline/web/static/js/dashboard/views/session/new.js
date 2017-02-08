@@ -33,7 +33,7 @@ class SessionNewView extends React.Component {
                 {this._renderError()}
               </FormField>
               <FormIconField iconKey="mail" iconFill="default">
-                <FormInput ref="email" type="text" placeholder="Email" size="lg" autofocus />
+                <FormInput ref="email" type="text" placeholder="Email" size="lg" autoFocus />
               </FormIconField>
               <FormIconField iconKey="lock" iconFill="default">
                 <FormInput ref="password" type="password" placeholder="Password" size="lg" />

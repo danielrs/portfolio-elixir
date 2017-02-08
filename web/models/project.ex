@@ -1,7 +1,6 @@
 defmodule Portfolio.Project do
   use Portfolio.Web, :model
   use Portfolio.Filtrable
-  require Logger
 
   schema "projects" do
     field :title, :string

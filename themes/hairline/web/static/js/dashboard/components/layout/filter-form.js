@@ -5,8 +5,8 @@ import {Button, Form, FormIconField, FormInput, FormSelect} from 'elemental';
 const Order = new Enum(['DESC', 'ASC']);
 
 const orderOptions = [
-  {label: 'Desc', value: Order.DESC.toLowerCase()},
-  {label: 'Asc', value: Order.ASC.toLowerCase()}
+  {label: 'Desc', value: Order.DESC},
+  {label: 'Asc', value: Order.ASC}
 ]
 
 class FilterForm extends React.Component {

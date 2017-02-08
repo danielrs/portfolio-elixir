@@ -4,12 +4,12 @@ import {connect} from 'react-redux';
 import {Button, Modal, ModalHeader, ModalBody, ModalFooter} from 'elemental';
 
 import Constants from '../../constants';
-import Actions from '../../actions/project';
+import Actions from '../../actions/post';
 
 import DocumentTitle from '../../components/layout/document-title';
-import ProjectForm from './components/form';
+import PostForm from './components/form';
 
-class ProjectNewView extends React.Component {
+class PostNewView extends React.Component {
   state = {
     isOpen: false
   }
@@ -23,22 +23,22 @@ class ProjectNewView extends React.Component {
   _handleSubmit = (e) => {
     e.preventDefault();
     const {dispatch} = this.props;
-    dispatch(Actions.createProject(this.refs.form.getFormData()));
+    dispatch(Actions.createPost(this.refs.form.getFormData()));
   }
 
   _handleClose = (e) => {
     const {dispatch} = this.props;
     this.setState({isOpen: false});
-    dispatch(push('/dashboard/projects'));
+    dispatch(push('/dashboard/post'));
   }
 
   render() {
     return (
-      <DocumentTitle title="New project">
+      <DocumentTitle title="New post">
         <Modal isOpen={this.state.isOpen}>
-          <ModalHeader text="New project" showCloseButton onClose={this._handleClose}/>
+          <ModalHeader text="New post" showCloseButton onClose={this._handleClose}/>
           <ModalBody>
-            <ProjectForm ref="form" errors={this.props.errors} />
+            <PostForm ref="form" errors={this.props.errors} />
           </ModalBody>
           <ModalFooter>
             <Button type="hollow-primary" onClick={this._handleSubmit} disabled={this.props.submiting}>
@@ -54,9 +54,9 @@ class ProjectNewView extends React.Component {
 
 const mapStateToProps = function(state) {
   return {
-    submiting: state.project.submiting,
-    errors: state.project.errors
+    submiting: state.post.submiting,
+    errors: state.post.errors
   };
 };
 
-export default connect(mapStateToProps)(ProjectNewView);
+export default connect(mapStateToProps)(PostNewView);

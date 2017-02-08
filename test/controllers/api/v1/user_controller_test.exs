@@ -103,7 +103,7 @@ defmodule Portfolio.API.V1.UserControllerTest do
   @tag admin: true
   test "does not update and renders errors when data is invalid", %{admin_conn: conn} do
     user = Factory.insert(:user)
-    conn = patch conn, user_path(conn, :update, user), user: %{}
+    conn = patch conn, user_path(conn, :update, user), user: %{first_name: ""}
     assert json_response(conn, code(:unprocessable_entity))["errors"] != %{}
   end
 

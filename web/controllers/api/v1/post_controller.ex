@@ -6,9 +6,9 @@ defmodule Portfolio.API.V1.PostController do
 
   plug API.V1.UserResourceModificationPlug when action in [:create, :update, :delete]
 
-  def index(conn, %{"user_id" => user_id}) do
+  def index(conn, %{"user_id" => user_id} = params) do
     user = Repo.get!(User, user_id)
-    posts = assoc(user, :posts) |> Ecto.Query.order_by(desc: :date) |> Repo.all
+    posts = assoc(user, :posts) |> Post.filter_by(params) |> Repo.all
     render(conn, "index.json", posts: posts)
   end
 
@@ -35,9 +35,8 @@ defmodule Portfolio.API.V1.PostController do
   end
 
   def update(conn, %{"user_id" => user_id, "id" => id, "post" => post_params}) do
-    post = Repo.get!(Post, id, user_id: user_id) |> Map.take([:id, :user_id])
-    changeset = Post.changeset(struct(Post, post), post_params)
-
+    post = Repo.get!(Post, id, user_id: user_id)
+    changeset = Post.changeset(post, post_params)
     case Repo.update(changeset) do
       {:ok, post} ->
         render(conn, "show.json", post: post)

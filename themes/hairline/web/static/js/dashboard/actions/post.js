@@ -1,70 +1,46 @@
 import Constants from '../constants';
 import Request from '../utils/http-request';
-import {replace} from 'react-router-redux';
-import moment from 'moment';
+import {push} from 'react-router-redux';
 
 const PostActions = {
   fetchPosts: function() {
-    return dispatch => {
+    return (dispatch, getState) => {
+      const {user} = getState().session;
       dispatch({type: Constants.POSTS_FETCHING});
-      setTimeout(() => {
-        Request.get('/api/v1/posts')
-        .then(function(response) {
-          dispatch({type: Constants.POSTS_RECEIVED, posts: response.data});
-        })
-        .catch(function(error) {});
-      }, 1000);
+      Request.get(`/api/v1/users/${user.id}/posts`, getState().post.filter)
+      .then(function(response) {
+        dispatch({type: Constants.POSTS_RECEIVED, posts: response.data});
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
     };
   },
 
-  newPost: function(data) {
+  newPost: function() {
     return dispatch => {
-      Request.post('/api/v1/posts', data)
+      dispatch(push(`/dashboard/posts/new`));
+    };
+  },
+
+  createPost: function(data) {
+    return (dispatch, getState) => {
+      const {user} = getState().session;
+      dispatch({type: Constants.POSTS_SUBMITING});
+      Request.post(`/api/v1/users/${user.id}/posts`, data)
       .then(response => {
+        dispatch({
+          type: Constants.POSTS_NEW,
+          post: response.data
+        });
         dispatch(this.fetchPosts());
-        dispatch(replace('/dashboard/posts'));
+        dispatch(push(`/dashboard/posts`));
       })
       .catch(error => {
         error.response.json()
         .then(function(errorJSON) {
           dispatch({
-            type: Constants.POSTS_POST_ERROR,
-            errors: errorJSON.errors
-          });
-        });
-      });
-    };
-  },
-
-  fetchPost: function(id) {
-    return dispatch => {
-      dispatch({type: Constants.POSTS_POST_FETCHING});
-      Request.get(`/api/v1/posts/${id}`)
-      .then(function(response) {
-        dispatch({
-          type: Constants.POSTS_POST_RECEIVED,
-          post: {...response.data, date: moment(response.data.date)}
-        });
-      })
-      .catch(function(error) {});
-    };
-  },
-
-  editPost: function(id, data) {
-    return dispatch => {
-      Request.patch(`/api/v1/posts/${id}`, data)
-      .then(response => {
-        dispatch(this.fetchPosts());
-        dispatch({
-          type: Constants.POSTS_POST_RECEIVED,
-          post: {...response.data, date: moment(response.data.date)}
-        });
-      })
-      .catch(error => {
-        error.response.json()
-        .then(errorJSON => {
-          dispatch({
-            type: Constants.POSTS_POST_ERROR,
+            type: Constants.POSTS_ERROR,
             errors: errorJSON.errors
           });
         });
@@ -73,31 +49,82 @@ const PostActions = {
   },
 
   deletePost: function(id, data) {
-    return dispatch => {
-      Request.delete(`/api/v1/posts/${id}`)
+    return (dispatch, getState) => {
+      const {user} = getState
+      Request.delete(`/api/v1/users/${user.id}/posts/${id}`)
       .then(response => {
         dispatch({
-          type: Constants.POSTS_POST_DELETED,
+          type: Constants.POSTS_DELETE,
           post: data
         });
         dispatch(this.fetchPosts());
       })
+    };
+  },
+
+  filterPosts: function(filter) {
+    return dispatch => {
+      dispatch({type: Constants.POSTS_FILTER, filter: filter});
+      dispatch(this.fetchPosts());
+    };
+  },
+
+  fetchPost: function(id) {
+    return (dispatch, getState) => {
+      const {user} = getState().session;
+      dispatch({type: Constants.CURRENT_POST_FETCHING});
+      Request.get(`/api/v1/users/${user.id}/posts/${id}`)
+      .then(function(response) {
+        dispatch({
+          type: Constants.CURRENT_POST_RECEIVED,
+          post: response.data
+        });
+      })
+      .catch(function(error) {});
+    };
+  },
+
+  showPost: function(id) {
+    return dispatch => {
+      dispatch(push(`/dashboard/posts/${id}`));
+    };
+  },
+
+  editPost: function(id) {
+    return dispatch => {
+      dispatch(this.errorReset());
+      dispatch(push(`/dashboard/posts/${id}/edit`));
+    };
+  },
+
+  updatePost: function(id, data) {
+    return (dispatch, getState) => {
+      const {user} = getState().session;
+      dispatch({type: Constants.POSTS_SUBMITING});
+      Request.patch(`/api/v1/users/${user.id}/posts/${id}`, data)
+      .then(response => {
+        dispatch({
+          type: Constants.CURRENT_POST_UPDATED,
+          post: response.data
+        });
+        dispatch(this.fetchPosts());
+        dispatch(push(`/dashboard/posts/${id}`));
+      })
       .catch(error => {
-        console.log(error);
+        error.response.json()
+        .then(errorJSON => {
+          dispatch({
+            type: Constants.POSTS_ERROR,
+            errors: errorJSON.errors
+          });
+        });
       });
     };
   },
 
-  undoDelete: function(data) {
+  errorReset: function() {
     return dispatch => {
-      dispatch(this.newPost({post: data}));
-      dispatch({type: Constants.POSTS_POST_UNDO});
-    };
-  },
-
-  formReset: function() {
-    return dispatch => {
-      dispatch({type: Constants.POSTS_POST_FORM_RESET});
+      dispatch({type: Constants.POSTS_ERROR_RESET});
     };
   }
 };

@@ -5,21 +5,21 @@ import {presets} from 'react-motion';
 import {Button, ModalHeader, ModalBody, ModalFooter} from 'elemental';
 
 import Constants from '../../constants';
-import Actions from '../../actions/project';
+import Actions from '../../actions/post';
 
 import DocumentTitle from '../../components/layout/document-title';
 import ModalLoader from '../../components/layout/modal-loader';
 import ConfirmButton from '../../components/layout/confirm-button';
-import ProjectForm from './components/form';
+import PostForm from './components/form';
 
-class ProjectShowView extends React.Component {
+class PostShowView extends React.Component {
   state = {
     isOpen: false,
     changed:  false
   }
 
   componentDidMount() {
-    this.fetchProject();
+    this.fetchPost();
     this.setState({isOpen: true});
   }
 
@@ -34,39 +34,36 @@ class ProjectShowView extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.params.id != prevProps.params.id)
-      this.fetchProject();
+      this.fetchPost();
   }
 
-  fetchProject() {
+  fetchPost() {
     const {dispatch} = this.props;
-    dispatch(Actions.fetchProject(this.props.params.id));
+    dispatch(Actions.fetchPost(this.props.params.id));
   }
 
   // Show Modal
   _handleEdit = (e) => {
     const {dispatch} = this.props;
-    dispatch(Actions.editProject(this.props.params.id));
+    dispatch(Actions.editPost(this.props.params.id));
   }
 
   _handleClose = (e) => {
     const {dispatch} = this.props;
-    dispatch(push('/dashboard/projects'));
+    dispatch(push('/dashboard/posts'));
   }
 
   _renderShow() {
     return (
       <div>
-        <ModalHeader text={'Showing ' + this.props.project.title} showCloseButton onClose={this._handleClose} />
+        <ModalHeader text={'Showing ' + this.props.post.title} showCloseButton onClose={this._handleClose} />
         <ModalBody className="project">
           <h1 className="project__title">
-            {this.props.project.title + ' '}
-            <span className="project__date">{this.props.project.date}</span>
+            {this.props.post.title + ' '}
+            <span className="project__date">{this.props.post.date}</span>
           </h1>
-          <div className="project__description">{this.props.project.description}</div>
-          <a className="project__homepage" href={this.props.project.homepage}>{this.props.project.homepage}</a>
-          {this.props.project.content
-            ? <div className="project__content">{this.props.project.content}</div>
-            : ''
+          {this.props.post.html
+              ? <div className="project__content" dangerouslySetInnerHTML={{__html: this.props.post.html}} /> : ''
           }
         </ModalBody>
         <ModalFooter key={Math.random()}>
@@ -85,23 +82,23 @@ class ProjectShowView extends React.Component {
 
   _handleSave = e => {
     const {dispatch} = this.props;
-    dispatch(Actions.updateProject(this.props.params.id, this.refs.form.getFormData()));
+    dispatch(Actions.updatePost(this.props.params.id, this.refs.form.getFormData()));
     this.setState({changed: false});
   }
 
   _handleShow = e => {
     const {dispatch} = this.props;
-    dispatch(Actions.showProject(this.props.params.id));
+    dispatch(Actions.showPost(this.props.params.id));
     this.setState({changed: false});
   }
 
   _renderEdit() {
     return (
       <div>
-        <ModalHeader text={'Editing ' + this.props.project.title} showCloseButton onClose={this._handleClose} />
+        <ModalHeader text={'Editing ' + this.props.post.title} showCloseButton onClose={this._handleClose} />
         <ModalBody>
-          <ProjectForm ref="form" project={this.props.project} errors={this.props.errors} onChange={this._handleChange} />
-        </ModalBody>
+          <PostForm ref="form" post={this.props.post} errors={this.props.errors} onChange={this._handleChange} />
+          </ModalBody>
         <ModalFooter key={Math.random()}>
           <Button type="hollow-primary" onClick={this._handleSave} disabled={this.props.submiting}>
             {this.props.submiting ? 'Saving...' : 'Save'}
@@ -126,8 +123,8 @@ class ProjectShowView extends React.Component {
   // Render show or edit modal
   render() {
     return (
-      <DocumentTitle title={(this.props.children ? 'Editing ' : '') + (this.props.project.title || '...')}>
-        <ModalLoader loaded={this.props.loaded} isOpen={this.state.isOpen}>
+      <DocumentTitle title={(this.props.children ? 'Editing ' : '') + (this.props.post.title || '...')}>
+        <ModalLoader width="large" loaded={this.props.loaded} isOpen={this.state.isOpen}>
           {this.props.children ? this._renderEdit() : this._renderShow()}
         </ModalLoader>
       </DocumentTitle>
@@ -137,10 +134,10 @@ class ProjectShowView extends React.Component {
 
 const mapStateToProps = function(state) {
   return {
-    ...state.project.current,
-    submiting: state.project.submiting,
-    errors: state.project.errors
+    ...state.post.current,
+    submiting: state.post.submiting,
+    errors: state.post.errors
   };
 };
 
-export default connect(mapStateToProps)(ProjectShowView);
+export default connect(mapStateToProps)(PostShowView);

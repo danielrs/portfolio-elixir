@@ -1,17 +1,27 @@
 <article class="post">
-  <header class="post__header">
+  <header class="post__header
+    <%= if assigns[:main?] do %>post__header--main<% end %>">
     <div class="post__date"><%= Portfolio.Utils.format_date(@post.date, "{Mshort} {0D}, {YYYY}") %></div>
+
     <h1 class="post__title">
-      <a href="<%= blog_path(@conn, :show, @post.id, @post.slug) %>"><%= @post.title %></a>
+      <%= if assigns[:main?] do %>
+        <%= @post.title %>
+      <% else %>
+        <a href="<%= blog_path(@conn, :show, @post.id, @post.slug) %>">
+          <%= @post.title %>
+        </a>
+      <% end %>
     </h1>
 
     <div class="post__meta">
-      <%= if assigns[:author?] do %>
+      <%= if assigns[:main?] do %>
         by
         <span class="post__author">
           <%= @post.user.first_name <> " " <> @post.user.last_name %>
         </span>
-        &bull;
+        <%= if not Enum.empty?(@post.tags) do %>
+          &bull;
+        <% end %>
         <%= render "_tag-list.html", conn: @conn, tags: @post.tags %>
       <% else %>
         <%= render "_tag-list.html", conn: @conn, tags: @post.tags %>
@@ -19,7 +29,7 @@
     </div>
   </header>
 
-  <%= if assigns[:body?] do %>
+  <%= if assigns[:main?] do %>
     <div class="post__body">
       <%= raw(@post.html) %>
     </div>

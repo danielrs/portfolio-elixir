@@ -1,5 +1,5 @@
 <section class="main-section blog-section">
-  <div class="container container--blog">
+  <div class="container">
 
     <%= if @conn.params["tag"] do %>
       <div class="tag-info">

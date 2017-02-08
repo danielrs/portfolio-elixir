@@ -82,7 +82,7 @@ defmodule Portfolio.API.V1.PostControllerTest do
 
   test "does not update chosen resource and renders errors when data is invalid", %{nonadmin_conn: conn, nonadmin_user: user} do
     post = Factory.insert(:post, user: user)
-    conn = patch conn, user_post_path(conn, :update, user, post), post: %{}
+    conn = patch conn, user_post_path(conn, :update, user, post), post: %{title: ""}
     assert json_response(conn, 422)["errors"] != %{}
   end
 
