@@ -44,7 +44,7 @@ config :guardian, Guardian,
 # Mailgun
 config :portfolio,
   mailgun_domain: System.get_env("MAILGUN_DOMAIN"),
-  mailgun_key: System.get_env("MAILGUN_KEY"),
+  mailgun_key: System.get_env("MAILGUN_KEY")
 
 # Theme configuration
 config :portfolio,
