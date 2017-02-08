@@ -64,5 +64,4 @@ EXPOSE 4000
 # The command to run when this image starts up
 CMD mix ecto.create \
     && mix ecto.migrate \
-    && mix run priv/repo/seeds.exs \
     && MIX_ENV=prod mix phoenix.server
