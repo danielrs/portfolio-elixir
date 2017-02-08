@@ -1,6 +1,7 @@
 defmodule Portfolio.SetupController do
   use Portfolio.Web, :controller
 
+  alias Portfolio.Seeds
   alias Portfolio.Repo
   alias Portfolio.Role
   alias Portfolio.User
@@ -15,6 +16,8 @@ defmodule Portfolio.SetupController do
   end
 
   def create(conn, %{"user" => user_params}) do
+    Seeds.setup_roles
+
     role = Repo.get_by!(Role, name: "admin", admin?: true)
     changeset = User.changeset(%User{role_id: role.id}, user_params)
 

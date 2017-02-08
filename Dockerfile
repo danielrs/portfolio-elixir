@@ -21,7 +21,6 @@ ENV HOME /home/app
 WORKDIR /app
 ADD . .
 RUN chown -R app .
-
 USER app
 
 # Install nvm
@@ -38,9 +37,9 @@ ENV NODE_PATH $NVM_DIR/versions/node/v$NODE_VERSION/lib/node_modules
 ENV PATH      $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 
 # Install Elixir's rebar, hex, and phoenix
-RUN mix local.rebar --force
-RUN mix local.hex --force
-RUN mix archive.install https://github.com/phoenixframework/archives/raw/master/phoenix_new.ez --force
+RUN mix local.rebar --force \
+    && mix local.hex --force \
+    && mix archive.install https://github.com/phoenixframework/archives/raw/master/phoenix_new.ez --force
 
 #
 # Deploy
