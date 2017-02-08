@@ -27,7 +27,8 @@ config :portfolio, Portfolio.Repo,
   password: System.get_env("RDS_PASSWORD"),
   hostname: System.get_env("RDS_HOSTNAME"),
   port: System.get_env("RDS_PORT") || 5432,
-  pool_size: 20
+  pool_size: 20,
+  ssl: true
 
 # Do not print debug messages in production
 config :logger, level: :info

@@ -24,4 +24,4 @@ alias Portfolio.Role
   %{name: "user", admin?: false}
 ]
 |> Enum.map(&Role.changeset(%Role{}, &1))
-|> Enum.each(&Repo.insert!(&1))
+|> Enum.each(&Repo.insert(&1))
