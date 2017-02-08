@@ -41,11 +41,14 @@ config :guardian, Guardian,
   secret_key: "lksdjowiurowieurlkjsdlwwer",
   serializer: Portfolio.GuardianSerializer
 
+# Mailgun
+config :portfolio,
+  mailgun_domain: System.get_env("MAILGUN_DOMAIN"),
+  mailgun_key: System.get_env("MAILGUN_KEY"),
+
 # Theme configuration
 config :portfolio,
   site_name: "Daniel Rivas",
   showcase_email: "daniel.rivas@email.com",
   theme: :hairline,
   static_path: Path.expand("../priv/static", __DIR__)
-
-import_config "config.secret.exs"
