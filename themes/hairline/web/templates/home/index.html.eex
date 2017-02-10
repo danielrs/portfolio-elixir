@@ -8,7 +8,7 @@
   <div class="mega-brand__container">
     <div class="mega-brand__header">
       <h1 class="animated fadeInDown"><%= site_name %></h1>
-      <code id="tagline">Software Engineer</code>
+      <code id="tagline">I'm a programmer</code>
       <ul class="social">
         <%= for social <- @social do %>
           <li>

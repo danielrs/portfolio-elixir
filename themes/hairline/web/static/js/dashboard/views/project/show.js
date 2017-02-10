@@ -23,6 +23,13 @@ class ProjectShowView extends React.Component {
     this.setState({isOpen: true});
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    if (nextState.changed == true && this.state.changed == false) {
+      return false;
+    }
+    return true;
+  }
+
   componentDidUpdate(prevProps) {
     if (this.props.params.id != prevProps.params.id)
       this.fetchProject();

@@ -59,8 +59,7 @@ $('#tagline').typing({
               "I'm Daniel",
               "I design stuff",
               "I code that stuff",
-              "I'm a..",
-              "Software Engineer!"]});
+              "I'm a programmer"]});
 
 // Header toggle
 const headerToggler = new ClassToggler('header.header');
