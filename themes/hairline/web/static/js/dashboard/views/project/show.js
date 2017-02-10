@@ -15,21 +15,12 @@ import ProjectForm from './components/form';
 class ProjectShowView extends React.Component {
   state = {
     isOpen: false,
-    changed:  false
+    changed: false
   }
 
   componentDidMount() {
     this.fetchProject();
     this.setState({isOpen: true});
-  }
-
-  componentWillUnmount() {
-    document.body.style.overflow = null;
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    // Not render if 'changed ' changed to true
-    return !(!this.state.changed && nextState.changed);
   }
 
   componentDidUpdate(prevProps) {
@@ -79,8 +70,9 @@ class ProjectShowView extends React.Component {
 
   // Edit Modal
   _handleChange = e => {
-    this.changed = true;
-    this.setState({changed: true});
+    if (!this.state.changed) {
+      this.setState({changed: true});
+    }
   }
 
   _handleSave = e => {

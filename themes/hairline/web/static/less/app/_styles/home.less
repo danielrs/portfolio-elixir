@@ -1,0 +1,112 @@
+.mega-brand {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  margin-top: -4rem;
+  background: @color-light-gray;
+  .background-image(linear-gradient(to bottom, @color-white 0%, @color-white 90%, @color-light-gray 100%));
+
+  &__video-wrapper {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow: hidden;
+    .animation-duration(@animation-very-slow);
+    &:after {
+      @r: red(@color-light-gray);
+      @g: green(@color-light-gray);
+      @b: blue(@color-light-gray);
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      .background-image(linear-gradient(to bottom, transparent 0%, transparent 75%, rgba(@r, @g, @b, 1) 100%));
+    }
+  }
+
+  &__video {
+    display: none;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    transform: translateX(-50%);
+    opacity: 0.075;
+  }
+
+  &__container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    padding: @magic-number;
+    .transform(translate(-50%, -50%));
+  }
+
+  &__header {
+    text-align: center;
+    margin-bottom: @magic-number;
+
+    h1 {
+      font-family: "Pacifico", serif;
+      font-weight: normal;
+      margin-bottom: .25em;
+    }
+
+    #tagline {
+      display: inline-block;
+      font-size: 2em / @golden-ratio;
+      margin-bottom: .25em * @golden-ratio;
+    }
+  }
+
+  &__body {
+    display: none;
+    margin: 0 auto;
+  }
+
+  @media screen and (min-width: @break-m) {
+    &__body {
+      display: block;
+    }
+
+    &__video {
+      display: block;
+    }
+
+    &__header {
+      font-size: 1.25em;
+    }
+
+    &__body {
+      max-width: 50%;
+    }
+  }
+
+  @media screen and (min-width: @break-l) {
+    &__header {
+      font-size: 1.5em;
+    }
+  }
+
+  @media screen and (min-width: @break-xl) {
+    &__body { max-width: 25%; }
+  }
+}
+
+@keyframes blink {
+	0% { opacity: 1; }
+	45% { opacity: 1; }
+	50% { opacity: 0; }
+	95% { opacity: 0; }
+	100% { opacity: 1; }
+}
+
+.typingjs__caret {
+	animation: blink 1s linear 0s infinite;
+}

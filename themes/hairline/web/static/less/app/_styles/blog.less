@@ -93,7 +93,9 @@
 
 // Post content
 
-.post p code {
+.post span code,
+.post p code,
+.post ul code {
   background: @color-gray;
   padding: 1px 4px;
   border: 1px solid @color-dark-gray;
@@ -102,9 +104,15 @@
 
 .post pre > code {
   border-radius: 4px;
-  font-family: "Inconsolata", "monospace";
 }
 
 .post img {
   margin: @magic-number auto;
+}
+
+// Utilities used in posts
+.centered {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }

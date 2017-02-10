@@ -1,12 +1,3 @@
-// Settings
-@sidebar-width: 220px;
-
-.error {
-  font-family: "Lato", sans-serif;
-  font-size: .75em;
-  color: tomato;
-}
-
 body {
   background: @color-light-gray;
 }
@@ -14,18 +5,23 @@ body {
 .container {
   max-width: @break-l;
   margin: 0 auto;
-  padding: 0 @magic-number;
+  padding: 0 1.5rem;
+
+  &.container--extra-small {
+    max-width: @break-s;
+  }
+
+  &.container--small {
+    max-width: @break-m;
+  }
+}
+
+.container.container--error {
+  text-align: center;
 }
 
 .dashboard {
   margin-top: 3em;
-}
-
-// Utility classes for layout
-.centered {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 // Header and other common elements
@@ -43,6 +39,7 @@ header[role=heading] {
 }
 
 .nav {
+  margin: 0 0 @magic-number;
   background: @color-white;
   border: 1px solid @color-dark-gray;
   border-radius: 4px;

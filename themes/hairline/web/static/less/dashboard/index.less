@@ -1,11 +1,15 @@
 @import "./bower_components/greed/greed.less";
 @import "./node_modules/lesshat/lesshat.less";
 
-@import "./_mixins";
+// Setup
+@import "../app/_mixins";
 @import "./_settings";
 
-@import "./_styles/card";
-@import "./_styles/elemental";
-@import "./_styles/layout";
+// Master styles
+@import "./_master/layout";
+@import "./_master/typography";
+@import "./_master/ui";
+
+// Specific styles
+@import "../app/_styles/blog.less";
 @import "./_styles/project";
-@import "./_styles/typography";

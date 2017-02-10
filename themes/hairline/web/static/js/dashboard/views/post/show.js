@@ -1,4 +1,5 @@
 import React from 'react';
+import {findDOMNode} from 'react-dom'
 import {connect} from 'react-redux';
 import {push} from 'react-router-redux';
 import {presets} from 'react-motion';
@@ -23,15 +24,6 @@ class PostShowView extends React.Component {
     this.setState({isOpen: true});
   }
 
-  componentWillUnmount() {
-    document.body.style.overflow = null;
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    // Not render if 'changed ' changed to true
-    return !(!this.state.changed && nextState.changed);
-  }
-
   componentDidUpdate(prevProps) {
     if (this.props.params.id != prevProps.params.id)
       this.fetchPost();
@@ -53,18 +45,31 @@ class PostShowView extends React.Component {
     dispatch(push('/dashboard/posts'));
   }
 
+  _highlightPost = (post_body) => {
+    if (!this.props.children) {
+      $(post_body).find('pre code').each(function(i, block) {
+        hljs.highlightBlock(block);
+      });
+    }
+  }
+
   _renderShow() {
     return (
       <div>
         <ModalHeader text={'Showing ' + this.props.post.title} showCloseButton onClose={this._handleClose} />
-        <ModalBody className="project">
-          <h1 className="project__title">
-            {this.props.post.title + ' '}
-            <span className="project__date">{this.props.post.date}</span>
-          </h1>
-          {this.props.post.html
-              ? <div className="project__content" dangerouslySetInnerHTML={{__html: this.props.post.html}} /> : ''
-          }
+        <ModalBody className="post">
+          <header className="post__header post__header--main">
+            <div className="post__date">{this.props.post.date}</div>
+            <h1 className="post__title">{this.props.post.title}</h1>
+
+            <div className="post__meta">
+              by
+              <span className="post__author">
+              </span>
+
+            </div>
+          </header>
+          <div ref={this._highlightPost} className="post__body" dangerouslySetInnerHTML={{__html: this.props.post.html}} />
         </ModalBody>
         <ModalFooter key={Math.random()}>
           <Button type="hollow-primary" onClick={this._handleEdit}>Edit</Button>
@@ -76,8 +81,9 @@ class PostShowView extends React.Component {
 
   // Edit Modal
   _handleChange = e => {
-    this.changed = true;
-    this.setState({changed: true});
+    if (!this.state.changed) {
+      this.setState({changed: true});
+    }
   }
 
   _handleSave = e => {
