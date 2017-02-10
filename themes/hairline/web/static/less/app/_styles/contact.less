@@ -11,3 +11,20 @@
 #contact-form {
   textarea { min-height: 16em; }
 }
+
+ul.social {
+  list-style: none;
+
+  li {
+
+    display: inline-block;
+
+    &:before {
+      content: ' / ';
+    }
+
+    &:first-child:before {
+      content: '';
+    }
+  }
+}

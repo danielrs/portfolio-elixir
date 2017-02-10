@@ -34,7 +34,7 @@ defmodule Portfolio.Plug.Menu do
     menu = []
            |> menu_entry("Home", :home_path)
            |> menu_entry("Projects", :project_path)
-           |> menu_entry("Contact", :contact_path)
+           # |> menu_entry("Contact", :contact_path)
            |> menu_entry("Blog", :blog_path)
 
     Keyword.put(opts, :menu, menu);

@@ -56,9 +56,11 @@ const isHome = $('body').hasClass('body--home');
 // Tagline
 $('#tagline').typing({
   sentences: ["Hello",
-              "I'm daniel",
-              "I code stuff",
-              "I'm a programmer!"]});
+              "I'm Daniel",
+              "I design stuff",
+              "I code that stuff",
+              "I'm a..",
+              "Software Engineer!"]});
 
 // Header toggle
 const headerToggler = new ClassToggler('header.header');

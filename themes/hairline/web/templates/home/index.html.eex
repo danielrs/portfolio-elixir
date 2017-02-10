@@ -8,11 +8,17 @@
   <div class="mega-brand__container">
     <div class="mega-brand__header">
       <h1 class="animated fadeInDown"><%= site_name %></h1>
-      <code id="tagline">I'm a programer!</code>
+      <code id="tagline">Software Engineer</code>
+      <ul class="social">
+        <%= for social <- @social do %>
+          <li>
+            <a href="<%= social.url %>"><%= social.caption %></a>
+          </li>
+        <% end %>
+      </ul>
     </div>
     <div class="mega-brand__body">
-    <p>I do a lot of things related to software development, but what I love the most is programming! My favorite programming languages are <strong>Haskell</strong> for functional and <strong>C++</strong> for imperative, the best of both worlds.</p>
-    <p>On my free time I like to learn about anything, either a new programming language or a new tool to boost my development.</p>
+      <p>I do a lot of things related to software development, but what I love the most is programming! On my free time I like to learn about anything, either a new programming language or a new tool to boost my development.</p>
     </div>
   </div>
 </section>

@@ -272,7 +272,9 @@ main[role=main] {
     }
 
     #tagline {
+      display: inline-block;
       font-size: 2em / @golden-ratio;
+      margin-bottom: .25em * @golden-ratio;
     }
   }
 
@@ -281,13 +283,11 @@ main[role=main] {
     margin: 0 auto;
   }
 
-  @media screen and (min-width: @break-s) {
+  @media screen and (min-width: @break-m) {
     &__body {
       display: block;
     }
-  }
 
-  @media screen and (min-width: @break-m) {
     &__video {
       display: block;
     }
