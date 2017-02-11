@@ -33,7 +33,7 @@
     "highlightjs": {
       "main": [
         "highlight.pack.js",
-        "styles/dracula.css"
+        "styles/ocean.css"
       ]
     }
   }
