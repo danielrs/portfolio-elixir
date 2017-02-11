@@ -71,7 +71,7 @@ defmodule Portfolio.SeedData do
       %{
         first_name: "Daniel",
         last_name: "Rivas",
-        email: "daniel.rivas@email.com",
+        email: "john.doe@email.com",
         password: "abc123",
         password_confirmation: "abc123",
         role: :admin

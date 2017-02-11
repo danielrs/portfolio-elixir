@@ -27,6 +27,7 @@ defmodule Portfolio.API.V1.PostControllerTest do
     assert json_response(conn, 200)["data"] != []
   end
 
+  @tag focus: true
   test "shows chosen resource", %{nonadmin_conn: conn, nonadmin_user: user} do
     post = Factory.insert(:post, user: user)
     conn = get conn, user_post_path(conn, :show, user, post)
@@ -37,7 +38,14 @@ defmodule Portfolio.API.V1.PostControllerTest do
       "html" => post.html,
       "date" => Ecto.Date.to_string(post.date),
       "published?" => post.published?,
-      "user_id" => post.user_id}
+      "user" => %{
+        "id" => user.id,
+        "email" => user.email,
+        "first_name" => user.first_name,
+        "last_name" => user.last_name
+      },
+      "tags" => []
+    }
   end
 
   test "does not show resource and instead throw error when id is nonexistent", %{nonadmin_conn: conn} do

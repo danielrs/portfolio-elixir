@@ -1,5 +1,5 @@
 import React from 'react';
-import DatePicker from 'react-date-picker';
+import {DateField} from 'react-date-picker';
 import {renderErrorsFor, dateToISO8601} from '../../../utils';
 import {Form, FormField, FormInput, Checkbox} from 'elemental';
 
@@ -50,7 +50,7 @@ class PostForm extends React.Component {
 
   render() {
     return (
-      <Form key={this.props.post.id}>
+      <Form className="post--edit" key={this.props.post.id}>
         <FormField className={this.props.errors.title ? 'is-invalid' : ''}>
           <FormInput
             type="text"
@@ -71,6 +71,17 @@ class PostForm extends React.Component {
             defaultValue={this.props.post.slug} />
           {renderErrorsFor(this.props.errors, 'slug')}
         </FormField>
+
+        <FormField className={this.props.errors.date ? 'is-invalid' : ''}>
+          <DateField
+            ref="date"
+            defaultValue={this.date}
+            dateFormat="YYYY-MM-DD"
+            onChange={this._handleDateChange}
+            forceValidDate />
+          {renderErrorsFor(this.props.errors, 'date')}
+        </FormField>
+
         <FormField className={this.props.errors.markdown ? 'is-invalid' : ''}>
           <FormInput
             type="text"
@@ -81,11 +92,6 @@ class PostForm extends React.Component {
             defaultValue={this.props.post.markdown}
             multiline />
           {renderErrorsFor(this.props.errors, 'markdown')}
-        </FormField>
-
-        <FormField className={this.props.errors.date ? 'is-invalid' : ''}>
-          <DatePicker ref="date" defaultDate={this.date} onChange={this._handleDateChange} />
-          {renderErrorsFor(this.props.errors, 'date')}
         </FormField>
 
         <FormField>

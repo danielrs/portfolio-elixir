@@ -18,7 +18,8 @@ defmodule Portfolio.API.V1.PostView do
       html: post.html,
       date: post.date,
       published?: post.published?,
-      user_id: post.user_id}
+      user: post.user,
+      tags: post.tags}
     |> Map.drop(ignores)
   end
 end

@@ -1,5 +1,5 @@
 import React from 'react';
-import DatePicker from 'react-date-picker';
+import {DateField} from 'react-date-picker';
 import {renderErrorsFor, dateToISO8601} from '../../../utils';
 import {Form, FormField, FormInput} from 'elemental';
 
@@ -61,6 +61,7 @@ class ProjectForm extends React.Component {
             defaultValue={this.props.project.title} />
           {renderErrorsFor(this.props.errors, 'title')}
         </FormField>
+
         <FormField className={this.props.errors.description ? 'is-invalid' : ''}>
           <FormInput
             type="text"
@@ -71,6 +72,7 @@ class ProjectForm extends React.Component {
             defaultValue={this.props.project.description} />
           {renderErrorsFor(this.props.errors, 'description')}
         </FormField>
+
         <FormField className={this.props.errors.homepage ? 'is-invalid' : ''}>
           <FormInput
             type="text"
@@ -81,6 +83,17 @@ class ProjectForm extends React.Component {
             defaultValue={this.props.project.homepage} />
           {renderErrorsFor(this.props.errors, 'homepage')}
         </FormField>
+
+        <FormField className={this.props.errors.date ? 'is-invalid' : ''}>
+          <DateField
+            ref="date"
+            defaultValue={this.date}
+            dateFormat="YYYY-MM-DD"
+            onChange={this._handleDateChange}
+            forceValidDate />
+          {renderErrorsFor(this.props.errors, 'date')}
+        </FormField>
+
         <FormField className={this.props.errors.content ? 'is-invalid' : ''}>
           <FormInput
             type="text"
@@ -91,10 +104,6 @@ class ProjectForm extends React.Component {
             defaultValue={this.props.project.content}
             multiline />
           {renderErrorsFor(this.props.errors, 'content')}
-        </FormField>
-        <FormField className={this.props.errors.date ? 'is-invalid' : ''}>
-          <DatePicker ref="date" defaultDate={this.date} onChange={this._handleDateChange} />
-          {renderErrorsFor(this.props.errors, 'date')}
         </FormField>
       </Form>
     );

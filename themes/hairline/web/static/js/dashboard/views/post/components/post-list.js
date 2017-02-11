@@ -14,6 +14,8 @@ const postSpec = React.PropTypes.shape({
   markdown: React.PropTypes.string,
   html: React.PropTypes.string.isRequired,
   date: React.PropTypes.any.isRequired,
+  user: React.PropTypes.object.isRequired,
+  tags: React.PropTypes.array,
   'published?': React.PropTypes.bool.isRequired,
 });
 

@@ -7,8 +7,10 @@ defmodule Portfolio.API.V1.PostController do
   plug API.V1.UserResourceModificationPlug when action in [:create, :update, :delete]
 
   def index(conn, %{"user_id" => user_id} = params) do
-    user = Repo.get!(User, user_id)
-    posts = assoc(user, :posts) |> Post.filter_by(params) |> Repo.all
+    posts =  Post.query_posts(user_id: user_id)
+             |> Post.filter_by(params)
+             |> Repo.all
+
     render(conn, "index.json", posts: posts)
   end
 
@@ -18,6 +20,7 @@ defmodule Portfolio.API.V1.PostController do
 
     case Repo.insert(changeset) do
       {:ok, post} ->
+        post = Post.query_posts(user_id: user_id) |> Repo.get!(post.id)
         conn
         |> put_status(:created)
         |> put_resp_header("location", user_post_path(conn, :show, user, post))
@@ -30,7 +33,7 @@ defmodule Portfolio.API.V1.PostController do
   end
 
   def show(conn, %{"user_id" => user_id, "id" => id}) do
-    post = Repo.get!(Post, id, user_id: user_id)
+    post = Post.query_posts(user_id: user_id) |> Repo.get!(id)
     render(conn, "show.json", post: post)
   end
 
@@ -39,6 +42,7 @@ defmodule Portfolio.API.V1.PostController do
     changeset = Post.changeset(post, post_params)
     case Repo.update(changeset) do
       {:ok, post} ->
+        post = Post.query_posts(user_id: user_id) |> Repo.get!(post.id)
         render(conn, "show.json", post: post)
       {:error, changeset} ->
         conn

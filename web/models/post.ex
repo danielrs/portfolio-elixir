@@ -2,8 +2,6 @@ defmodule Portfolio.Post do
   use Portfolio.Web, :model
   use Portfolio.Filtrable
 
-  require Logger
-
   schema "posts" do
     field :title, :string
     field :slug, :string
@@ -40,15 +38,29 @@ defmodule Portfolio.Post do
 
   defp cast_slug(changeset) do
     if changeset.valid? do
-      cond do
-        get_change(changeset, :slug) ->
-          changeset |> update_change(:slug, &(&1 |> slugify))
-        title = get_change(changeset, :title) ->
-          changeset |> put_change(:slug, title |> slugify)
-        title = get_field(changeset, :title) ->
-          changeset |> put_change(:slug, title |> slugify)
-        true ->
-          changeset |> add_error(:slug, "unable to extrapolate from title")
+      case {
+        get_change(changeset, :slug),
+        changeset.params["slug"],
+        get_change(changeset, :title),
+        get_field(changeset, :title)} do
+          # New slug was provided
+          {slug, _, _, _} when not is_nil(slug) ->
+            changeset |> update_change(:slug, &(&1 |> slugify))
+
+          # Same slug was provided
+          {nil, slug, _, _} when not is_nil(slug) ->
+            changeset |> put_change(:slug, slug |> slugify)
+
+          # No slug was provided, check title change
+          {_, nil, title, _} when not is_nil(title) ->
+            changeset |> put_change(:slug, title |> slugify)
+
+          # No slug was provided, check title field
+          {_, nil, _, title} when not is_nil(title) ->
+            changeset |> put_change(:slug, title |> slugify)
+
+          _ ->
+            changeset |> add_error(:slug, "unable to extrapolate from title")
       end
     else
       changeset
@@ -84,6 +96,25 @@ defmodule Portfolio.Post do
 
     def order_by(query, order_map) do
       query |> Ecto.Query.order_by(^order_map)
+    end
+  end
+
+  #
+  # Queries
+  #
+
+  @spec query_posts([user_id: String.t]) :: Ecto.Queryable.t
+  def query_posts(opts \\ []) do
+    posts = from p in Portfolio.Post,
+      join: u in assoc(p, :user),
+      left_join: t in assoc(p, :tags),
+      preload: [user: u, tags: t]
+
+    if user_id = opts[:user_id] do
+      from p in posts,
+        where: p.user_id == ^user_id
+    else
+      posts
     end
   end
 end

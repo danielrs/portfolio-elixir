@@ -61,6 +61,20 @@ class PostShowView extends React.Component {
   }
 
   _renderShow() {
+
+    const author = this.props.post.user ?
+      (
+        <span className="post__author">
+          {this.props.post.user.first_name}
+          {' '}
+          {this.props.post.user.last_name}
+        </span>
+      )
+      : (
+        <span className="post__author">
+        </span>
+      );
+
     return (
       <div>
         <ModalHeader text={'Showing ' + this.props.post.title} showCloseButton onClose={this._handleClose} />
@@ -70,10 +84,7 @@ class PostShowView extends React.Component {
             <h1 className="post__title">{this.props.post.title}</h1>
 
             <div className="post__meta">
-              by
-              <span className="post__author">
-              </span>
-
+              {'by '}{author}
             </div>
           </header>
           <div ref={this._highlightPost} className="post__body" dangerouslySetInnerHTML={{__html: this.props.post.html}} />

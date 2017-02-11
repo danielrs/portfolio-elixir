@@ -5,10 +5,17 @@ defmodule Portfolio.GuardianSerializer do
   alias Portfolio.User
 
   require Ecto.Query
+  import Ecto.Query, only: [from: 2]
 
   def for_token(user = %User{}), do: {:ok, "User:#{user.id}"}
   def for_token(_), do: {:error, "Unknown resource type"}
 
-  def from_token("User:" <> id), do: {:ok, User |> Ecto.Query.preload(:role) |> Repo.get(id)}
+  def from_token("User:" <> id) do
+    query = from u in User,
+      join: r in assoc(u, :role),
+      preload: [role: r]
+    {:ok, query |> Repo.get(id)}
+  end
+
   def from_token(_), do: {:error, "Unknown resource type"}
 end

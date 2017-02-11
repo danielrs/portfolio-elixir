@@ -12,6 +12,7 @@
       <ul class="social">
         <%= for social <- @social do %>
           <li>
+            <i class="fa <%= social.icon %>" ></i>
             <a href="<%= social.url %>"><%= social.caption %></a>
           </li>
         <% end %>
