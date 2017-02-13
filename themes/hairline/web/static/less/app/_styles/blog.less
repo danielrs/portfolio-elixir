@@ -5,7 +5,7 @@
 }
 
 .post {
-  font-family: "Droid Serif", Georgia, serif;
+  &:extend(.font-serif);
   font-size: 1.05rem;
   line-height: 1.6rem;
   color: @color-body;
@@ -13,7 +13,7 @@
   margin-bottom: @magic-number*2;
 
   .post__header {
-    font-family: "Lato", sans-serif;
+    &:extend(.font-sans-serif);
     margin-bottom: @magic-number*2;
     > .post__date {
       margin-bottom: @magic-number-rem/3;
@@ -21,7 +21,7 @@
       color: lighten(@color-body, 16%);
     }
     > .post__title {
-      margin-bottom: @magic-number-rem/3;
+      margin-bottom: @magic-number / 3;
       font-size: 24em / 16;
       line-height: 24em / 24;
       font-weight: 400;
@@ -29,7 +29,6 @@
   }
 
   .post__header--main {
-    padding-bottom: @magic-number;
     text-align: center;
 
     > .post__title {
@@ -41,7 +40,15 @@
   }
 
   .post__header > .post__meta {
-    > .post__author { font-style: italic; }
+    > .post__author {
+      margin-bottom: @magic-number / 2;
+      font-style: italic;
+    }
+
+    > .post__tags {
+      margin-bottom: @magic-number;
+    }
+
     > .post__tags .post__tag {
       margin-right: .5em;
       &:last-child { margin-right: 0; }
@@ -52,7 +59,7 @@
     h1, h2, h3, h4, h5, h6 {
       margin-top: @magic-number * 1.25;
       margin-bottom: 1em;
-      font-family: "Lato", sans-serif;
+      &:extend(.font-sans-serif);
     }
 
     pre {
@@ -67,13 +74,27 @@
 
 .tag {
   .tag-color(@color) {
-    @light-color: lighten(@color, 16%);
-    color: @light-color;
-    &:visited { color: @light-color; }
-    &:focus { color: @color; }
-    &:hover { color: @color; }
-    &:active { color: @light-color; }
+    @visited-color: lighten(@color, 16%);
+    @hover-color: lighten(@color, 8%);
+
+    background-color: @visited-color;
+
+    &:visited { background-color: @visited-color; }
+    &:focus { background-color: @hover-color; }
+    &:hover { background-color: @hover-color; }
+    &:active { background-color: @color; }
   }
+
+  display: inline-block;
+  padding: .075em .75em;
+  border-radius: 2px;
+
+  &:extend(.font-monospace);
+  font-size: 0.95rem;
+  font-weight: bold;
+  text-decoration: none !important;
+
+  color: @color-white !important;
 
   .tag-color(@color-body);
 
@@ -89,11 +110,10 @@
   &--color-9 { .tag-color(@color-tag-9); }
 }
 
+
 .tag-info {
-  font-family: "Lato", sans-serif;
   margin-bottom: @magic-number;
   font-weight: bold;
-  a { font-weight: 400; }
 }
 
 // Post elements

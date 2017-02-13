@@ -38,7 +38,8 @@ defmodule Portfolio.Factory do
       homepage: "Some homepage",
       content: "Some content",
       date: Ecto.Date.utc,
-      user: build(:user)
+      user: build(:user),
+      tags: []
     }
   end
 
@@ -50,8 +51,14 @@ defmodule Portfolio.Factory do
       html: "<h1>Some markdown</h1>\n",
       date: Ecto.Date.utc,
       published?: true,
-      user: build(:user)
+      user: build(:user),
+      tags: []
     }
+  end
+
+  def post_with_tags_factory do
+    post_factory
+    |> Map.put(:tags, [build(:tag)])
   end
 
   def tag_factory do

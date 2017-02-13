@@ -41,6 +41,7 @@ defmodule Portfolio.API.V1.UserControllerTest do
     }
   end
 
+
   @tag admin: true
   test "show chosen resources as admin", %{admin_conn: conn} do
     role = Factory.insert(:role)
@@ -70,7 +71,7 @@ defmodule Portfolio.API.V1.UserControllerTest do
   end
 
   @tag admin: true
-  test "creates and renders resources when data is valid", %{admin_conn: conn} do
+  test "creates and renders resource when data is valid", %{admin_conn: conn} do
     role = Factory.insert(:role)
     user_params = Factory.params_for_2(:user, role_id: role.id)
     conn = post conn, user_path(conn, :create), user: user_params

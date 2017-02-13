@@ -1,6 +1,7 @@
 defmodule Portfolio.Router do
   use Portfolio.Web, :router
   import Portfolio.Plug.Setup
+  import Portfolio.API.V1.Plugs
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -28,7 +29,7 @@ defmodule Portfolio.Router do
 
   pipeline :api_v1_auth do
     plug Guardian.Plug.EnsureAuthenticated, handler: Portfolio.API.V1.SessionController
-    plug Portfolio.API.V1.EnsureGuardianResourceLoadedPlug
+    plug :ensure_guardian_resource_loaded
   end
 
   # User scope
@@ -58,15 +59,20 @@ defmodule Portfolio.Router do
     pipe_through :api
 
     scope "/v1", V1 do
+
       post "/session", SessionController, :create
       delete "/session", SessionController, :delete
+
       scope "/" do
         pipe_through :api_v1_auth
         get "/session", SessionController, :show
+
         resources "/users", UserController, except: [:new, :edit] do
           resources "/projects", ProjectController, except: [:new, :edit]
           resources "/posts", PostController, except: [:new, :edit]
         end
+
+        resources "/tags", TagController, except: [:new, :edit]
       end
     end
   end

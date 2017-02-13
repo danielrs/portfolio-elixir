@@ -48,8 +48,7 @@ defmodule Portfolio.BlogControllerTest do
   end
 
   test "show tags when post has tags", %{conn: conn} do
-    tags = Factory.insert_list(3, :tag)
-    post = Factory.insert(:post, tags: tags)
+    post = Factory.insert(:post_with_tags)
     conn = get conn, blog_path(conn, :show, post.id, post.slug)
     assert html_response(conn, 200) =~ "post__tags"
   end

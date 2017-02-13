@@ -1,4 +1,4 @@
-defmodule Portfolio.Repo.Migrations.ProjectsTags do
+defmodule Portfolio.Repo.Migrations.CreateProjectsTags do
   use Ecto.Migration
 
   def change do

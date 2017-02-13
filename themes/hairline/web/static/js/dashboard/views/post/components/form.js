@@ -9,8 +9,9 @@ class PostForm extends React.Component {
     post: React.PropTypes.shape({
       title: React.PropTypes.string,
       slug: React.PropTypes.string,
-      markdown: React.PropTypes.string,
+      tags: React.PropTypes.string,
       date: React.PropTypes.any,
+      markdown: React.PropTypes.string,
       'published?': React.PropTypes.bool,
     }),
     errors: React.PropTypes.object,
@@ -31,12 +32,17 @@ class PostForm extends React.Component {
       post: {
         title: this.refs.title.refs.input.value,
         slug: this.refs.slug.refs.input.value,
-        markdown: this.refs.markdown.refs.input.value,
         date: this.date,
-        'published?': this.refs['published?'].refs.target.checked,
-      }
+        tags: this._asTaglist(this.refs.tags.refs.input.value),
+        markdown: this.refs.markdown.refs.input.value,
+        'published?': this.refs['published?'].refs.target.checked
+      },
     };
     return data;
+  }
+
+  _asTaglist(string) {
+    return string.split(/,\s*/).filter(tag => tag.length > 0);
   }
 
   _handleChange = (e) => {
@@ -61,6 +67,7 @@ class PostForm extends React.Component {
             defaultValue={this.props.post.title} />
           {renderErrorsFor(this.props.errors, 'title')}
         </FormField>
+
         <FormField className={this.props.errors.slug ? 'is-invalid' : ''}>
           <FormInput
             type="text"
@@ -70,6 +77,17 @@ class PostForm extends React.Component {
             onChange={this._handleChange}
             defaultValue={this.props.post.slug} />
           {renderErrorsFor(this.props.errors, 'slug')}
+        </FormField>
+
+        <FormField className={this.props.errors.tags ? 'is-invalid' : ''}>
+          <FormInput
+            type="text"
+            ref="tags"
+            name="tags"
+            placeholder="Tags separated by comma"
+            onChange={this._handleChange}
+            defaultValue={''} />
+          {renderErrorsFor(this.props.errors, 'tags')}
         </FormField>
 
         <FormField className={this.props.errors.date ? 'is-invalid' : ''}>

@@ -1,11 +1,21 @@
+# Check
+# http://tagging.pui.ch/post/37027745720/tags-database-schemas
+
 defmodule Portfolio.Tag do
   use Portfolio.Web, :model
 
   schema "tags" do
     field :name, :string
 
-    many_to_many :projects, Portfolio.Project, join_through: "projects_tags"
-    many_to_many :posts, Portfolio.Post, join_through: "posts_tags"
+    many_to_many :projects, Portfolio.Project,
+      join_through: "projects_tags",
+      on_delete: :delete_all,
+      on_replace: :delete
+
+    many_to_many :posts, Portfolio.Post,
+      join_through: "posts_tags",
+      on_delete: :delete_all,
+      on_replace: :delete
 
     timestamps()
   end
@@ -21,6 +31,7 @@ defmodule Portfolio.Tag do
     |> cast(params, @required_fields ++ @optional_fields)
     |> validate_required(@required_fields)
     |> cast_name
+    |> unique_constraint(:name)
   end
 
   defp cast_name(changeset) do
@@ -36,5 +47,15 @@ defmodule Portfolio.Tag do
     |> String.downcase
     |> String.replace(~r/\s/, "-")
     |> String.replace(~r/[^-+\p{L}0-9]/u, "")
+  end
+
+  #
+  # Queries
+  #
+
+  @spec query_list([atom]) :: Ecto.Queryable.t
+  def query_list(tag_names \\ []) do
+    from t in Portfolio.Tag,
+      where: t.name in ^tag_names
   end
 end

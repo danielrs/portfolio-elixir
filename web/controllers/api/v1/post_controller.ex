@@ -1,13 +1,15 @@
 defmodule Portfolio.API.V1.PostController do
   use Portfolio.Web, :controller
 
+  import API.V1.Plugs
+
   alias Portfolio.Post
   alias Portfolio.User
 
-  plug API.V1.UserResourceModificationPlug when action in [:create, :update, :delete]
+  plug :ensure_admin_or_owner when action in [:create, :update, :delete]
 
   def index(conn, %{"user_id" => user_id} = params) do
-    posts =  Post.query_posts(user_id: user_id)
+    posts =  (from p in Post.query_posts, where: p.user_id == ^user_id)
              |> Post.filter_by(params)
              |> Repo.all
 
@@ -21,6 +23,7 @@ defmodule Portfolio.API.V1.PostController do
     case Repo.insert(changeset) do
       {:ok, post} ->
         post = Post.query_posts(user_id: user_id) |> Repo.get!(post.id)
+
         conn
         |> put_status(:created)
         |> put_resp_header("location", user_post_path(conn, :show, user, post))
@@ -33,16 +36,18 @@ defmodule Portfolio.API.V1.PostController do
   end
 
   def show(conn, %{"user_id" => user_id, "id" => id}) do
-    post = Post.query_posts(user_id: user_id) |> Repo.get!(id)
+    post = Post.query_posts |> Repo.get_by!(id: id, user_id: user_id)
     render(conn, "show.json", post: post)
   end
 
   def update(conn, %{"user_id" => user_id, "id" => id, "post" => post_params}) do
-    post = Repo.get!(Post, id, user_id: user_id)
+    post = Post.query_posts |> Repo.get_by!(id: id, user_id: user_id)
     changeset = Post.changeset(post, post_params)
+
     case Repo.update(changeset) do
       {:ok, post} ->
         post = Post.query_posts(user_id: user_id) |> Repo.get!(post.id)
+
         render(conn, "show.json", post: post)
       {:error, changeset} ->
         conn

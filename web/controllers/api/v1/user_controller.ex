@@ -2,7 +2,6 @@ defmodule Portfolio.API.V1.UserController do
   use Portfolio.Web, :controller
 
   alias Portfolio.User
-  require Logger
 
   plug :authorize_creation when action in [:create]
   plug :authorize_modification when action in [:update, :delete]

@@ -69,8 +69,8 @@ defmodule Portfolio.SeedData do
   def users do
     [
       %{
-        first_name: "Daniel",
-        last_name: "Rivas",
+        first_name: "John",
+        last_name: "Doe",
         email: "john.doe@email.com",
         password: "abc123",
         password_confirmation: "abc123",

@@ -27,8 +27,7 @@ defmodule Portfolio.API.V1.PostControllerTest do
     assert json_response(conn, 200)["data"] != []
   end
 
-  @tag focus: true
-  test "shows chosen resource", %{nonadmin_conn: conn, nonadmin_user: user} do
+  test "shows chosen post", %{nonadmin_conn: conn, nonadmin_user: user} do
     post = Factory.insert(:post, user: user)
     conn = get conn, user_post_path(conn, :show, user, post)
     assert json_response(conn, 200)["data"] == %{"id" => post.id,
@@ -42,45 +41,64 @@ defmodule Portfolio.API.V1.PostControllerTest do
         "id" => user.id,
         "email" => user.email,
         "first_name" => user.first_name,
-        "last_name" => user.last_name
+        "last_name" => user.last_name,
+        "role" => %{
+          "id" => user.role.id,
+          "name" => user.role.name,
+          "admin?" => user.role.admin?
+        }
       },
       "tags" => []
     }
   end
 
-  test "does not show resource and instead throw error when id is nonexistent", %{nonadmin_conn: conn} do
+  test "does not show post and instead throw error when id is nonexistent", %{nonadmin_conn: conn} do
     assert_error_sent 404, fn ->
       get conn, user_post_path(conn, :show, -1, -1)
     end
   end
 
-  test "creates and renders resource when data is valid", %{nonadmin_conn: conn, nonadmin_user: user} do
+  test "creates and renders post when data is valid", %{nonadmin_conn: conn, nonadmin_user: user} do
     post_params = Factory.params_for_2(:post)
     conn = post conn, user_post_path(conn, :create, user), post: post_params
     assert json_response(conn, 201)["data"]["id"]
     assert Repo.get_by(Post, post_params)
   end
 
-  test "does not create resource and renders errors when data is invalid", %{nonadmin_conn: conn, nonadmin_user: user} do
+  @tag focus: true
+  test "creates and renders post with tags", %{nonadmin_conn: conn, nonadmin_user: user} do
+    tags = List.duplicate(nil, 3)
+           |> Enum.map(fn _ ->
+             Factory.params_for(:tag) |> Map.get(:name)
+           end)
+    post_params = Factory.params_for(:post) |> Map.put(:tags, tags)
+
+    conn = post conn, user_post_path(conn, :create, user), post: post_params
+
+    assert json_response(conn, 201)["data"]["id"]
+    assert length(json_response(conn, 201)["data"]["tags"]) == 3
+  end
+
+  test "does not create post and renders errors when data is invalid", %{nonadmin_conn: conn, nonadmin_user: user} do
     conn = post conn, user_post_path(conn, :create, user), post: %{}
     assert json_response(conn, 422)["errors"] != %{}
   end
 
   @tag admin: true
-  test "creates and renders resource from another user as admin", %{admin_conn: conn, nonadmin_user: user} do
+  test "creates and renders post from another user as admin", %{admin_conn: conn, nonadmin_user: user} do
     post_params = Factory.params_for_2(:post, user: user)
     conn = post conn, user_post_path(conn, :create, user), post: post_params
     assert json_response(conn, 201)["data"]["id"]
     assert Repo.get_by(Post, post_params)
   end
 
-  test "does not create and renders resource for another user as non-admin user", %{nonadmin_conn: conn, admin_user: user} do
+  test "does not create and renders post for another user as non-admin user", %{nonadmin_conn: conn, admin_user: user} do
     post_params = Factory.params_for_2(:post, user: user)
     conn = post conn, user_post_path(conn, :create, user), post: post_params
     assert json_response(conn, 403)["error"]
   end
 
-  test "updates and renders chosen resource when data is valid", %{nonadmin_conn: conn, nonadmin_user: user} do
+  test "updates and renders chosen post when data is valid", %{nonadmin_conn: conn, nonadmin_user: user} do
     post = Factory.insert(:post, user: user)
     post_params = Factory.params_for_2(:post)
     conn = patch conn, user_post_path(conn, :update, user, post), post: post_params
@@ -88,14 +106,14 @@ defmodule Portfolio.API.V1.PostControllerTest do
     assert Repo.get_by(Post, post_params)
   end
 
-  test "does not update chosen resource and renders errors when data is invalid", %{nonadmin_conn: conn, nonadmin_user: user} do
+  test "does not update chosen post and renders errors when data is invalid", %{nonadmin_conn: conn, nonadmin_user: user} do
     post = Factory.insert(:post, user: user)
     conn = patch conn, user_post_path(conn, :update, user, post), post: %{title: ""}
     assert json_response(conn, 422)["errors"] != %{}
   end
 
   @tag admin: true
-  test "updates and renders chosen resource from another user as admin", %{admin_conn: conn, nonadmin_user: user} do
+  test "updates and renders chosen post from another user as admin", %{admin_conn: conn, nonadmin_user: user} do
     post = Factory.insert(:post, user: user)
     post_params = Factory.params_for_2(:post)
     conn = patch conn, user_post_path(conn, :update, user, post), post: post_params
@@ -103,14 +121,14 @@ defmodule Portfolio.API.V1.PostControllerTest do
     assert Repo.get_by(Post, post_params)
   end
 
-  test "does not update chosen resource from another user as non-admin user", %{nonadmin_conn: conn, admin_user: user} do
+  test "does not update chosen post from another user as non-admin user", %{nonadmin_conn: conn, admin_user: user} do
     post = Factory.insert(:post, user: user)
     post_params = Factory.params_for_2(:post)
     conn = patch conn, user_post_path(conn, :update, user, post), post: post_params
     assert json_response(conn, 403)["error"]
   end
 
-  test "deletes chosen resource", %{nonadmin_conn: conn, nonadmin_user: user} do
+  test "deletes chosen post", %{nonadmin_conn: conn, nonadmin_user: user} do
     post = Factory.insert(:post, user: user)
     conn = delete conn, user_post_path(conn, :delete, user, post)
     assert response(conn, 204)
@@ -118,14 +136,14 @@ defmodule Portfolio.API.V1.PostControllerTest do
   end
 
   @tag admin: true
-  test "deletes chosen resource from another user as admin", %{admin_conn: conn, nonadmin_user: user} do
+  test "deletes chosen post from another user as admin", %{admin_conn: conn, nonadmin_user: user} do
     post = Factory.insert(:post, user: user)
     conn = delete conn, user_post_path(conn, :delete, user, post)
     assert response(conn, 204)
     refute Repo.get(Post, post.id)
   end
 
-  test "does not delete chosen resource from another user as non-admin user", %{nonadmin_conn: conn, admin_user: user} do
+  test "does not delete chosen post from another user as non-admin user", %{nonadmin_conn: conn, admin_user: user} do
     post = Factory.insert(:post, user: user)
     conn = delete conn, user_post_path(conn, :delete, user, post)
     assert json_response(conn, 403)["error"]

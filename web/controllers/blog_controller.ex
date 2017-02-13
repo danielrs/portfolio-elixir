@@ -9,7 +9,7 @@ defmodule Portfolio.BlogController do
   plug :fix_slug when action in [:show_proxy, :show]
 
   def index(conn, params) do
-    paginator = get_posts(params) |> paginate_posts(params)
+    paginator = query_posts(params) |> paginate_posts(params)
     render conn, "index.html", page_title: page_title("Blog"), paginator: paginator
   end
 
@@ -17,8 +17,8 @@ defmodule Portfolio.BlogController do
     conn
   end
 
-  def show(conn, %{"id" => id}) do
-    post = Post |> Query.preload(:user) |> Query.preload(:tags) |> Repo.get!(id)
+  def show(conn, params = %{"id" => id}) do
+    post = query_posts(%{}) |> Repo.get!(id)
     if post.published? do
       render(conn, "show.html", page_title: page_title(post.title), post: post)
     else
@@ -28,16 +28,14 @@ defmodule Portfolio.BlogController do
     end
   end
 
-  defp get_posts(params) do
+  defp query_posts(params) do
     tag_name = Map.get(params, "tag")
 
-    if tag_name do
-      from p in Post,
-        join: pt in "posts_tags", on: pt.post_id == p.id,
-        join: t in Tag, on: t.id == pt.tag_id,
+    if tag_name = Map.get(params, "tag") do
+      from [_, _, _, t] in Post.query_posts,
         where: t.name == ^tag_name
     else
-      Post
+      Post.query_posts
     end
   end
 

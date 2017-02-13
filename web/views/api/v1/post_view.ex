@@ -18,8 +18,12 @@ defmodule Portfolio.API.V1.PostView do
       html: post.html,
       date: post.date,
       published?: post.published?,
-      user: post.user,
-      tags: post.tags}
+      user:
+        render_one(post.user, API.V1.UserView, "show.json")
+        |> Map.get(:data),
+      tags:
+        render_one(post.tags, API.V1.TagView, "index.json", as: :tags)
+        |> Map.get(:data)}
     |> Map.drop(ignores)
   end
 end

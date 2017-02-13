@@ -1,14 +1,14 @@
 defmodule Portfolio.API.V1.ProjectController do
   use Portfolio.Web, :controller
 
+  import API.V1.Plugs
+
   alias Portfolio.User
   alias Portfolio.Project
-  require Logger
 
-  plug API.V1.UserResourceModificationPlug when action in [:create, :update, :delete]
+  plug :ensure_admin_or_owner when action in [:create, :update, :delete]
 
   def index(conn, %{"user_id" => user_id} = params) do
-    Logger.debug inspect(params)
     user = Repo.get!(User, user_id)
     projects = assoc(user, :projects) |> Project.filter_by(params) |> Repo.all
     render(conn, "index.json", projects: projects)
