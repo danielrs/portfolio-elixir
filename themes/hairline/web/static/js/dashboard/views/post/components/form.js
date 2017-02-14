@@ -9,6 +9,7 @@ class PostForm extends React.Component {
     post: React.PropTypes.shape({
       title: React.PropTypes.string,
       slug: React.PropTypes.string,
+      description: React.PropTypes.string,
       tags: React.PropTypes.string,
       date: React.PropTypes.any,
       markdown: React.PropTypes.string,
@@ -32,6 +33,7 @@ class PostForm extends React.Component {
       post: {
         title: this.refs.title.refs.input.value,
         slug: this.refs.slug.refs.input.value,
+        description: this.refs.description.refs.input.value,
         date: this.date,
         markdown: this.refs.markdown.refs.input.value,
         'published?': this.refs['published?'].refs.target.checked
@@ -77,6 +79,17 @@ class PostForm extends React.Component {
             onChange={this._handleChange}
             defaultValue={this.props.post.slug} />
           {renderErrorsFor(this.props.errors, 'slug')}
+        </FormField>
+
+        <FormField className={this.props.errors.description ? 'is-invalid' : ''}>
+          <FormInput
+            type="text"
+            ref="description"
+            name="description"
+            placeholder="Description"
+            onChange={this._handleChange}
+            defaultValue={this.props.post.description} />
+          {renderErrorsFor(this.props.errors, 'description')}
         </FormField>
 
         <FormField className={this.props.errors.tags ? 'is-invalid' : ''}>

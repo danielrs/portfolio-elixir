@@ -14,6 +14,7 @@ defmodule Portfolio.API.V1.PostView do
     %{id: post.id,
       title: post.title,
       slug: post.slug,
+      description: post.description,
       markdown: post.markdown,
       html: post.html,
       date: post.date,

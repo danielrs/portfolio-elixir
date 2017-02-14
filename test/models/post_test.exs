@@ -5,6 +5,7 @@ defmodule Portfolio.PostTest do
 
   @valid_attrs %{title: "Some REALLY awesome title!!!...",
                  slug: "some-slug-not-from-title",
+                 description: "Some description",
                  markdown: "# Some Markdown",
                  html: "*I was not generated yet",
                  date: "2010-04-17",

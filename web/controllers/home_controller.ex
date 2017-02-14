@@ -13,7 +13,9 @@ defmodule Portfolio.HomeController do
                |> Project.filter_by(%{order_by: "-date"})
                |> Repo.all
 
-    render conn, "index.html", page_title: page_title, projects: projects, posts: latest_posts
+    conn
+    |> SEO.put_meta(SEO.default_meta)
+    |> render("index.html", projects: projects, posts: latest_posts)
   end
 
   defp latest_posts do

@@ -5,6 +5,7 @@ defmodule Portfolio.Post do
   schema "posts" do
     field :title, :string
     field :slug, :string
+    field :description, :string
     field :markdown, :string
     field :html, :string
     field :date, Ecto.Date
@@ -20,7 +21,7 @@ defmodule Portfolio.Post do
   end
 
   @required_fields [:title, :markdown, :date]
-  @optional_fields [:slug, :html, :published?]
+  @optional_fields [:slug, :description, :html, :published?]
   @filtrable_fields [:date, :title, :slug, :markdown]
 
   @doc """
@@ -34,6 +35,7 @@ defmodule Portfolio.Post do
     |> cast(params, @required_fields ++ @optional_fields)
     |> validate_required(@required_fields)
     |> cast_slug
+    |> validate_length(:description, max: 155)
     |> cast_html
     |> update_change(:date, &cast_date(&1))
     |> unique_constraint(:slug, message: "already taken")

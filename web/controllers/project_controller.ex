@@ -11,6 +11,9 @@ defmodule Portfolio.ProjectController do
                |> Project.filter_by(%{order_by: "-date"})
                |> Repo.all
 
-    render conn, "index.html", page_title: page_title("Projects"), projects: projects
+    conn
+    |> SEO.put_title("Projects")
+    |> SEO.put_meta("Daniel Rivas personal programming projects")
+    |> render("index.html", projects: projects)
   end
 end

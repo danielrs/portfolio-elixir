@@ -12,7 +12,7 @@ defmodule Portfolio.SetupController do
 
   def index(conn, _params) do
     changeset = User.changeset(%User{})
-    render conn, "index.html", page_title: page_title("Setup"), changeset: changeset
+    render conn, "index.html", title: "Setup", changeset: changeset
   end
 
   def create(conn, %{"user" => user_params}) do
@@ -28,7 +28,7 @@ defmodule Portfolio.SetupController do
         |> put_flash(:info, "Setup completed successfully")
         |> redirect(to: home_path(conn, :index))
       {:error, changeset} ->
-        render conn, "index.html", page_title: page_title("Setup"), changeset: changeset
+        render conn, "index.html", title: "Setup", changeset: changeset
     end
   end
 end

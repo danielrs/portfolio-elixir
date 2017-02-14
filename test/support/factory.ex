@@ -47,6 +47,7 @@ defmodule Portfolio.Factory do
     %Post{
       title: "Some title",
       slug: "some-slug",
+      description: "Some description",
       markdown: "# Some markdown",
       html: "<h1>Some markdown</h1>\n",
       date: Ecto.Date.utc,

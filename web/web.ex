@@ -45,18 +45,7 @@ defmodule Portfolio.Web do
       import Portfolio.Gettext
 
       alias Portfolio.API
-
-      def page_title(title \\ "")
-      def page_title(title) when is_binary(title) do
-        if String.strip(title) == "" do
-          Application.get_env(:portfolio, :site_name)
-        else
-          title <> " - " <> Application.get_env(:portfolio, :site_name)
-        end
-      end
-      def page_title(title) do
-        Application.get_env(:portfolio, :site_name)
-      end
+      alias Portfolio.SEO
     end
   end
 
@@ -75,8 +64,7 @@ defmodule Portfolio.Web do
       import Portfolio.Gettext
 
       alias Portfolio.API
-
-      def site_name, do: Application.get_env(:portfolio, :site_name)
+      use Portfolio.SEO
     end
   end
 

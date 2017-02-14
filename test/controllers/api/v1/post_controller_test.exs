@@ -40,6 +40,7 @@ defmodule Portfolio.API.V1.PostControllerTest do
     assert json_response(conn, 200)["data"] == %{"id" => post.id,
       "title" => post.title,
       "slug" => post.slug,
+      "description" => post.description,
       "markdown" => post.markdown,
       "html" => post.html,
       "date" => Ecto.Date.to_string(post.date),

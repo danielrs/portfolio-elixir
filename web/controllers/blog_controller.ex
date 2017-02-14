@@ -8,7 +8,11 @@ defmodule Portfolio.BlogController do
 
   def index(conn, params) do
     paginator = query_posts(params) |> paginate_posts(params)
-    render conn, "index.html", page_title: page_title("Blog"), paginator: paginator
+
+    conn
+    |> SEO.put_title("Blog")
+    |> SEO.put_meta("Daniel Rivas programming blog")
+    |> render("index.html", paginator: paginator)
   end
 
   def show_proxy(conn, _params) do
@@ -18,7 +22,10 @@ defmodule Portfolio.BlogController do
   def show(conn, %{"id" => id}) do
     post = query_posts(%{}) |> Repo.get!(id)
     if post.published? do
-      render(conn, "show.html", page_title: page_title(post.title), post: post)
+      conn
+      |> SEO.put_title(post.title)
+      |> SEO.put_meta(post.description)
+      |> render("show.html", post: post)
     else
       conn
       |> put_flash(:info, "You are not allowed to view unpublished posts")

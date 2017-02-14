@@ -24,7 +24,10 @@ defmodule Portfolio.ContactController do
   end
 
   defp do_render(conn, changeset) do
-    render(conn, "index.html", page_title: page_title("Contact"), changeset: changeset)
+    conn
+    |> SEO.put_title("Contact")
+    |> SEO.put_meta("Contact me")
+    |> render("index.html", changeset: changeset)
   end
 
   defp send_message(changeset) do

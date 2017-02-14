@@ -7,7 +7,11 @@
     <meta name="description" content="<%= site_name <> " website" %>">
     <meta name="author" content="<%= site_name %>">
 
-    <title><%= assigns[:page_title] || site_name %></title>
+    <title><%= assigns[:title] %></title>
+    <%= if assigns[:meta] do %>
+    <meta name="description" content="<%= assigns[:meta] %>" />
+    <% end %>
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/vendor.css") %>">
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/dashboard.css") %>">

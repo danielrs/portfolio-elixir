@@ -11,6 +11,7 @@ const postSpec = React.PropTypes.shape({
   id: React.PropTypes.number.isRequired,
   title: React.PropTypes.string.isRequired,
   slug: React.PropTypes.string.isRequired,
+  description: React.PropTypes.string,
   markdown: React.PropTypes.string,
   html: React.PropTypes.string.isRequired,
   date: React.PropTypes.any.isRequired,
