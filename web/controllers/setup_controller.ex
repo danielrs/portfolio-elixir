@@ -6,8 +6,6 @@ defmodule Portfolio.SetupController do
   alias Portfolio.Role
   alias Portfolio.User
 
-  require Logger
-
   plug :put_layout, "setup.html"
 
   def index(conn, _params) do
@@ -21,7 +19,6 @@ defmodule Portfolio.SetupController do
     role = Repo.get_by!(Role, name: "admin", admin?: true)
     changeset = User.changeset(%User{role_id: role.id}, user_params)
 
-    Logger.debug inspect(changeset.errors)
     case Repo.insert(changeset) do
       {:ok, _user} ->
         conn

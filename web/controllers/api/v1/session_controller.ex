@@ -1,6 +1,5 @@
 defmodule Portfolio.API.V1.SessionController do
   use Portfolio.Web, :controller
-  require Logger
 
   alias Portfolio.Session
 

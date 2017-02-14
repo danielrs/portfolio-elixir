@@ -17,7 +17,7 @@ defmodule Portfolio.API.V1.PostView do
       description: post.description,
       markdown: post.markdown,
       html: post.html,
-      date: post.date,
+      date: Portfolio.Utils.format_date(post.date, "{YYYY}-{0M}-{0D}"),
       published?: post.published?,
       user:
         render_one(post.user, API.V1.UserView, "show.json")

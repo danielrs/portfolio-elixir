@@ -53,9 +53,32 @@ defmodule Portfolio.Tag do
   # Queries
   #
 
-  @spec query_list([atom]) :: Ecto.Queryable.t
-  def query_list(tag_names \\ []) do
-    from t in Portfolio.Tag,
-      where: t.name in ^tag_names
-  end
+  # def tags_with_date do
+  #   query = """
+  #   SELECT *
+  #   FROM (
+  #     SELECT
+  #       t.*,
+  #       p.date date,
+  #       row_number() OVER (
+  #         PARTITION BY t.name ORDER BY p.date DESC
+  #       ) rn
+  #     FROM #{Portfolio.Tag.__schema__(:source)} as t
+  #     INNER JOIN #{Portfolio.PostTag.__schema__(:source)} as pt
+  #     ON pt.tag_id = t.id
+  #     INNER JOIN #{Portfolio.Post.__schema__(:source)} as p
+  #     ON p.id = pt.post_id
+  #     ORDER BY t.name ASC
+  #   ) as q
+  #   WHERE q.rn <= 1;
+  #   """
+
+  #   Logger.debug query
+
+  #   res = Ecto.Adapters.SQL.query!(Portfolio.Repo, query)
+  #   cols = Enum.map res.columns, &(String.to_atom(&1))
+  #   Enum.map res.rows, fn(row) ->
+  #     Enum.zip(cols, row)
+  #   end
+  # end
 end

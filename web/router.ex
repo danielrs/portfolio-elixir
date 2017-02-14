@@ -44,6 +44,8 @@ defmodule Portfolio.Router do
     get "/blog/:id", BlogController, :show_proxy
     get "/blog/:id/:slug", BlogController, :show
 
+    get "/sitemap.xml", SitemapController, :sitemap
+
     get "/dashboard*path", DashboardController, :index
   end
 

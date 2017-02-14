@@ -16,7 +16,7 @@ defmodule Portfolio.API.V1.ProjectView do
       description: project.description,
       homepage: project.homepage,
       content: project.content,
-      date: project.date,
+      date: Portfolio.Utils.format_date(project.date, "{YYYY}-{0M}-{0D}"),
       user:
         render_one(project.user, API.V1.UserView, "show.json")
         |> Map.get(:data),

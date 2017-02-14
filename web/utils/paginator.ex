@@ -10,7 +10,7 @@ defmodule Portfolio.Paginator do
     page_number = params |> Map.get("page", 1) |> to_int |> positive
     page_size = params |> Map.get("page_size", 10) |> to_int |> positive
 
-    total_entries = total_entries(query, page_size)
+    total_entries = total_entries(query)
 
     %Paginator{
       page_number: page_number,
@@ -30,7 +30,7 @@ defmodule Portfolio.Paginator do
     |> Repo.all
   end
 
-  defp total_entries(query, page_size) do
+  defp total_entries(query) do
     total_entries =
       query
       |> exclude(:preload)

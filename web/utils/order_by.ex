@@ -1,6 +1,4 @@
 defmodule Portfolio.OrderBy do
-  require Logger
-
   @moduledoc """
   This module contains functions for parsing query strings such as:
 

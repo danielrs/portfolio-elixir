@@ -44,6 +44,7 @@ defmodule Portfolio.API.V1.ProjectController do
   end
 
   def update(conn, %{"user_id" => user_id, "id" => id, "project" => project_params} = params) do
+
     project = Project.query_projects |> Repo.get_by!(id: id, user_id: user_id)
     changeset = Project.changeset(project, project_params)
                 |> TagUpdater.put_tags(params["tags"])

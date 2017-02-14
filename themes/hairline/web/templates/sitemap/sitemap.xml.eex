@@ -1,0 +1,53 @@
+<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+  <%# Renders parent pages %>
+  <url>
+    <loc>
+      <%= host %>
+    </loc>
+    <lastmod><%= format_sitemap_date(Ecto.Date.utc) %></lastmod>
+    <priority>1.0</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+
+  <url>
+    <loc>
+      <%= host %><%= project_path(@conn, :index) %>
+    </loc>
+    <lastmod><%= format_sitemap_date(Ecto.Date.utc) %></lastmod>
+    <priority>0.75</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+
+  <url>
+    <loc>
+      <%= host %><%= blog_path(@conn, :index) %>
+    </loc>
+    <lastmod><%= format_sitemap_date(Ecto.Date.utc) %></lastmod>
+    <priority>0.75</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+
+  <%# Renders posts %>
+  <%= for post <- @posts do %>
+    <url>
+      <loc>
+        <%= host %><%= blog_path(@conn, :show, post.id, post.slug) %>
+      </loc>
+      <lastmod><%= format_sitemap_date(post.updated_at) %></lastmod>
+      <priority>0.5</priority>
+      <changefreq>weekly</changefreq>
+    </url>
+  <% end %>
+
+  <%# Renders tags %>
+  <%= for tag <- @tags do %>
+    <url>
+      <loc>
+        <%= host %><%= blog_path(@conn, :index, tag: tag.name) %>
+      </loc>
+      <lastmod><%= format_sitemap_date(Ecto.Date.utc) %></lastmod>
+      <priority>0.25</priority>
+      <changefreq>weekly</changefreq>
+    </url>
+  <% end %>
+</urlset>

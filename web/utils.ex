@@ -1,6 +1,4 @@
 defmodule Portfolio.Utils do
-  use Timex
-
   @spec codify(Strint.t) :: integer
   def codify(string) do
     string
@@ -9,11 +7,16 @@ defmodule Portfolio.Utils do
     |> abs
   end
 
-  @spec format_date(Ecto.Date.type, String.t, atom | nil) :: String.t | no_return
-  def format_date(ecto_date, format_string, formatter \\ Timex.Format.DateTime.Formatters.Default) do
-    ecto_date
-    |> Ecto.Date.to_string
-    |> Timex.parse!("{YYYY}-{0M}-{0D}")
+  @spec format_date(Ecto.Date.type | Ecto.DateTime.type, String.t, atom | nil) :: String.t | no_return
+  def format_date(date, format_string, formatter \\ Timex.Format.DateTime.Formatters.Default)
+  def format_date(%Ecto.Date{} = date, format_string, formatter) do
+    date
+    |> Ecto.Date.to_erl
+    |> Timex.format!(format_string, formatter)
+  end
+  def format_date(%Ecto.DateTime{} = datetime, format_string, formatter) do
+    datetime
+    |> Ecto.DateTime.to_erl
     |> Timex.format!(format_string, formatter)
   end
 end

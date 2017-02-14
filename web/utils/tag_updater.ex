@@ -14,6 +14,7 @@ defmodule Portfolio.TagUpdater do
         |> List.wrap
         |> Enum.map(& Tag.changeset(%Tag{}, %{name: &1}))
         |> Enum.filter(& &1.valid?)
+        |> Enum.uniq
         |> Enum.map(&get_or_insert_tag/1)
 
       changeset |> Changeset.put_assoc(:tags, tags)
