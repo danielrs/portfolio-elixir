@@ -5,6 +5,7 @@ defmodule Portfolio.API.V1.PostController do
 
   alias Portfolio.Post
   alias Portfolio.User
+  alias Portfolio.TagUpdater
 
   plug :ensure_admin_or_owner when action in [:create, :update, :delete]
 
@@ -16,13 +17,14 @@ defmodule Portfolio.API.V1.PostController do
     render(conn, "index.json", posts: posts)
   end
 
-  def create(conn, %{"user_id" => user_id, "post" => post_params}) do
+  def create(conn, %{"user_id" => user_id, "post" => post_params} = params) do
     user = Repo.get!(User, user_id)
     changeset = user |> build_assoc(:posts) |> Post.changeset(post_params)
+                |> TagUpdater.put_tags(params["tags"])
 
     case Repo.insert(changeset) do
       {:ok, post} ->
-        post = Post.query_posts(user_id: user_id) |> Repo.get!(post.id)
+        post = Post.query_posts |> Repo.get_by!(id: post.id, user_id: user_id)
 
         conn
         |> put_status(:created)
@@ -40,13 +42,14 @@ defmodule Portfolio.API.V1.PostController do
     render(conn, "show.json", post: post)
   end
 
-  def update(conn, %{"user_id" => user_id, "id" => id, "post" => post_params}) do
+  def update(conn, %{"user_id" => user_id, "id" => id, "post" => post_params} = params) do
     post = Post.query_posts |> Repo.get_by!(id: id, user_id: user_id)
     changeset = Post.changeset(post, post_params)
+                |> TagUpdater.put_tags(params["tags"])
 
     case Repo.update(changeset) do
       {:ok, post} ->
-        post = Post.query_posts(user_id: user_id) |> Repo.get!(post.id)
+        post = Post.query_posts |> Repo.get_by!(id: post.id, user_id: user_id)
 
         render(conn, "show.json", post: post)
       {:error, changeset} ->

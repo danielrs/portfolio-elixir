@@ -10,7 +10,10 @@ defmodule Portfolio.Project do
     field :date, Ecto.Date, default: Ecto.Date.utc
 
     belongs_to :user, Portfolio.User
-    many_to_many :tags, Portfolio.Tag, join_through: "projects_tags"
+    many_to_many :tags, Portfolio.Tag,
+      join_through: Portfolio.ProjectTag,
+      on_delete: :delete_all,
+      on_replace: :delete
 
     timestamps
   end
@@ -42,5 +45,16 @@ defmodule Portfolio.Project do
     def order_by(query, order_map) do
       query |> Ecto.Query.order_by(^order_map)
     end
+  end
+
+  #
+  # Queries
+  #
+
+  @spec query_projects :: Ecto.Queryable.t
+  def query_projects do
+    tags_query = from t in Portfolio.Tag, order_by: t.name
+    from p in Portfolio.Project,
+      preload: [:user, user: :role, tags: ^tags_query]
   end
 end

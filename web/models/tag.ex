@@ -8,12 +8,12 @@ defmodule Portfolio.Tag do
     field :name, :string
 
     many_to_many :projects, Portfolio.Project,
-      join_through: "projects_tags",
+      join_through: Portfolio.ProjectTag,
       on_delete: :delete_all,
       on_replace: :delete
 
     many_to_many :posts, Portfolio.Post,
-      join_through: "posts_tags",
+      join_through: Portfolio.PostTag,
       on_delete: :delete_all,
       on_replace: :delete
 

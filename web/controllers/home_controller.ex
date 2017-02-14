@@ -7,19 +7,19 @@ defmodule Portfolio.HomeController do
 
   plug Portfolio.Plug.Menu
 
-  def index(conn, params) do
+  def index(conn, _params) do
     user = Repo.get_by(User, email: Application.get_env(:portfolio, :showcase_email))
-    projects = user && assoc(user, :projects) |> Project.filter_by(params) |> Repo.all || []
+    projects = (from p in Project.query_projects, where: p.user_id == ^user.id)
+               |> Project.filter_by(%{order_by: "-date"})
+               |> Repo.all
+
     render conn, "index.html", page_title: page_title, projects: projects, posts: latest_posts
   end
 
   defp latest_posts do
-    Post
-    |> Query.preload(:user)
-    |> Query.preload(:tags)
-    |> Query.select([:id, :title, :slug, :date, :published?, :user_id])
+    Post.query_posts
     |> Query.where(published?: true)
-    |> Ecto.Query.order_by(desc: :date)
+    |> Ecto.Query.order_by(desc: :date, desc: :inserted_at, asc: :title)
     |> Ecto.Query.limit(4)
     |> Repo.all
   end

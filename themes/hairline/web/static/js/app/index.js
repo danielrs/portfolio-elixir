@@ -22,6 +22,8 @@ import "phoenix_html"
 
 // import socket from "./socket"
 
+var _ = require('lodash');
+
 class ClassToggler {
   constructor(el) {
     this.$el = $(el);
@@ -64,6 +66,7 @@ $('#tagline').typing({
 // Header toggle
 const headerToggler = new ClassToggler('header.header');
 const brandToggler = new ClassToggler('header.header .navbar-brand');
+
 $(document).scroll(function() {
   if ($(document).scrollTop() <= 10) {
     headerToggler.on('header--transparent');
@@ -79,3 +82,11 @@ $(document).scroll(function() {
 $('.navbar-toggle').click(function() {
   $('.nav-wrapper').toggleClass('nav-wrapper--collapsed');
 });
+
+// Resize mega-brand to window height
+if (isHome) {
+  $(window).resize(_.throttle(function() {
+    $('.mega-brand').height($(window).height());
+  }, 100));
+  $(window).resize();
+}

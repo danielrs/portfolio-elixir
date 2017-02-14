@@ -18,7 +18,7 @@ defmodule Portfolio.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [mod: {Portfolio, []},
-     applications: [:phoenix, :phoenix_pubsub, :phoenix_ecto, :phoenix_html, :postgrex, :gettext, :cowboy, :logger, :comeonin, :timex]]
+     applications: [:phoenix, :phoenix_pubsub, :phoenix_ecto, :phoenix_html, :postgrex, :gettext, :cowboy, :logger, :comeonin, :timex, :scrivener_ecto]]
   end
 
   # Specifies which paths to compile per environment.
@@ -37,12 +37,15 @@ defmodule Portfolio.Mixfile do
      {:postgrex, ">= 0.0.0"},
      {:gettext, "~> 0.9"},
      {:cowboy, "~> 1.0"},
+
      {:comeonin, "~> 3.0"},
      {:guardian, "~> 0.14"},
      {:mailgun, "~> 0.1.2"},
      {:earmark, "~> 1.1.1"},
      {:ex_machina, "~> 1.0", only: :test},
      {:timex, "~> 3.0"},
+     {:scrivener_ecto, "~> 1.0"},
+
      {:hairline, path: "./themes/hairline"}]
   end
 

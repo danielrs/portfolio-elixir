@@ -7,7 +7,10 @@ defmodule Portfolio.ProjectController do
 
   def index(conn, _params) do
     user = Repo.get_by(User, email: Application.get_env(:portfolio, :showcase_email))
-    projects = user && assoc(user, :projects) |> Project.filter_by(%{order_by: "-date"}) |> Repo.all || []
+    projects = (from p in Project.query_projects, where: p.user_id == ^user.id)
+               |> Project.filter_by(%{order_by: "-date"})
+               |> Repo.all
+
     render conn, "index.html", page_title: page_title("Projects"), projects: projects
   end
 end

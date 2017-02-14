@@ -17,7 +17,12 @@ defmodule Portfolio.API.V1.ProjectView do
       homepage: project.homepage,
       content: project.content,
       date: project.date,
-      user_id: project.user_id}
+      user:
+        render_one(project.user, API.V1.UserView, "show.json")
+        |> Map.get(:data),
+      tags:
+        render_one(project.tags, API.V1.TagView, "index.json", as: :tags)
+        |> Map.get(:data)}
     |> Map.drop(ignores)
   end
 end

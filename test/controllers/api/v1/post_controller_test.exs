@@ -28,7 +28,14 @@ defmodule Portfolio.API.V1.PostControllerTest do
   end
 
   test "shows chosen post", %{nonadmin_conn: conn, nonadmin_user: user} do
-    post = Factory.insert(:post, user: user)
+    tags = Factory.insert_list(3, :tag)
+    post = Factory.insert(:post, user: user, tags: tags)
+    tags = tags |> Enum.map(fn tag ->
+      for {key, val} <- (tag |> Map.from_struct |> Map.take([:id, :name])),
+        into: %{},
+        do: {Atom.to_string(key), val}
+    end)
+
     conn = get conn, user_post_path(conn, :show, user, post)
     assert json_response(conn, 200)["data"] == %{"id" => post.id,
       "title" => post.title,
@@ -48,7 +55,7 @@ defmodule Portfolio.API.V1.PostControllerTest do
           "admin?" => user.role.admin?
         }
       },
-      "tags" => []
+      "tags" => tags
     }
   end
 
@@ -63,20 +70,6 @@ defmodule Portfolio.API.V1.PostControllerTest do
     conn = post conn, user_post_path(conn, :create, user), post: post_params
     assert json_response(conn, 201)["data"]["id"]
     assert Repo.get_by(Post, post_params)
-  end
-
-  @tag focus: true
-  test "creates and renders post with tags", %{nonadmin_conn: conn, nonadmin_user: user} do
-    tags = List.duplicate(nil, 3)
-           |> Enum.map(fn _ ->
-             Factory.params_for(:tag) |> Map.get(:name)
-           end)
-    post_params = Factory.params_for(:post) |> Map.put(:tags, tags)
-
-    conn = post conn, user_post_path(conn, :create, user), post: post_params
-
-    assert json_response(conn, 201)["data"]["id"]
-    assert length(json_response(conn, 201)["data"]["tags"]) == 3
   end
 
   test "does not create post and renders errors when data is invalid", %{nonadmin_conn: conn, nonadmin_user: user} do
@@ -96,6 +89,14 @@ defmodule Portfolio.API.V1.PostControllerTest do
     post_params = Factory.params_for_2(:post, user: user)
     conn = post conn, user_post_path(conn, :create, user), post: post_params
     assert json_response(conn, 403)["error"]
+  end
+
+  test "creates and renders post with no tags", %{nonadmin_conn: conn, nonadmin_user: user} do
+    post_params = Factory.params_for(:post)
+    conn = post conn, user_post_path(conn, :create, user), post: post_params
+
+    assert json_response(conn, 201)["data"]["id"]
+    assert length(json_response(conn, 201)["data"]["tags"]) == 0
   end
 
   test "updates and renders chosen post when data is valid", %{nonadmin_conn: conn, nonadmin_user: user} do
@@ -126,6 +127,39 @@ defmodule Portfolio.API.V1.PostControllerTest do
     post_params = Factory.params_for_2(:post)
     conn = patch conn, user_post_path(conn, :update, user, post), post: post_params
     assert json_response(conn, 403)["error"]
+  end
+
+  test "updates and sets post tags to no tags", %{nonadmin_conn: conn, nonadmin_user: user} do
+    post = Factory.insert(:post, user: user)
+    post_params = Factory.params_for(:post)
+    conn = patch conn, user_post_path(conn, :update, user, post), post: post_params
+
+    assert json_response(conn, 200)["data"]["id"]
+    assert length(json_response(conn, 200)["data"]["tags"]) == 0
+  end
+
+  test "updates and sets post tags to new tags", %{nonadmin_conn: conn, nonadmin_user: user} do
+    tags = Factory.build_list(3, :tag) |> Enum.map(& &1 |> Map.get(:name))
+    post = Factory.insert(:post, user: user)
+    post_params = Factory.params_for(:post)
+
+    conn = patch conn, user_post_path(conn, :update, user, post),
+    post: post_params, tags: tags
+
+    assert json_response(conn, 200)["data"]["id"]
+    assert length(json_response(conn, 200)["data"]["tags"]) == 3
+  end
+
+  test "updates and sets post without tags to new tags", %{nonadmin_conn: conn, nonadmin_user: user} do
+    tags = Factory.build_list(3, :tag) |> Enum.map(& &1 |> Map.get(:name))
+    post = Factory.insert(:post, user: user, tags: [])
+    post_params = Factory.params_for(:post)
+
+    conn = patch conn, user_post_path(conn, :update, user, post),
+    post: post_params, tags: tags
+
+    assert json_response(conn, 200)["data"]["id"]
+    assert length(json_response(conn, 200)["data"]["tags"]) == 3
   end
 
   test "deletes chosen post", %{nonadmin_conn: conn, nonadmin_user: user} do

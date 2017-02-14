@@ -33,10 +33,10 @@ class PostForm extends React.Component {
         title: this.refs.title.refs.input.value,
         slug: this.refs.slug.refs.input.value,
         date: this.date,
-        tags: this._asTaglist(this.refs.tags.refs.input.value),
         markdown: this.refs.markdown.refs.input.value,
         'published?': this.refs['published?'].refs.target.checked
       },
+      tags: this._asTaglist(this.refs.tags.refs.input.value)
     };
     return data;
   }

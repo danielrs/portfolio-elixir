@@ -40,17 +40,16 @@
   }
 
   .post__header > .post__meta {
+    margin-bottom: @magic-number;
+
     > .post__author {
       margin-bottom: @magic-number / 2;
       font-style: italic;
     }
 
-    > .post__tags {
-      margin-bottom: @magic-number;
-    }
-
     > .post__tags .post__tag {
       margin-right: .5em;
+      margin-bottom: .5em;
       &:last-child { margin-right: 0; }
     }
   }

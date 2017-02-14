@@ -39,7 +39,7 @@ defmodule Portfolio.Factory do
       content: "Some content",
       date: Ecto.Date.utc,
       user: build(:user),
-      tags: []
+      tags: [build(:tag)]
     }
   end
 
@@ -52,7 +52,7 @@ defmodule Portfolio.Factory do
       date: Ecto.Date.utc,
       published?: true,
       user: build(:user),
-      tags: []
+      tags: [build(:tag)]
     }
   end
 

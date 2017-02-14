@@ -42,7 +42,7 @@ defmodule Portfolio.BlogControllerTest do
   end
 
   test "doesn't show any tags when post doesn't has any tags", %{conn: conn} do
-    post = Factory.insert(:post)
+    post = Factory.insert(:post, tags: [])
     conn = get conn, blog_path(conn, :show, post.id, post.slug)
     refute html_response(conn, 200) =~ "post__tags"
   end
