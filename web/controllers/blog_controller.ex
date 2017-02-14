@@ -46,7 +46,8 @@ defmodule Portfolio.BlogController do
 
   defp query_posts(params) do
     if tag_name = Map.get(params, "tag") do
-      from [_, _, _, t] in Post.query_posts,
+      from p in Post.query_posts,
+        join: t in assoc(p, :tags),
         where: t.name == ^tag_name
     else
       Post.query_posts

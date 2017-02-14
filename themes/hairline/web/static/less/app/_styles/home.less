@@ -1,8 +1,8 @@
 .mega-brand {
   position: relative;
   width: 100%;
-  // Fullscreen heigh (100vh) will be set programatically
-  height: 1080px;
+  height: 640px;
+  min-height: 10em;
   margin-top: -4rem;
   background: @color-light-gray;
   .background-image(linear-gradient(to bottom, @color-white 0%, @color-white 90%, @color-light-gray 100%));
@@ -72,9 +72,7 @@
   }
 
   @media screen and (min-width: @break-m) {
-    &__body {
-      display: block;
-    }
+    height: 768px;
 
     &__video {
       display: block;
@@ -85,6 +83,7 @@
     }
 
     &__body {
+      display: block;
       max-width: 50%;
     }
   }
@@ -97,6 +96,10 @@
 
   @media screen and (min-width: @break-xl) {
     &__body { max-width: 25%; }
+  }
+
+  &--dynamic-height {
+    height: 100vh;
   }
 }
 

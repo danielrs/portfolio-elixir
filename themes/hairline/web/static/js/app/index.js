@@ -22,7 +22,13 @@ import "phoenix_html"
 
 // import socket from "./socket"
 
-var _ = require('lodash');
+// var _ = require('lodash');
+
+// Function to check if we are on a mobile
+// From: http://stackoverflow.com/questions/3514784/what-is-the-best-way-to-detect-a-mobile-device-in-jquery
+function isMobile() {
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+}
 
 class ClassToggler {
   constructor(el) {
@@ -83,10 +89,7 @@ $('.navbar-toggle').click(function() {
   $('.nav-wrapper').toggleClass('nav-wrapper--collapsed');
 });
 
-// Resize mega-brand to window height
-if (isHome) {
-  $(window).resize(_.throttle(function() {
-    $('.mega-brand').height($(window).height());
-  }, 100));
-  $(window).resize();
+// If is not mobile at dynamic height
+if (!isMobile()) {
+  $('.mega-brand').addClass('mega-brand--dynamic-height');
 }
