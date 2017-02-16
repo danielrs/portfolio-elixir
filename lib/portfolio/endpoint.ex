@@ -3,6 +3,11 @@ defmodule Portfolio.Endpoint do
 
   socket "/socket", Portfolio.UserSocket
 
+  # Redirects www. requests to bare url.
+  # Disabled for now. It's preferred to handle it in
+  # the webhost.
+  # plug Portfolio.Plug.WWWRedirect
+
   # Serve at "/" the static files from "priv/static" directory.
   #
   # You should set gzip to true if you are running phoenix.digest
