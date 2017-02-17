@@ -6,19 +6,12 @@ import {Button, Dropdown, Glyph, Table, Row, Col, Card} from 'elemental';
 import {TransitionMotion, spring, presets} from 'react-motion';
 import StaggeredList from '../../../components/layout/staggered-list';
 
-const projectSpec = React.PropTypes.shape({
-  id: React.PropTypes.number.isRequired,
-  title: React.PropTypes.string.isRequired,
-  description: React.PropTypes.string.isRequired,
-  homepage: React.PropTypes.string.isRequired,
-  content: React.PropTypes.string,
-  date: React.PropTypes.any.isRequired
-});
+import Project from '../../../proptypes/project';
 
 class ProjectListItem extends React.Component {
 
   static propTypes = {
-    project: projectSpec,
+    project: Project,
   }
 
   _handleShow = e => {
@@ -56,7 +49,7 @@ class ProjectListItem extends React.Component {
 
 class ProjectList extends React.Component {
   static propTypes = {
-    projects: React.PropTypes.arrayOf(projectSpec)
+    projects: React.PropTypes.arrayOf(Project)
   }
 
   static defaultProps = {

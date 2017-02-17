@@ -29,13 +29,13 @@ class PostNewView extends React.Component {
   _handleClose = (e) => {
     const {dispatch} = this.props;
     this.setState({isOpen: false});
-    dispatch(push('/dashboard/post'));
+    dispatch(push('/dashboard/posts'));
   }
 
   render() {
     return (
       <DocumentTitle title="New post">
-        <Modal isOpen={this.state.isOpen}>
+        <Modal width="large" isOpen={this.state.isOpen}>
           <ModalHeader text="New post" showCloseButton onClose={this._handleClose}/>
           <ModalBody>
             <PostForm ref="form" errors={this.props.errors} />

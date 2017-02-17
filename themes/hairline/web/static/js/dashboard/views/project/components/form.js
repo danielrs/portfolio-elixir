@@ -3,16 +3,12 @@ import {DateField} from 'react-date-picker';
 import {renderErrorsFor, dateToISO8601} from '../../../utils';
 import {Form, FormField, FormInput} from 'elemental';
 
+import Project from '../../../proptypes/project';
+
 class ProjectForm extends React.Component {
 
   static propTypes = {
-    project: React.PropTypes.shape({
-      title: React.PropTypes.string,
-      description: React.PropTypes.string,
-      homepage: React.PropTypes.string,
-      content: React.PropTypes.string,
-      date: React.PropTypes.any,
-    }),
+    project: Project,
     errors: React.PropTypes.object,
     onChange: React.PropTypes.func.isRequired
   }

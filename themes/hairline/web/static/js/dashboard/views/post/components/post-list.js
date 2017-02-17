@@ -6,24 +6,12 @@ import Actions from '../../../actions/post';
 import {Button, Dropdown, Glyph, Table, Row, Col, Card} from 'elemental';
 import {TransitionMotion, spring, presets} from 'react-motion';
 import StaggeredList from '../../../components/layout/staggered-list';
-
-const postSpec = React.PropTypes.shape({
-  id: React.PropTypes.number.isRequired,
-  title: React.PropTypes.string.isRequired,
-  slug: React.PropTypes.string.isRequired,
-  description: React.PropTypes.string,
-  markdown: React.PropTypes.string,
-  html: React.PropTypes.string.isRequired,
-  date: React.PropTypes.any.isRequired,
-  user: React.PropTypes.object.isRequired,
-  tags: React.PropTypes.array,
-  'published?': React.PropTypes.bool.isRequired,
-});
+import Post from '../../../proptypes/post';
 
 class PostListItem extends React.Component {
 
   static propTypes = {
-    post: postSpec,
+    post: Post,
   }
 
   _handleShow = e => {
@@ -54,7 +42,7 @@ class PostListItem extends React.Component {
 
 class PostList extends React.Component {
   static propTypes = {
-    posts: React.PropTypes.arrayOf(postSpec)
+    posts: React.PropTypes.arrayOf(Post)
   }
 
   static defaultProps = {

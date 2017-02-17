@@ -2,19 +2,12 @@ import React from 'react';
 import {DateField} from 'react-date-picker';
 import {renderErrorsFor, dateToISO8601} from '../../../utils';
 import {Form, FormField, FormInput, Checkbox} from 'elemental';
+import Post from '../../../proptypes/post';
 
 class PostForm extends React.Component {
 
   static propTypes = {
-    post: React.PropTypes.shape({
-      title: React.PropTypes.string,
-      slug: React.PropTypes.string,
-      description: React.PropTypes.string,
-      tags: React.PropTypes.string,
-      date: React.PropTypes.any,
-      markdown: React.PropTypes.string,
-      'published?': React.PropTypes.bool,
-    }),
+    post: Post,
     errors: React.PropTypes.object,
     onChange: React.PropTypes.func.isRequired
   }
@@ -45,6 +38,15 @@ class PostForm extends React.Component {
 
   _asTaglist(string) {
     return string.split(/,\s*/).filter(tag => tag.length > 0);
+  }
+
+  _asTagString(taglist) {
+    if (taglist && Array.isArray(taglist)) {
+      return taglist.map(tag => tag.name);
+    }
+    else {
+      return '';
+    }
   }
 
   _handleChange = (e) => {
@@ -99,7 +101,7 @@ class PostForm extends React.Component {
             name="tags"
             placeholder="Tags separated by comma"
             onChange={this._handleChange}
-            defaultValue={''} />
+            defaultValue={this._asTagString(this.props.post.tags)} />
           {renderErrorsFor(this.props.errors, 'tags')}
         </FormField>
 

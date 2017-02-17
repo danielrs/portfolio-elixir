@@ -62,18 +62,32 @@ class PostShowView extends React.Component {
 
   _renderShow() {
 
-    const author = this.props.post.user ?
-      (
-        <span className="post__author">
+    let author = null;
+    if (this.props.post.user) {
+      author =  (
+        <div className="post__author">
+          by
           {this.props.post.user.first_name}
           {' '}
           {this.props.post.user.last_name}
-        </span>
-      )
-      : (
-        <span className="post__author">
-        </span>
+        </div>
       );
+    }
+
+    let tags = null;
+    if (this.props.post.tags && this.props.post.tags.length > 0) {
+      tags = (
+        <div className="post__tags">
+          {this.props.post.tags.map(tag => {
+            return (
+              <span key={tag.id} className="post__tag tag">
+                {tag.name}
+              </span>
+            );
+          })}
+        </div>
+      );
+    }
 
     return (
       <div>
@@ -84,7 +98,8 @@ class PostShowView extends React.Component {
             <h1 className="post__title">{this.props.post.title}</h1>
 
             <div className="post__meta">
-              {'by '}{author}
+              {author}
+              {tags}
             </div>
           </header>
           <div ref={this._highlightPost} className="post__body" dangerouslySetInnerHTML={{__html: this.props.post.html}} />
