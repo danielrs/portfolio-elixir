@@ -1,11 +1,11 @@
 defmodule Portfolio.Message do
   use Portfolio.Web, :model
 
-  schema "message" do
-    field :name, :string, virtual: true
-    field :email, :string, virtual: true
-    field :subject, :string, virtual: true
-    field :text, :string, virtual: true
+  embedded_schema do
+    field :name, :string
+    field :email, :string
+    field :subject, :string
+    field :text, :string
   end
 
   @required_fields [:name, :email, :subject, :text]

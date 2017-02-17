@@ -1,10 +1,13 @@
 defmodule Portfolio.Utils do
   @spec codify(Strint.t) :: integer
-  def codify(string) do
+  def codify(string) when is_binary(string) do
     string
     |> to_char_list
-    |> Enum.reduce(fn (x, acc) -> x + acc end)
+    |> Enum.reduce(0, fn (x, acc) -> x + acc end)
     |> abs
+  end
+  def codify(_) do
+    0
   end
 
   @spec format_date(Ecto.Date.type | Ecto.DateTime.type, String.t, atom | nil) :: String.t | no_return

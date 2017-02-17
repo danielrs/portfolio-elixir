@@ -1,7 +1,7 @@
 <section class="main-section blog-section">
   <div class="container">
 
-    <%= if @conn.params["tag"] do %>
+    <%= if @conn.params["tag"] && @conn.params["tag"] != "" do %>
       <div class="tag-info">
         <span>
           Showing <%= render "_tag.html", conn: @conn, tag: %{name: @conn.params["tag"]} %> posts.

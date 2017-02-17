@@ -13,6 +13,10 @@ defmodule Portfolio.UtilsTest do
     assert Utils.codify @string == @string_integer
   end
 
+  test "codify returns 0 on empty string" do
+    assert Utils.codify "" == 0
+  end
+
   test "format_date works with default formatter" do
     assert Utils.format_date(@date, "{Mshort} {0D}, {YYYY}") == "Oct 15, 1992"
   end

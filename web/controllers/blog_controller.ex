@@ -2,12 +2,13 @@ defmodule Portfolio.BlogController do
   use Portfolio.Web, :controller
   alias Ecto.Query
   alias Portfolio.Post
+  alias Portfolio.BlogFilter
 
   plug Portfolio.Plug.Menu
   plug :fix_slug when action in [:show_proxy, :show]
 
   def index(conn, params) do
-    paginator = query_posts(params) |> paginate_posts(params)
+    paginator = BlogFilter.query_posts(params) |> paginate_posts(params)
 
     conn
     |> SEO.put_title("Blog")
@@ -20,7 +21,7 @@ defmodule Portfolio.BlogController do
   end
 
   def show(conn, %{"id" => id}) do
-    post = query_posts(%{}) |> Repo.get!(id)
+    post = Post.query_posts |> Repo.get!(id)
     if post.published? do
       conn
       |> SEO.put_title(post.title)
@@ -41,16 +42,6 @@ defmodule Portfolio.BlogController do
       |> halt
     else
       conn
-    end
-  end
-
-  defp query_posts(params) do
-    if tag_name = Map.get(params, "tag") do
-      from p in Post.query_posts,
-        join: t in assoc(p, :tags),
-        where: t.name == ^tag_name
-    else
-      Post.query_posts
     end
   end
 

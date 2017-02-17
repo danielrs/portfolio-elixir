@@ -6,7 +6,7 @@ defmodule Portfolio.ProjectController do
   plug Portfolio.Plug.Menu
 
   def index(conn, _params) do
-    user = Repo.get_by(User, email: Application.get_env(:portfolio, :showcase_email))
+    user = Repo.get_by!(User, email: Application.get_env(:portfolio, :showcase_email))
     projects = (from p in Project.query_projects, where: p.user_id == ^user.id)
                |> Project.filter_by(%{order_by: "-date"})
                |> Repo.all

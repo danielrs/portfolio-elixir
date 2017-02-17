@@ -2,6 +2,10 @@ defmodule Portfolio.BlogControllerTest do
   use Portfolio.ConnCase
   alias Portfolio.Factory
 
+  setup %{conn: conn} do
+    conn |> setup_conn
+  end
+
   test "index doesn't show author name or body", %{conn: conn} do
     post = Factory.insert(:post)
     conn = get conn, blog_path(conn, :index)

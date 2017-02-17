@@ -31,6 +31,27 @@ defmodule Portfolio.ConnCase do
       # The default endpoint for testing
       @endpoint Portfolio.Endpoint
 
+      defp setup_conn(conn) do
+        alias Portfolio.Factory
+
+        nonadmin_role = Factory.insert(:role)
+        admin_role    = Factory.insert(:role, admin?: true)
+        nonadmin_user = Factory.insert(:user, role: nonadmin_role)
+        admin_user    = Factory.insert(:user, role: admin_role)
+
+        Application.put_env(:portfolio, :showcase_email, admin_user.email)
+
+        {:ok, nonadmin_conn} = login_user(conn, nonadmin_user)
+        {:ok, admin_conn} = login_user(conn, admin_user)
+
+        {:ok,
+         conn: conn,
+         nonadmin_conn: nonadmin_conn,
+         admin_conn: admin_conn,
+         nonadmin_user: nonadmin_user,
+         admin_user: admin_user}
+      end
+
       defp login_user(conn, user) do
         auth_conn = post conn, session_path(conn, :create), session: %{email: user.email, password: user.password}
         status = Map.get(auth_conn, :status)

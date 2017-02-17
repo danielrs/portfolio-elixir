@@ -5,15 +5,7 @@ defmodule Portfolio.API.V1.UserControllerTest do
   alias Portfolio.User
 
   setup %{conn: conn} do
-    nonadmin_role = Factory.insert(:role)
-    admin_role    = Factory.insert(:role, admin?: true)
-    nonadmin_user = Factory.insert(:user, role: nonadmin_role)
-    admin_user    = Factory.insert(:user, role: admin_role)
-
-    {:ok, nonadmin_conn} = login_user(conn, nonadmin_user)
-    {:ok, admin_conn} = login_user(conn, admin_user)
-
-    {:ok, nonadmin_conn: nonadmin_conn, admin_conn: admin_conn}
+    conn |> setup_conn
   end
 
   test "list all entries on index as non-admin", %{nonadmin_conn: conn} do
