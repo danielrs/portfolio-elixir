@@ -1,5 +1,6 @@
 <section class="main-section blog-section">
   <div class="container">
+    <%# <h2 class="header--main">Posts</h2> %>
 
     <%= if @conn.params["tag"] && @conn.params["tag"] != "" do %>
       <div class="tag-info">

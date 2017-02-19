@@ -1,6 +1,8 @@
-<%= for post <- @posts do %>
-  <%= render "_post.html", conn: @conn, post: post %>
-<% end %>
+<div class="post-list">
+  <%= for post <- @posts do %>
+    <%= render "_post.html", conn: @conn, post: post, simple?: true %>
+  <% end %>
+</div>
 
 <%= if assigns[:paginator] && @paginator.total_pages > 1 && assigns[:paginator?] do %>
   <%= render Portfolio.SharedView, "_paginator.html", paginator: @paginator, path_func: fn page_number -> %>

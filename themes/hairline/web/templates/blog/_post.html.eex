@@ -1,32 +1,29 @@
-<article class="post">
-  <header class="post__header
-    <%= if assigns[:main?] do %>post__header--main<% end %>">
+<article class="post <%= if assigns[:simple?] do %>post--simple<% end %>">
+  <header class="post__header">
     <div class="post__date"><%= Portfolio.Utils.format_date(@post.date, "{Mshort} {0D}, {YYYY}") %></div>
 
     <h1 class="post__title">
-      <%= if assigns[:main?] do %>
-        <%= @post.title %>
-      <% else %>
+      <%= if assigns[:simple?] do %>
         <a href="<%= blog_path(@conn, :show, @post.id, @post.slug) %>">
           <%= @post.title %>
         </a>
+      <% else %>
+        <%= @post.title %>
       <% end %>
     </h1>
 
     <div class="post__meta">
-      <%= if assigns[:main?] do %>
-        <div class="post__author">
-          by
-          <%= @post.user.first_name <> " " <> @post.user.last_name %>
-        </div>
-        <%= render "_tag-list.html", conn: @conn, tags: @post.tags %>
-      <% else %>
-        <%= render "_tag-list.html", conn: @conn, tags: @post.tags %>
-      <% end %>
+      <div class="post__author">
+        by
+        <%= @post.user.first_name <> " " <> @post.user.last_name %>
+      </div>
+      <%= render "_tag-list.html", conn: @conn, tags: @post.tags %>
     </div>
   </header>
 
-  <%= if assigns[:main?] do %>
+  <hr class="post__separator" />
+
+  <%= if !assigns[:simple?] do %>
     <div class="post__body">
       <%= raw(@post.html) %>
     </div>

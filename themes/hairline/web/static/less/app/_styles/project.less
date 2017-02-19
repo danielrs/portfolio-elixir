@@ -11,6 +11,7 @@
 
   &__header &__title {
     display: inline-block;
+    margin-top: 0;
     float: left;
     font-size: 16em / 16;
     line-height: 24em / 16
@@ -31,6 +32,8 @@
 .project-list {
   .grid(@gutter: @magic-number);
   .row;
+
+  margin-top: @magic-number * 2;
 
   .project-card {
     margin-bottom: @magic-number;

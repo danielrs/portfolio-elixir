@@ -18,16 +18,18 @@
         <% end %>
       </ul>
     </div>
+
     <div class="mega-brand__body">
       <p>I do a lot of things related to software development, but what I love the most is programming! On my free time I like to learn about anything, either a new programming language or a new tool to boost my development.</p>
     </div>
+
   </div>
 </section>
 
 <%= if not Enum.empty?(@projects) do %>
   <section class="main-section project-section">
     <div class="container">
-      <h2 class="header--main">Personal projects</h2>
+      <h2 class="header--main header--center">Personal projects</h2>
       <%= render Portfolio.ProjectView, "_project-list.html", assigns %>
       <div class="main-section__link">
         <a href="<%= project_path(@conn, :index) %>">Go to projects page</a>
@@ -39,7 +41,7 @@
 <%= if not Enum.empty?(@posts) do %>
   <section class="main-section post-section">
     <div class="container">
-      <h2 class="header--main">Latest post</h2>
+      <h2 class="header--main header--center">Latest post</h2>
       <%= render Portfolio.BlogView, "_post-list.html", assigns %>
       <div class="main-section__link">
         <a href="<%= blog_path(@conn, :index) %>">Go to blog</a>

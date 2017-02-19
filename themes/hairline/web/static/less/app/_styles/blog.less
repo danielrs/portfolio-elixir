@@ -10,54 +10,53 @@
   line-height: 1.6rem;
   color: @color-body;
 
-  margin-bottom: @magic-number*2;
+  // margin-top: @magic-number*2;
 
   .post__header {
     &:extend(.font-sans-serif);
-    margin-bottom: @magic-number*2;
-    > .post__date {
-      margin-bottom: @magic-number-rem/3;
+    text-align: center;
+
+    .post__date {
       font-size: 0.9rem;
       color: lighten(@color-body, 16%);
     }
-    > .post__title {
-      margin-bottom: @magic-number / 3;
-      font-size: 24em / 16;
-      line-height: 24em / 24;
-      font-weight: 400;
-    }
-  }
 
-  .post__header--main {
-    text-align: center;
-
-    > .post__title {
-      font-size: 36em / 16;
+    .post__title {
+      margin-top: 0;
       font-weight: bold;
     }
-
-    border-bottom: 1px solid @color-gray;
   }
 
   .post__header > .post__meta {
-    margin-bottom: @magic-number;
 
     > .post__author {
-      margin-bottom: @magic-number / 2;
+      margin-top: @magic-number / 4;
       font-style: italic;
     }
 
-    > .post__tags .post__tag {
-      margin-right: .5em;
-      margin-bottom: .5em;
-      &:last-child { margin-right: 0; }
+    > .post__tags {
+
+      .post__tag {
+	margin-top: @magic-number / 2;
+	margin-right: @magic-number / 2;
+	&:last-child { margin-right: 0; }
+      }
+    }
+  }
+
+  > .post__separator {
+    height: @magic-number;
+    border: none;
+    text-align: center;
+    font-weight: bold;
+    &:before {
+      content: '\2219\2219\2219';
+      letter-spacing: 1em;
     }
   }
 
   > .post__body {
     h1, h2, h3, h4, h5, h6 {
-      margin-top: @magic-number * 1.25;
-      margin-bottom: 1em;
       &:extend(.font-sans-serif);
     }
 
@@ -68,6 +67,27 @@
     img {
       max-width: 100%;
     }
+  }
+}
+
+.post.post--simple {
+  .post__header {
+    text-align: left;
+    border-bottom: none;
+
+    .post__title {
+      font-size: 1.5 * @scale * 1rem;
+      line-height: 1.5 * @leading;
+      font-weight: 400;
+    }
+
+    .post__author {
+      display: none;
+    }
+  }
+
+  .post__separator {
+    display: none;
   }
 }
 
@@ -111,8 +131,25 @@
 
 
 .tag-info {
-  margin-bottom: @magic-number;
+  &:extend(.font-sans-serif);
   font-weight: bold;
+}
+
+// Post list.
+.post-list {
+  .post {
+    margin-top: @magic-number * 2;
+
+    &:first-child { margin-top: 0; }
+  }
+}
+
+h1, h2, h3, h4, h5, h6, .tag-info {
+  & + .post-list {
+    .post:first-child {
+      margin-top: @magic-number * 2;
+    }
+  }
 }
 
 // Post elements

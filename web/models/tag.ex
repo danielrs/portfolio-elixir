@@ -45,8 +45,9 @@ defmodule Portfolio.Tag do
   defp tagify(string) when is_binary(string) do
     string
     |> String.downcase
-    |> String.replace(~r/\s/, "-")
-    |> String.replace(~r/[^-+\p{L}0-9]/u, "")
+    |> String.replace(~r/\s+/, "-")
+    |> String.replace(~r/[^-\p{L}0-9]/u, "")
+    |> String.replace(~r/-+/, "-")
   end
 
   #

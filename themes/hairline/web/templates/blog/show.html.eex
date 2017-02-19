@@ -1,7 +1,7 @@
 <section class="main-section blog-section">
   <div class="container container--blog">
 
-    <%= render "_post.html", conn: @conn, post: @post, main?: true %>
+    <%= render "_post.html", conn: @conn, post: @post %>
 
   </div>
 </section>
