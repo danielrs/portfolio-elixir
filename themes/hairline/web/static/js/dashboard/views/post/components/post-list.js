@@ -32,7 +32,7 @@ class PostListItem extends React.Component {
   render() {
     return (
       <div key={this.props.post.id} className="post-item">
-        <h4>{this.props.post.title}</h4>
+        <h2>{this.props.post.title}</h2>
         <Button type="link" onClick={this._handleShow}>Show</Button>
         <Button type="link" onClick={this._handleEdit}>Edit</Button>
       </div>

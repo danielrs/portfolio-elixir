@@ -102,6 +102,7 @@ class PostShowView extends React.Component {
               {tags}
             </div>
           </header>
+          <hr className="post__separator" />
           <div ref={this._highlightPost} className="post__body" dangerouslySetInnerHTML={{__html: this.props.post.html}} />
         </ModalBody>
         <ModalFooter key={Math.random()}>

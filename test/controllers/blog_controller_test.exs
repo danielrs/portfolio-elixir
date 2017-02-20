@@ -6,10 +6,9 @@ defmodule Portfolio.BlogControllerTest do
     conn |> setup_conn
   end
 
-  test "index doesn't show author name or body", %{conn: conn} do
+  test "index doesn't show body", %{conn: conn} do
     post = Factory.insert(:post)
     conn = get conn, blog_path(conn, :index)
-    refute html_response(conn, 200) =~ post.user.first_name <> " " <> post.user.last_name
     refute html_response(conn, 200) =~ post.html
   end
 

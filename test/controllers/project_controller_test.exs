@@ -1,7 +1,6 @@
 defmodule Portfolio.ProjectControllerTest do
   use Portfolio.ConnCase
   alias Portfolio.Factory
-  alias Portfolio.User
 
   setup %{conn: conn} do
     conn |> setup_conn

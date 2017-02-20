@@ -26,8 +26,9 @@ body {
 
 // Header and other common elements
 header[role=heading] {
-  margin-bottom: 3em;
   h1 {
+    font-size: 1.5 * @scale * 1em; line-height: 1.5 * @leading; margin-top: 2 * @leading;
+
     a {
       text-decoration: none;
       font-family: "Pacifico", sans-serif;
@@ -39,7 +40,8 @@ header[role=heading] {
 }
 
 .nav {
-  margin: 0 0 @magic-number;
+  margin: @magic-number 0 0;
+  padding: 0;
   background: @color-white;
   border: 1px solid @color-dark-gray;
   border-radius: 4px;
@@ -58,6 +60,10 @@ header[role=heading] {
       &.nav__link--active, &:active { color: @color-body; }
     }
   }
+}
+
+main[role=main] {
+  margin-top: @magic-number * 2;
 }
 
 .header-content {
