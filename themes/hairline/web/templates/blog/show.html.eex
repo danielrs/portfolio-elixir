@@ -1,5 +1,5 @@
-<section class="main-section blog-section">
-  <div class="container container--blog">
+<section class="main-section">
+  <div class="container container--small">
 
     <%= render "_post.html", conn: @conn, post: @post %>
 

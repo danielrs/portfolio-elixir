@@ -17,6 +17,13 @@
         by
         <%= @post.user.first_name <> " " <> @post.user.last_name %>
       </div>
+
+      <%= if @post.description != "" do %>
+        <p class="post__description">
+          <%= @post.description %>
+        </p>
+      <% end %>
+
       <%= render "_tag-list.html", conn: @conn, tags: @post.tags %>
     </div>
   </header>

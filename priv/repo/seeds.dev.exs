@@ -28,6 +28,10 @@ require Ecto.Query
 defmodule Portfolio.SeedData do
   @moduledoc false
 
+  @short_lorem """
+  Ipsum mollitia nemo nam id minima Facere esse odit praesentium minima error Dolorem a impedit ex distinctio.
+  """
+
   @lorem """
   Ipsum mollitia nemo nam id minima Facere esse odit praesentium minima error Dolorem a impedit ex distinctio non Earum minima voluptas adipisci dolor at velit possimus. Dicta illo vel inciduntyy.
 
@@ -106,42 +110,49 @@ defmodule Portfolio.SeedData do
     [
       %{
         title: "Some of my favorite Vim plugins",
+        description: @short_lorem,
         markdown: @lorem,
         date: Ecto.Date.utc,
         published?: true
       },
       %{
         title: "Some of my favorite Vim plugins (Unpublished)",
+        description: @short_lorem,
         markdown: @lorem,
         date: Ecto.Date.utc,
         published?: false
       },
       %{
         title: "Why functional programming is better",
+        description: @short_lorem,
         markdown: @lorem,
         date: Ecto.Date.utc,
         published?: true
       },
       %{
         title: "How to learn Haskell",
+        description: @short_lorem,
         markdown: @lorem,
         date: Ecto.Date.utc,
         published?: true
       },
       %{
         title: "Web development and functional programming",
+        description: @short_lorem,
         markdown: @lorem,
         date: Ecto.Date.utc,
         published?: true
       },
       %{
         title: "Why immutability helps us think clearer",
+        description: @short_lorem,
         markdown: @lorem,
         date: Ecto.Date.utc,
         published?: true
       },
       %{
         title: "Must have skill for any serious developer",
+        description: @short_lorem,
         markdown: @lorem,
         date: Ecto.Date.utc,
         published?: true
@@ -172,12 +183,14 @@ defmodule Portfolio.SeedData do
       },
       %{
         title: "Create a paginator in Elixir + Phoenix Framework",
+        description: @short_lorem,
         markdown: @lorem,
         date: Ecto.Date.utc,
         published?: true
       },
       %{
         title: "How to be awesome",
+        description: @short_lorem,
         markdown: @lorem,
         date: Ecto.Date.utc,
         published?: true

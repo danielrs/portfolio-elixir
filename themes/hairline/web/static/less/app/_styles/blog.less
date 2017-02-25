@@ -1,23 +1,13 @@
-.blog-section {
-  .container--blog {
-    max-width: @break-m;
-  }
-}
-
 .post {
   &:extend(.font-serif);
-  font-size: 1.05rem;
-  line-height: 1.6rem;
   color: @color-body;
-
-  // margin-top: @magic-number*2;
 
   .post__header {
     &:extend(.font-sans-serif);
     text-align: center;
 
     .post__date {
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       color: lighten(@color-body, 16%);
     }
 
@@ -30,28 +20,31 @@
   .post__header > .post__meta {
 
     > .post__author {
-      margin-top: @magic-number / 4;
+      margin-top: @leading / 4;
       font-style: italic;
+    }
+
+    > .post__description {
+      display: none;
+      margin-top: @leading / 4;
     }
 
     > .post__tags {
 
       .post__tag {
-	margin-top: @magic-number / 2;
-	margin-right: @magic-number / 2;
+	margin-top: @leading / 2;
+	margin-right: @leading / 2;
 	&:last-child { margin-right: 0; }
       }
     }
   }
 
   > .post__separator {
-    height: @magic-number;
+    height: @leading;
     border: none;
     text-align: center;
-    font-weight: bold;
     &:before {
-      content: '\2219\2219\2219';
-      letter-spacing: 1em;
+      content: '•\00a0\00a0•\00a0\00a0•';
     }
   }
 
@@ -61,7 +54,7 @@
     }
 
     pre {
-      margin: @magic-number 0;
+      margin: @leading 0;
     }
 
     img {
@@ -76,13 +69,17 @@
     border-bottom: none;
 
     .post__title {
-      font-size: 1.5 * @scale * 1rem;
+      font-size: 1.5 * @scale * 1em;
       line-height: 1.5 * @leading;
       font-weight: 400;
     }
 
     .post__author {
       display: none;
+    }
+
+    .post__description {
+      display: block;
     }
   }
 
@@ -138,7 +135,7 @@
 // Post list.
 .post-list {
   .post {
-    margin-top: @magic-number * 2;
+    margin-top: @leading * 2;
 
     &:first-child { margin-top: 0; }
   }
@@ -147,7 +144,7 @@
 h1, h2, h3, h4, h5, h6, .tag-info {
   & + .post-list {
     .post:first-child {
-      margin-top: @magic-number * 2;
+      margin-top: @leading * 2;
     }
   }
 }
@@ -168,7 +165,7 @@ h1, h2, h3, h4, h5, h6, .tag-info {
 }
 
 .post img {
-  margin: @magic-number auto;
+  margin: @leading auto;
 }
 
 // Utilities used in posts
