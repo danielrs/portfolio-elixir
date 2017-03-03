@@ -22,9 +22,9 @@
 
 
 // Typesetting variables. Edit these!
-@baseFontSize: 17; // in pixels. This would result in 22px on desktop
-@baseLineHeight: 1.75; // how large the line height is as a multiple of font size
-@leading: @baseLineHeight * 1rem;
+@base-font-size: 17; // in pixels. This would result in 22px on desktop
+@base-line-height: 1.75; // how large the line height is as a multiple of font size
+@leading: @base-line-height * 1rem;
 
 // Rate of growth for headings
 // I actually like this to be slightly smaller then the leading. Makes for tight headings.
@@ -34,7 +34,7 @@
 html, body {
   /* Change default typefaces here */
   &:extend(.font-serif);
-  font-size: @baseFontSize / 16 * 100%;
+  font-size: @base-font-size / 16 * 100%;
 
   // Make everything look a little nicer in webkit
   -webkit-font-smoothing: antialiased;
@@ -111,7 +111,7 @@ table {
 
   td, th {
     padding: 0;
-    line-height: @baseLineHeight * @baseFontSize - 0px;
+    line-height: @base-line-height * @base-font-size - 0px;
   }
 }
 

@@ -7,6 +7,12 @@
   </div>
   <div class="mega-brand__container">
     <div class="mega-brand__header">
+      <div class="logo-wrapper animated fadeInDown">
+        <img class="logo"
+             src="<%= static_path(@conn, "/images/danielrs_logo.svg") %>"
+             onerror="this.src='<%= static_path(@conn, "/images/danielrs_logo.png") %>'"
+             alt="danielrs logo" />
+      </div>
       <h1 class="animated fadeInDown"><%= site_name %></h1>
       <code id="tagline">I'm a programmer</code>
       <ul class="social">
