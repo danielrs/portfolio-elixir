@@ -21,17 +21,12 @@ defmodule Portfolio.BlogController do
   end
 
   def show(conn, %{"id" => id}) do
-    post = Post.query_posts |> Repo.get!(id)
-    if post.published? do
-      conn
-      |> SEO.put_title(post.title)
-      |> SEO.put_meta(post.description)
-      |> render("show.html", post: post)
-    else
-      conn
-      |> put_flash(:info, "You are not allowed to view unpublished posts")
-      |> redirect(to: blog_path(conn, :index))
-    end
+    post = Post.query_posts |> Repo.get_by!(id: id, published?: true)
+
+    conn
+    |> SEO.put_title(post.title)
+    |> SEO.put_meta(post.description)
+    |> render("show.html", post: post)
   end
 
   defp fix_slug(conn, _opts) do

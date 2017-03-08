@@ -57,7 +57,7 @@
         </div>
 
         <span class="copyright">
-          © 2016 <%= site_name %>
+          © <%= Portfolio.Utils.format_date(Ecto.Date.utc, "{YYYY}") %> <%= site_name %>
         </span>
       </div>
     </footer>
