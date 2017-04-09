@@ -1,5 +1,7 @@
 [danielrs.me]: http://danielrs.me/
 
+[![danielrs.me](https://img.shields.io/website-up-down-green-red/http/danielrs.me.svg)][danielrs.me]
+
 # Portfolio
 
 This is the source code for the skeleton of my personal [website][danielrs.me]. It was made with *Elixir* and *PostgreSQL* for the back-end; and *React.js* and *LESS* for the front-end.
