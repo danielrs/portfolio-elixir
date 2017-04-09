@@ -10,7 +10,7 @@ This is the source code for the skeleton of my personal [website][danielrs.me]. 
 
 ### Development
 
-For easier development and deployment, I created docker-compose setup. To start the containers use:
+For easier development and deployment, I created a docker-compose setup. To start the containers use:
 
 ```
 docker-compose up
