@@ -1,14 +1,18 @@
 @import "./bower_components/greed/greed.less";
 @import "./node_modules/lesshat/lesshat.less";
 
-// Setup
-@import "../app/_mixins";
+// Common
+@import "../_common/settings";
+@import "../_common/mixins";
+@import "../_common/typography";
+
+// Common overrides
 @import "./_settings";
+@import "./_typography";
 
 // Master styles
-@import "./_master/layout";
-@import "./_master/typography";
-@import "./_master/ui";
+@import "./_layout";
+@import "./_ui";
 
 // Specific styles
 @import "../app/_styles/blog.less";

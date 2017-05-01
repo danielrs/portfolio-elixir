@@ -1,7 +1,7 @@
 defmodule Portfolio.BlogFilter do
   use Portfolio.Web, :model
 
-  schema "blog_filter" do
+  embedded_schema do
     field :tag, :string
     field :search, :string
   end

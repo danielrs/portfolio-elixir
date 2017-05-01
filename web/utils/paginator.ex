@@ -56,7 +56,11 @@ defmodule Portfolio.Paginator do
     end
   end
 
-  defp positive(x) do
-    x
+  defp positive(x) when is_integer(x) do
+    if x >= 0 do
+      x
+    else
+      :error
+    end
   end
 end

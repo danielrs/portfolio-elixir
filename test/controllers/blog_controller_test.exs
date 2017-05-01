@@ -12,10 +12,11 @@ defmodule Portfolio.BlogControllerTest do
     refute html_response(conn, 200) =~ post.html
   end
 
-  test "showing an unpublished post redirects to blog", %{conn: conn} do
+  test "showing an unpublished post shows not found", %{conn: conn} do
     post = Factory.insert(:post, published?: false)
-    conn = get conn, blog_path(conn, :show, post.id, post.slug)
-    assert redirected_to(conn) =~ blog_path(conn, :index)
+    assert_error_sent 404, fn ->
+      get conn, blog_path(conn, :show, post.id, post.slug)
+    end
   end
 
   test "showing a published post by id redirects to correct id and slug", %{conn: conn} do

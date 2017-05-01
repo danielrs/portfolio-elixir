@@ -2,7 +2,7 @@ defmodule Portfolio.API.V1.PostView do
   use Portfolio.Web, :view
 
   def render("index.json", %{posts: posts}) do
-    %{data: render_many(posts, API.V1.PostView, "post.json", ignore: :markdown)}
+    %{data: render_many(posts, API.V1.PostView, "post.json", ignore: [:markdown, :html])}
   end
 
   def render("show.json", %{post: post}) do
