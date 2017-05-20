@@ -20,8 +20,8 @@ defmodule Portfolio.Project do
   end
 
   @required_fields [:title, :description, :homepage, :date]
-  @optional_fields [:content]
-  @filtrable_fields [:date, :title, :description, :homepage]
+  @optional_fields [:language, :content]
+  @filtrable_fields [:date, :title, :description, :homepage, :language]
 
   @doc """
   Creates a changeset based on the `model` and `params`.

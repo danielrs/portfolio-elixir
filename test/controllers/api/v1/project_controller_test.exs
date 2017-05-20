@@ -30,6 +30,7 @@ defmodule Portfolio.API.V1.ProjectControllerTest do
       "homepage" => project.homepage,
       "content" => project.content,
       "date" => Ecto.Date.to_string(project.date),
+      "language" => project.language,
       "user" => %{
         "id" => user.id,
         "email" => user.email,

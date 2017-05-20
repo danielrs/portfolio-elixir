@@ -37,6 +37,7 @@ defmodule Portfolio.Factory do
       description: "Some description",
       homepage: "Some homepage",
       content: "Some content",
+      language: "Some language",
       date: Ecto.Date.utc,
       user: build(:user),
       tags: [build(:tag)]

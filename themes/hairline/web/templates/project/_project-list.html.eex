@@ -1,7 +1,7 @@
 <div class="project-list">
   <%= for project <- @projects do %>
     <a class="project-card" href="<%= project.homepage %>">
-      <div class="project-card__band <%= band_class(project.title) %>"></div>
+      <div class="project-card__band" style="background-color: <%= LanguageColor.get(project.language) %>"></div>
       <div class="project-card__header">
         <h1 class="project-card__title"><%= project.title %></h1>
         <span class="project-card__date"><%= project.date %></span>

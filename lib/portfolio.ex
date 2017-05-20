@@ -15,7 +15,7 @@ defmodule Portfolio do
       supervisor(Portfolio.Repo, []),
       # Here you could define other workers and supervisors as children
       # worker(Portfolio.Worker, [arg1, arg2, arg3]),
-      worker(Cachex, [:yaml_cache, [default_ttl: day_milliseconds], []]),
+      worker(Cachex, [:cache, [default_ttl: day_milliseconds], []]),
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html

@@ -1,6 +1,7 @@
 defmodule Portfolio.ProjectView do
   use Portfolio.Web, :view
   alias Portfolio.Utils
+  alias Portfolio.LanguageColor
 
   def band_class(string) do
     "project-card__band--color-"
