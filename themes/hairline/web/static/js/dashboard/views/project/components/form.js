@@ -28,6 +28,7 @@ class ProjectForm extends React.Component {
         title: this.refs.title.refs.input.value,
         description: this.refs.description.refs.input.value,
         homepage: this.refs.homepage.refs.input.value,
+        language: this.refs.language.refs.input.value,
         content: this.refs.content.refs.input.value,
         date: this.date
       }
@@ -88,6 +89,17 @@ class ProjectForm extends React.Component {
             onChange={this._handleDateChange}
             forceValidDate />
           {renderErrorsFor(this.props.errors, 'date')}
+        </FormField>
+
+        <FormField className={this.props.errors.language ? 'is-invalid' : ''}>
+          <FormInput
+            type="text"
+            ref="language"
+            name="language"
+            placeholder="Language"
+            onChange={this._handleChange}
+            defaultValue={this.props.project.language} />
+          {renderErrorsFor(this.props.errors, 'language')}
         </FormField>
 
         <FormField className={this.props.errors.content ? 'is-invalid' : ''}>

@@ -6,6 +6,8 @@ defmodule Portfolio do
   def start(_type, _args) do
     import Supervisor.Spec
 
+    day_milliseconds = 24*60*60*1000
+
     children = [
       # Start the endpoint when the application starts
       supervisor(Portfolio.Endpoint, []),
@@ -13,6 +15,7 @@ defmodule Portfolio do
       supervisor(Portfolio.Repo, []),
       # Here you could define other workers and supervisors as children
       # worker(Portfolio.Worker, [arg1, arg2, arg3]),
+      worker(Cachex, [:yaml_cache, [default_ttl: day_milliseconds], []]),
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html

@@ -8,6 +8,7 @@ defmodule Portfolio.Project do
     field :homepage, :string
     field :content, :string, default: ""
     field :date, Ecto.Date
+    field :language, :string
 
     belongs_to :user, Portfolio.User
     many_to_many :tags, Portfolio.Tag,
