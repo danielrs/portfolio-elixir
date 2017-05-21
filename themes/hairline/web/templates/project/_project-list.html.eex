@@ -1,14 +1,5 @@
 <div class="project-list">
   <%= for project <- @projects do %>
-    <a class="project-card" href="<%= project.homepage %>">
-      <div class="project-card__band" style="background-color: <%= LanguageColor.get(project.language) %>"></div>
-      <div class="project-card__header">
-        <h1 class="project-card__title"><%= project.title %></h1>
-        <span class="project-card__date"><%= project.date %></span>
-      </div>
-      <div class="project-card__body">
-        <p><%= project.description %></p>
-      </div>
-    </a>
+    <%= render "_project.html", conn: @conn, project: project %>
   <% end %>
 </div>

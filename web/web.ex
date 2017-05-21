@@ -63,7 +63,9 @@ defmodule Portfolio.Web do
       import Portfolio.ErrorHelpers
       import Portfolio.Gettext
 
+      # Custom
       alias Portfolio.API
+      alias Portfolio.LanguageColor
       use Portfolio.SEO
     end
   end

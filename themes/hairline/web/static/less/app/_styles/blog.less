@@ -89,18 +89,6 @@
 }
 
 .tag {
-  .tag-color(@color) {
-    @visited-color: lighten(@color, 16%);
-    @hover-color: lighten(@color, 8%);
-
-    background-color: @visited-color;
-
-    &:visited { background-color: @visited-color; }
-    &:focus { background-color: @hover-color; }
-    &:hover { background-color: @hover-color; }
-    &:active { background-color: @color; }
-  }
-
   display: inline-block;
   padding: .075em .75em;
   border-radius: 2px;
@@ -109,21 +97,16 @@
   font-size: 0.95rem;
   font-weight: bold;
   text-decoration: none !important;
-
   color: @color-white !important;
 
-  .tag-color(@color-body);
+  // Background colors are set on the server.
+  background-color: @color-body;
+  opacity: .75;
 
-  &--color-0 { .tag-color(@color-tag-0); }
-  &--color-1 { .tag-color(@color-tag-1); }
-  &--color-2 { .tag-color(@color-tag-2); }
-  &--color-3 { .tag-color(@color-tag-3); }
-  &--color-4 { .tag-color(@color-tag-4); }
-  &--color-5 { .tag-color(@color-tag-5); }
-  &--color-6 { .tag-color(@color-tag-6); }
-  &--color-7 { .tag-color(@color-tag-7); }
-  &--color-8 { .tag-color(@color-tag-8); }
-  &--color-9 { .tag-color(@color-tag-9); }
+  &:visited { opacity: .5; }
+  &:focus { opacity: .9; }
+  &:hover { opacity: .9; }
+  &:active { opacity: 1; }
 }
 
 

@@ -1,3 +1,6 @@
-<a href="<%= blog_path(@conn, :index, tag: @tag.name) %>" class="post__tag tag <%= tag_class(@tag.name) %>">
+<a
+  href="<%= blog_path(@conn, :index, tag: @tag.name) %>"
+  class="tag post__tag"
+  style="background-color: <%= LanguageColor.get(@tag.name) %>">
   <%= @tag.name %>
 </a>
