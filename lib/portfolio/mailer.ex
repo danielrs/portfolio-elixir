@@ -1,15 +1,22 @@
 defmodule Portfolio.Mailer do
-  use Mailgun.Client,
-    domain: Application.get_env(:portfolio, :mailgun_domain),
-    key: Application.get_env(:portfolio, :mailgun_key)
-
-    require Logger
+  @moduledoc """
+  Module for sending emails. Note that we don't use the recommended
+  configuration specified at https://github.com/chrismccord/mailgun
+  because in AWS BeanStalk, the environment variables are not
+  available at compile time. Instead, we pass the configuration at
+  runtime when it is available.
+  """
+  def conf() do
+    %{
+      domain: Application.get_env(:portfolio, :mailgun_domain),
+      key: Application.get_env(:portfolio, :mailgun_key)
+    }
+  end
 
   def send_contact_email(name, email, subject, text) do
-    Logger.info Application.get_env(:portfolio, :mailgun_domain)
-    Logger.info Application.get_env(:portfolio, :mailgun_key)
-
-    send_email to: "info@danielrs.me",
+    # Here we pass the configuration at runtime.
+    Mailgun.Client.send_email conf(),
+               to: "info@danielrs.me",
                from: email,
                subject: name <> " - " <> subject,
                html: Phoenix.View.render_to_string(Portfolio.EmailView, "contact.html", name: name, text: text)
