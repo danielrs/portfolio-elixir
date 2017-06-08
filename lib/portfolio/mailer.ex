@@ -6,29 +6,38 @@ defmodule Portfolio.Mailer do
   available at compile time. Instead, we pass the configuration at
   runtime when it is available.
   """
+  require Logger
+
   def conf() do
     domain = Application.get_env(:portfolio, :mailgun_domain)
     key = Application.get_env(:portfolio, :mailgun_key)
-    valid? = domain != nil && key != nil
     %{
       domain: domain,
       key: key,
-      valid?: valid?
+      valid?: domain != nil && key != nil
     }
   end
 
   def send_contact_email(name, email, subject, text) do
     # Here we pass the configuration at runtime.
     conf = conf()
+    error = {:error, "Unable to send email"}
+
     if conf.valid? do
-      Mailgun.Client.send_email conf,
-                 to: "info@danielrs.me",
-                 from: email,
-                 subject: name <> " - " <> subject,
-                 html: Phoenix.View.render_to_string(Portfolio.EmailView, "contact.html", name: name, text: text)
-      {:ok, nil}
+      res = Mailgun.Client.send_email conf,
+              to: "info@danielrs.me",
+              from: email,
+              subject: name <> " - " <> subject,
+              html: Phoenix.View.render_to_string(Portfolio.EmailView, "contact.html", name: name, text: text)
+      case res do
+        {:ok, _} -> {:ok, nil}
+        {:error, status, response} ->
+          Logger.error inspect(status) <> " - " <> inspect(response)
+          error
+      end
     else
-      {:error, "Unable to send email"}
+      Logger.error "Invalid configuration"
+      error
     end
   end
 end
