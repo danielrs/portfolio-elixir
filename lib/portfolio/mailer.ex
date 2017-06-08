@@ -7,18 +7,28 @@ defmodule Portfolio.Mailer do
   runtime when it is available.
   """
   def conf() do
+    domain = Application.get_env(:portfolio, :mailgun_domain)
+    key = Application.get_env(:portfolio, :mailgun_key)
+    valid? = domain != nil && key != nil
     %{
-      domain: Application.get_env(:portfolio, :mailgun_domain),
-      key: Application.get_env(:portfolio, :mailgun_key)
+      domain: domain,
+      key: key,
+      valid?: valid?
     }
   end
 
   def send_contact_email(name, email, subject, text) do
     # Here we pass the configuration at runtime.
-    Mailgun.Client.send_email conf(),
-               to: "info@danielrs.me",
-               from: email,
-               subject: name <> " - " <> subject,
-               html: Phoenix.View.render_to_string(Portfolio.EmailView, "contact.html", name: name, text: text)
+    conf = conf()
+    if conf.valid? do
+      Mailgun.Client.send_email conf,
+                 to: "info@danielrs.me",
+                 from: email,
+                 subject: name <> " - " <> subject,
+                 html: Phoenix.View.render_to_string(Portfolio.EmailView, "contact.html", name: name, text: text)
+      {:ok, nil}
+    else
+      {:error, "Unable to send email"}
+    end
   end
 end

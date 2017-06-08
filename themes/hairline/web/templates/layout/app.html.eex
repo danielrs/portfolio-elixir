@@ -39,11 +39,6 @@
       </div>
     </header>
 
-    <%# <section class="container"> %>
-    <%#   <p class="alert alert--info" role="alert"><%= get_flash(@conn, :info) %1></p> %>
-    <%#   <p class="alert alert--danger" role="alert"><%= get_flash(@conn, :error) %1></p> %>
-    <%# </section> %>
-
     <main role="main">
       <%= render @view_module, @view_template, assigns %>
     </main>
@@ -68,5 +63,22 @@
       // Initializes Highlight.js
       hljs.initHighlightingOnLoad();
     </script>
+
+    <%# Flash Messages %>
+    <%
+    info = get_flash(@conn, :info)
+    error = get_flash(@conn, :error)
+    %>
+
+    <%= if info || error do %>
+      <section class="container container--toast animated fadeInUp">
+        <%= if info do %>
+          <span class="toast"><%= info %></span>
+        <% end %>
+        <%= if error do %>
+          <span class="toast toast--error"><%= error %></span>
+        <% end %>
+      </section>
+    <% end %>
   </body>
 </html>

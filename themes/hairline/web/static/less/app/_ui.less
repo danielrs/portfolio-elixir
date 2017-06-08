@@ -2,6 +2,9 @@
 button,
 input[type=button],
 input[type=submit] {
+  &:extend(.font-sans-serif);
+  font-family: FontAwesome;
+
   @color: lighten(@color-body, 8%);
   @color-active: @color-body;
 
@@ -10,7 +13,6 @@ input[type=submit] {
   border: 1px solid @color;
   border-radius: 2px;
   outline: none;
-  font-family: "Lato", FontAwesome;
   color: @color;
   background: transparent;
   .transition(border-color @animation-fast, color @animation-fast, background @animation-fast);
@@ -43,11 +45,11 @@ input[type=text],
 input[type=email],
 input[type=password],
 textarea {
+  &:extend(.font-sans-serif);
+
   padding: .5em 1em;
   border: 1px solid @color-gray;
   background: @color-white;
-
-  font-family: "Lato", sans-serif;
 
   &:focus {
     border: 1px solid @color-dark-gray;
@@ -55,8 +57,9 @@ textarea {
   }
 
   &.input--error {
-    border-color: lighten(tomato, 16%);
-    &:focus { border-color: tomato; }
+    border-left-width: 2px;
+    border-left-color: lighten(tomato, 16%);
+    &:focus { border-left-color: tomato; }
   }
 
 }
@@ -66,7 +69,19 @@ textarea {
 }
 
 .help-block {
+  &:extend(.font-sans-serif);
+
+  display: block;
+  padding: .5em 1em;
+  margin-bottom: @leading;
+
+  border: 1px solid lighten(tomato, 16%);
+  border-radius: 2px;
+
   color: tomato;
+  background-color: lighten(tomato, 32%);
+
+  list-style: none;
 }
 
 fieldset {
@@ -109,10 +124,10 @@ fieldset {
 }
 
 nav.paginator {
+  &:extend(.font-sans-serif);
   .clearfix;
 
   margin-top: @leading * 2;
-  font-family: "Lato", sans-serif;
 
   .paginator__prev {
     float: left;
@@ -121,3 +136,43 @@ nav.paginator {
     float: right;
   }
 }
+
+.container.container--toast {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding-bottom: @leading * 2;
+  font-size: 1.125em;
+  text-align: center;
+  pointer-events: none;
+}
+
+.toast {
+  &:extend(.font-sans-serif);
+  display: table;
+  margin: 0 auto 0 auto;
+  padding: .5em 1em;
+  margin-bottom: @leading;
+
+  border-radius: 2px;
+  color: white;
+
+  background-color: @color-body;
+  opacity: .9;
+  .box-shadow(0 1px 8px rgba(0, 0, 0, .05));
+  .transition(opacity @animation-normal);
+
+  pointer-events: all;
+
+  z-index: 999;
+
+
+  &:hover {
+    cursor: default;
+    opacity: .25;
+  }
+
+  &--error {}
+}
+

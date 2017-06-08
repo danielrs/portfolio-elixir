@@ -92,3 +92,10 @@ $('.navbar-toggle').click(function() {
 if (!isMobile()) {
   $('.mega-brand').addClass('mega-brand--dynamic-height');
 }
+
+// Toasts.
+setTimeout(function() {
+  const toastToggler = new ClassToggler('.container--toast');
+  toastToggler.off('fadeInUp');
+  toastToggler.on('fadeOutDown');
+}, 4000);

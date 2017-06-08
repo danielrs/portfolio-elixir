@@ -1,9 +1,11 @@
 <%= form_for @changeset, contact_path(@conn, :create), [id: "contact-form"], fn f -> %>
 
   <%= if f.errors != [] do %>
-    <%= for {attr, message} <- f.errors do %>
-      <%= attr %> - <%= message %>
-    <% end %>
+    <ul class="help-block">
+      <%= for {attr, error} <- f.errors do %>
+        <li><strong><%= attr %></strong> - <%= translate_error(error) %></li>
+      <% end %>
+    </ul>
   <% end %>
 
   <fieldset class="form-group">

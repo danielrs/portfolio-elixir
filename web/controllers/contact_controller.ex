@@ -5,6 +5,8 @@ defmodule Portfolio.ContactController do
 
   plug Portfolio.Plug.Menu
 
+  require Logger
+
   def index(conn, _params) do
     changeset = Message.changeset(%Message{})
     do_render(conn, changeset)
@@ -12,12 +14,18 @@ defmodule Portfolio.ContactController do
 
   def create(conn, %{"message" => contact_params}) do
     changeset = Message.changeset(%Message{}, contact_params)
-
+    changeset = %{changeset | action: :create}
     if changeset.valid? do
-      send_message(changeset)
-      conn
-      |> put_flash(:info, "Message sent")
-      |> redirect(to: contact_path(conn, :index))
+      case send_message(changeset) do
+        {:ok, _} ->
+          conn
+          |> put_flash(:info, "Message sent")
+          |> redirect(to: contact_path(conn, :index))
+        {:error, message} ->
+          conn
+          |> put_flash(:info, message)
+          |> redirect(to: contact_path(conn, :index))
+      end
     else
       do_render(conn, changeset)
     end
