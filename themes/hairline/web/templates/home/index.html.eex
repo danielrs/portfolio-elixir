@@ -14,7 +14,15 @@
              alt="danielrs logo" />
       </div>
       <h1 class="animated fadeInDown"><%= site_name %></h1>
-      <code id="tagline">I'm a programmer</code>
+      <code id="tagline">Software Engineer</code>
+      <ul id="tagline-list">
+        <li>Hello</li>
+        <li>I'm Daniel</li>
+        <li>I design</li>
+        <li>I develop</li>
+        <li>I am a..</li>
+        <li>Software Engineer</li>
+      </ul>
       <ul class="social">
         <%= for social <- @social do %>
           <li>
@@ -26,7 +34,7 @@
     </div>
 
     <div class="mega-brand__body">
-      <p>I do a lot of things related to software development, but what I love the most is programming! On my free time I like to learn about anything, either a new programming language or a new tool to boost my development.</p>
+      <p>I am an enthusiast of highly reliable and scalable systems; skilled in concurrent, parallel and distributed computing.</p>
     </div>
 
   </div>

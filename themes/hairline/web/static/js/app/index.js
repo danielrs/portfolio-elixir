@@ -62,12 +62,11 @@ class ClassToggler {
 const isHome = $('body').hasClass('body--home');
 
 // Tagline
+const sentences = $('#tagline-list').children().map((_, li) => $(li).text());
 $('#tagline').typing({
-  sentences: ["Hello",
-              "I'm Daniel",
-              "I design stuff",
-              "I code that stuff",
-              "I'm a programmer"]});
+  sentences: sentences,
+  sentenceDelay: 1000
+});
 
 // Header toggle
 const headerToggler = new ClassToggler('header.header');
