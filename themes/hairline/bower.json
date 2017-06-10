@@ -20,7 +20,7 @@
   ],
   "dependencies": {
     "jquery": "^2.2.4",
-    "typing.js": "^0.2.2",
+    "typing.js": "^0.3.3",
     "normalize-css": "^5.0.0",
     "animate.css": "^3.5.2",
     "greed": "^0.1.0",

@@ -65,7 +65,8 @@ const isHome = $('body').hasClass('body--home');
 const sentences = $('#tagline-list').children().map((_, li) => $(li).text());
 $('#tagline').typing({
   sentences: sentences,
-  sentenceDelay: 1000
+  sentenceDelay: 1000,
+  ignorePrefix: true
 });
 
 // Header toggle
