@@ -16,7 +16,10 @@
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
   </head>
 
-  <body <%= if @path_root == home_path(@conn, :index) |> path_root do %> class="body--home" <% end %> >
+  <body
+    data-js-view-name="<%= js_view_name(@view_module, @view_template) %>"
+    <%= if @path_root == home_path(@conn, :index) |> path_root do %>class="body--home"<% end %>>
+
     <header role="heading" class="header header--fixed">
       <div class="container">
         <button class="navbar-toggle" type="button">&#9776;</button>
@@ -57,13 +60,6 @@
       </div>
     </footer>
 
-    <script src="<%= static_path(@conn, "/js/vendor.js") %>"></script>
-    <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
-    <script>
-      // Initializes Highlight.js
-      hljs.initHighlightingOnLoad();
-    </script>
-
     <%# Flash Messages %>
     <%
     info = get_flash(@conn, :info)
@@ -80,5 +76,9 @@
         <% end %>
       </section>
     <% end %>
+
+    <%# Javascript %>
+    <script src="<%= static_path(@conn, "/js/vendor.js") %>"></script>
+    <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
   </body>
 </html>

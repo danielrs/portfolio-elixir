@@ -24,87 +24,26 @@ import "phoenix_html"
 
 // var _ = require('lodash');
 
-// Function to check if we are on a mobile
-// From: http://stackoverflow.com/questions/3514784/what-is-the-best-way-to-detect-a-mobile-device-in-jquery
-function isMobile() {
-  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+import MainView from './views/main';
+import loadView from './views/loader';
+
+function handleDOMContentLoaded() {
+  // Get view name for this page.
+  const viewName = document.getElementsByTagName('body')[0].dataset.jsViewName;
+
+  // Load class for the view.
+  const ViewClass = loadView(viewName);
+  const view = new ViewClass();
+  view.mount();
+
+  window.currentView = view;
 }
 
-class ClassToggler {
-  constructor(el) {
-    this.$el = $(el);
-    this.onClasses = undefined;
-    this.offClasses = undefined;
-  }
-
-  on(classes) {
-    this.onClasses = classes;
-    this._removeClass(this.offClasses);
-    this._addClass(this.onClasses);
-  }
-
-  off(classes) {
-    this.offClasses = classes;
-    this._removeClass(this.onClasses);
-    this._addClass(this.offClasses);
-  }
-
-  _addClass(classes) {
-    if (classes && !this.$el.hasClass(classes))
-      this.$el.addClass(classes);
-  }
-  _removeClass(classes) {
-    if (classes && this.$el.hasClass(classes))
-      this.$el.removeClass(classes);
-  }
+function handleUnload() {
+  window.currentView.umount();
+  window.currentView = null;
 }
 
-const isHome = $('body').hasClass('body--home');
-
-// Tagline
-const sentences = $('#tagline-list').children().map((_, li) => $(li).text());
-$('#tagline').typing({
-  sentences: sentences,
-  sentenceDelay: 1000,
-  ignorePrefix: true
-});
-
-// Header toggle
-const headerToggler = new ClassToggler('header.header');
-const brandToggler = new ClassToggler('header.header .navbar-brand');
-
-$(document).scroll(function() {
-  if ($(document).scrollTop() <= 10) {
-    headerToggler.on('header--transparent');
-    if (isHome) brandToggler.off('animated fadeOutLeft');
-  }
-  else {
-    headerToggler.off();
-    if (isHome) brandToggler.on('animated fadeInLeft');
-  }
-}).trigger('scroll');
-
-// Navbar click
-$('.navbar-toggle').click(function() {
-  $('.nav-wrapper').toggleClass('nav-wrapper--collapsed');
-});
-
-// If is not mobile at dynamic height
-if (!isMobile()) {
-  $('.mega-brand').addClass('mega-brand--dynamic-height');
-}
-
-// Toasts.
-setTimeout(function() {
-  const toastToggler = new ClassToggler('.container--toast');
-  toastToggler.off('fadeInUp');
-  toastToggler.on('fadeOutDown');
-}, 4000);
-
-// Email.
-const user = 'danielrivas';
-const domain = 'danielrs.me';
-const $el = $('<a/>')
-$el.attr('href', 'mailto:' + user + '@' + domain);
-$el.text(user + '@' + domain);
-$('.personal-email').html($el);
+// window.addEventListener('DOMContentLoaded', handleDOMContentLoaded, false);
+handleDOMContentLoaded(); // change to line above if javascript loads before content.
+window.addEventListener('unload', handleUnload, false);
