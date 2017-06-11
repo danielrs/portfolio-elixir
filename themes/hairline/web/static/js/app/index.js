@@ -100,3 +100,11 @@ setTimeout(function() {
   toastToggler.off('fadeInUp');
   toastToggler.on('fadeOutDown');
 }, 4000);
+
+// Email.
+const user = 'danielrivas';
+const domain = 'danielrs.me';
+const $el = $('<a/>')
+$el.attr('href', 'mailto:' + user + '@' + domain);
+$el.text(user + '@' + domain);
+$('.personal-email').html($el);

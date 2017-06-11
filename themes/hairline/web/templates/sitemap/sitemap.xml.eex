@@ -20,6 +20,15 @@
 
   <url>
     <loc>
+      <%= host %><%= contact_path(@conn, :index) %>
+    </loc>
+    <lastmod><%= format_sitemap_date(Ecto.Date.utc) %></lastmod>
+    <priority>0.75</priority>
+    <changefreq>montly</changefreq>
+  </url>
+
+  <url>
+    <loc>
       <%= host %><%= blog_path(@conn, :index) %>
     </loc>
     <lastmod><%= format_sitemap_date(Ecto.Date.utc) %></lastmod>

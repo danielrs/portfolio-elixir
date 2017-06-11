@@ -1,11 +1,34 @@
 .main-section.contact-section {
+  .grid;
+  .row;
+
   margin-top: -4rem;
   padding-top: 7em;
   background: @color-light-gray;
-}
 
-#contact-form {
-  margin-top: @leading;
-  textarea { min-height: 16em; }
-}
+  #contact-info {
+    .personal-email {
+      &:extend(.font-monospace);
+    }
 
+    .social {
+      list-style: none;
+      padding-left: 0;
+    }
+  }
+
+  #contact-form {
+    margin-top: @leading;
+    textarea { min-height: 16em; }
+  }
+
+  @media screen and (min-width: @break-l) {
+    #contact-info {
+      .column(1, 3);
+    }
+
+    #contact-form {
+      .column(2, 3);
+    }
+  }
+}

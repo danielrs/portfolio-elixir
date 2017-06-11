@@ -1,18 +1,18 @@
 <%= form_for @changeset, contact_path(@conn, :create), [id: "contact-form"], fn f -> %>
 
-  <%= if f.errors != [] do %>
-    <ul class="help-block">
-      <%= for {attr, error} <- f.errors do %>
-        <li><strong><%= attr %></strong> - <%= translate_error(error) %></li>
-      <% end %>
-    </ul>
-  <% end %>
+  <%# <%= if f.errors != [] do %1> %>
+  <%#   <ul class="help-block"> %>
+  <%#     <%= for {attr, error} <- f.errors do %1> %>
+  <%#       <li><strong><%= attr %1></strong> - <%= translate_error(error) %1></li> %>
+  <%#     <% end %1> %>
+  <%#   </ul> %>
+  <%# <% end %1> %>
 
   <fieldset class="form-group">
-    <%= error_input :text_input, f, :name, placeholder: "Name" %>
-    <%= error_input :email_input, f, :email, placeholder: "Email" %>
-    <%= error_input :text_input, f, :subject, placeholder: "Subject" %>
-    <%= error_input :textarea, f, :text, placeholder: "Tell me what you need" %>
+    <%= error_input :text_input, f, :name, placeholder: "Name", required: true %>
+    <%= error_input :email_input, f, :email, placeholder: "Email", required: true %>
+    <%= error_input :text_input, f, :subject, placeholder: "Subject", required: true %>
+    <%= error_input :textarea, f, :text, placeholder: "Tell me what you need", required: true %>
   </fieldset>
   <fieldset class="form-center">
     <input type="submit" value="&#xf1d8; Send" class="button--wide" />
