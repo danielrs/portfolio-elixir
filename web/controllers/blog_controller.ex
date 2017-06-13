@@ -8,7 +8,9 @@ defmodule Portfolio.BlogController do
   plug :fix_slug when action in [:show_proxy, :show]
 
   def index(conn, params) do
-    paginator = BlogFilter.query_posts(params) |> paginate_posts(params)
+    paginator = BlogFilter.query_posts(params)
+                |> paginate_posts(params)
+                |> drop_body
 
     conn
     |> SEO.put_title("Blog")
@@ -45,5 +47,11 @@ defmodule Portfolio.BlogController do
     |> Query.where(published?: true)
     |> Query.order_by(desc: :date, desc: :inserted_at, asc: :title)
     |> Repo.paginate(params)
+  end
+
+  defp drop_body(paginator) do
+    %{paginator | entries: Enum.map(paginator.entries, fn entry ->
+      entry |> Map.drop([:markdown, :html])
+    end)}
   end
 end

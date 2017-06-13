@@ -3,7 +3,7 @@
     <h1 class="header--main">Contact me!</h1>
 
     <div id="contact-info">
-      <p>You can contact me using the form. Or if you wish to contact me directly you can send me an email at:</p>
+      <p>You can contact me using the form. Or if you wish to contact me directly, you can send me an email at:</p>
       <p class="personal-email">Enable javascript to see email</p>
       <h3>Other sites where to find me</h3>
       <ul class="social">
