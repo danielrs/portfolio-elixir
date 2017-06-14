@@ -19,12 +19,11 @@
     "tests"
   ],
   "dependencies": {
-    "typing.js": "^0.3.3",
+    "typing.js": "^0.4.1",
     "normalize-css": "^5.0.0",
     "animate.css": "^3.5.2",
     "greed": "^0.1.6",
-    "highlightjs": "^9.9.0",
-    "jquery": "^3.2.1"
+    "highlightjs": "^9.9.0"
   },
   "overrides": {
     "highlightjs": {

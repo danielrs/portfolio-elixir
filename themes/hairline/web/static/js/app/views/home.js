@@ -1,13 +1,15 @@
 import MainView from './main';
-import {isMobile} from '../../util';
+import {Element, isMobile} from '../../util';
 
 export default class HomeView extends MainView {
   mount() {
     super.mount();
 
     // Tagline
-    const sentences = $('#tagline-list').children().map((_, li) => $(li).text());
-    $('#tagline').typing({
+    const sentences = [...document.getElementById('tagline-list').children]
+      .map(li => li.textContent);
+
+    Typing.new('#tagline', {
       sentences: sentences,
       sentenceDelay: 1000,
       ignorePrefix: true
@@ -15,7 +17,7 @@ export default class HomeView extends MainView {
 
     // If we are not on mobile, mega brand can be dynamic height.
     if (!isMobile()) {
-      $('.mega-brand').addClass('mega-brand--dynamic-height');
+      new Element('.mega-brand').addClass('mega-brand--dynamic-height');
     }
   }
 

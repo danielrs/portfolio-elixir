@@ -15,7 +15,7 @@ export default class ContactView extends MainView {
     a.title = email;
     a.href = 'mailto:' + email;
 
-    const elements = Array.from(document.getElementsByClassName('personal-email'));
+    const elements = [...document.getElementsByClassName('personal-email')];
     elements.map(el => {
       el.innerHTML = '';
       el.appendChild(a);

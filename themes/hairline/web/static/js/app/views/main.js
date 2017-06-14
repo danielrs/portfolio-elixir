@@ -1,12 +1,16 @@
-import {isMobile, ClassToggler} from '../../util';
+import {Element, isMobile, ClassToggler} from '../../util';
+
+function scrollTop() {
+  return (document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop;
+}
 
 function headerToggle() {
-  const isHome = $('body').hasClass('body--home');
+  const isHome = new Element('body').hasClass('body--home');
   const headerToggler = new ClassToggler('header.header');
   const brandToggler = new ClassToggler('header.header .navbar-brand');
 
-  $(document).scroll(function() {
-    if ($(document).scrollTop() <= 10) {
+  window.addEventListener('scroll', function() {
+    if (scrollTop() <= 10) {
       headerToggler.on('header--transparent');
       if (isHome) brandToggler.off('animated fadeOutLeft');
     }
@@ -14,13 +18,14 @@ function headerToggle() {
       headerToggler.off();
       if (isHome) brandToggler.on('animated fadeInLeft');
     }
-  }).trigger('scroll');
+  });
+  window.dispatchEvent(new Event('scroll'));
 }
 
 function navbarClick() {
-    $('.navbar-toggle').click(function() {
-      $('.nav-wrapper').toggleClass('nav-wrapper--collapsed');
-    });
+  new Element('.navbar-toggle').first().addEventListener('click', function() {
+    new Element('.nav-wrapper').toggleClass('nav-wrapper--collapsed');
+  });
 }
 
 function toasts() {
