@@ -1,4 +1,5 @@
 import MainView from './main';
+import {map} from '../../util';
 
 export default class ContactView extends MainView {
   mount() {
@@ -15,8 +16,8 @@ export default class ContactView extends MainView {
     a.title = email;
     a.href = 'mailto:' + email;
 
-    const elements = [...document.getElementsByClassName('personal-email')];
-    elements.map(el => {
+    const elements = document.getElementsByClassName('personal-email');
+    map(elements, el => {
       el.innerHTML = '';
       el.appendChild(a);
     });

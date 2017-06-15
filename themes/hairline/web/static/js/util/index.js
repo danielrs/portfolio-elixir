@@ -3,6 +3,12 @@ import Element from './element';
 // Re-exports.
 export { Element };
 
+// Function for mapping a function call on
+// array values.
+export function map(array, f) {
+  return Array.prototype.map.call(array, f);
+}
+
 // Function to check if we are on a mobile
 // From: http://stackoverflow.com/questions/3514784/what-is-the-best-way-to-detect-a-mobile-device-in-jquery
 export function isMobile() {

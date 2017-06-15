@@ -1,13 +1,16 @@
 import MainView from './main';
-import {Element, isMobile} from '../../util';
+import {Element, map, isMobile} from '../../util';
 
 export default class HomeView extends MainView {
   mount() {
     super.mount();
 
     // Tagline
-    const sentences = [...document.getElementById('tagline-list').children]
-      .map(li => li.textContent);
+    const sentences =
+      map(
+        document.getElementById('tagline-list').children,
+        li => li.textContent
+      );
 
     Typing.new('#tagline', {
       sentences: sentences,

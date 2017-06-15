@@ -1,7 +1,9 @@
+import {map} from './index';
+
 // Different manipulations on multi-elements.
 export default class Element {
   constructor(selector) {
-    this.elements = [...document.querySelectorAll(selector)];
+    this.elements = document.querySelectorAll(selector);
   }
 
   first() {
@@ -19,7 +21,7 @@ export default class Element {
   addClass(classes) {
     if (classes) {
       classes = classes.split(' ');
-      this.elements.map(el => {
+      map(this.elements, el => {
 	classes.map(c => addClass(el, c));
       });
     }
@@ -28,7 +30,7 @@ export default class Element {
   removeClass(classes) {
     if (classes) {
       classes = classes.split(' ');
-      this.elements.map(el => {
+      map(this.elements, el => {
 	classes.map(c => removeClass(el, c));
       });
     }
@@ -37,7 +39,7 @@ export default class Element {
   toggleClass(classes) {
     if (classes) {
       classes = classes.split(' ');
-      this.elements.map(el => {
+      map(this.elements, el => {
 	classes.map(c => toggleClass(el, c));
       });
     }
