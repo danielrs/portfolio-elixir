@@ -19,7 +19,7 @@
     "tests"
   ],
   "dependencies": {
-    "typing.js": "^0.4.3",
+    "typing.js": "^0.4.4",
     "normalize-css": "^5.0.0",
     "animate.css": "^3.5.2",
     "greed": "^0.1.6",
