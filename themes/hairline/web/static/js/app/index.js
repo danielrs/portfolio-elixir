@@ -29,7 +29,7 @@ import loadView from './views/loader';
 
 function handleDOMContentLoaded() {
   // Get view name for this page.
-  const viewName = document.getElementsByTagName('body')[0].dataset.jsViewName;
+  const viewName = document.getElementsByTagName('body')[0].getAttribute('data-js-view-name');
 
   // Load class for the view.
   const ViewClass = loadView(viewName);

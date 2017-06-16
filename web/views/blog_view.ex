@@ -1,4 +1,4 @@
 defmodule Portfolio.BlogView do
   use Portfolio.Web, :view
-  alias Portfolio.Utils
+  import Portfolio.Utils, only: [host: 0]
 end

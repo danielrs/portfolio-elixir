@@ -1,9 +1,6 @@
 defmodule Portfolio.SitemapView do
   use Portfolio.Web, :view
-
-  def host do
-    "http://#{Application.get_env(:portfolio, Portfolio.Endpoint)[:url][:host]}"
-  end
+  import Portfolio.Utils, only: [host: 0]
 
   def format_sitemap_date(date) do
     date

@@ -1,4 +1,12 @@
 defmodule Portfolio.Utils do
+  @doc """
+  Returns the host url configured in the app.
+  """
+  @spec host() :: String.t
+  def host do
+    "http://#{Application.get_env(:portfolio, Portfolio.Endpoint)[:url][:host]}"
+  end
+
   @spec codify(Strint.t) :: integer
   def codify(string) when is_binary(string) do
     string
