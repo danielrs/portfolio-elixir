@@ -16,7 +16,7 @@
       <h1 class="animated fadeInDown"><%= site_name %></h1>
       <code id="tagline">Software Engineer</code>
       <ul id="tagline-list">
-        <li>Hello</li>
+        <li>Hi</li>
         <li>I'm Daniel</li>
         <li>I design</li>
         <li>I develop</li>
