@@ -27,7 +27,7 @@ The web container has elixir, phoenix, and npm installed. To start your Phoenix 
   * **If running the first time**, clean old dependencies with `mix deps.clean --all`
   * Install dependencies with `mix deps.get`
   * Create and migrate your database with `mix ecto.create && mix ecto.migrate`
-  * Install Node.js dependencies for the active theme with `npm install`
+  * Install Node.js dependencies in the assets directory with `npm install`
   * Start Phoenix endpoint with `mix phx.server`
 
 Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.

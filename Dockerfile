@@ -52,7 +52,7 @@ RUN mix deps.get
 RUN MIX_ENV=prod mix compile
 
 # Compiles assets
-RUN cd ./themes/hairline \
+RUN cd ./assets \
     && npm install \
     && NODE_ENV=production ./node_modules/.bin/brunch build --production
 RUN MIX_ENV=prod mix phoenix.digest
