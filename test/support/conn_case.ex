@@ -1,11 +1,11 @@
-defmodule Portfolio.ConnCase do
+defmodule PortfolioWeb.ConnCase do
   @moduledoc """
   This module defines the test case to be used by
   tests that require setting up a connection.
 
   Such tests rely on `Phoenix.ConnTest` and also
-  imports other functionality to make it easier
-  to build and query models.
+  import other functionality to make it easier
+  to build common datastructures and query the data layer.
 
   Finally, if the test case interacts with the database,
   it cannot be async. For this reason, every test runs
@@ -19,17 +19,13 @@ defmodule Portfolio.ConnCase do
     quote do
       # Import conveniences for testing with connections
       use Phoenix.ConnTest
+      import PortfolioWeb.Router.Helpers
 
       alias Portfolio.Repo
-      import Ecto
-      import Ecto.Changeset
-      import Ecto.Query, only: [from: 1, from: 2]
       import Plug.Conn.Status, only: [code: 1]
 
-      import Portfolio.Router.Helpers
-
       # The default endpoint for testing
-      @endpoint Portfolio.Endpoint
+      @endpoint PortfolioWeb.Endpoint
 
       defp setup_conn(conn) do
         alias Portfolio.Factory
@@ -45,11 +41,11 @@ defmodule Portfolio.ConnCase do
         {:ok, admin_conn} = login_user(conn, admin_user)
 
         {:ok,
-         conn: conn,
-         nonadmin_conn: nonadmin_conn,
-         admin_conn: admin_conn,
-         nonadmin_user: nonadmin_user,
-         admin_user: admin_user}
+          conn: conn,
+          nonadmin_conn: nonadmin_conn,
+          admin_conn: admin_conn,
+          nonadmin_user: nonadmin_user,
+          admin_user: admin_user}
       end
 
       defp login_user(conn, user) do
@@ -69,11 +65,10 @@ defmodule Portfolio.ConnCase do
 
   setup tags do
     :ok = Ecto.Adapters.SQL.Sandbox.checkout(Portfolio.Repo)
-
     unless tags[:async] do
       Ecto.Adapters.SQL.Sandbox.mode(Portfolio.Repo, {:shared, self()})
     end
-
     {:ok, conn: Phoenix.ConnTest.build_conn()}
   end
+
 end

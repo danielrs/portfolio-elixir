@@ -5,16 +5,21 @@
 # is restricted to this project.
 use Mix.Config
 
+# Custom configuration
+config :portfolio,
+  site_name: "Daniel Rivas",
+  showcase_email: System.get_env("PORTFOLIO_SHOWCASE_EMAIL") || "john.doe@email.com"
+
 # General application configuration
 config :portfolio,
+  namespace: Portfolio,
   ecto_repos: [Portfolio.Repo]
 
 # Configures the endpoint
-config :portfolio, Portfolio.Endpoint,
+config :portfolio, PortfolioWeb.Endpoint,
   url: [host: "localhost"],
-  root: Path.dirname(__DIR__),
-  secret_key_base: "QljouOFRV2gXf+4ncD9uIz+WnaQYZDb0q1qq0PM6wTA/uUFBN/WELd6KtEKMRLGQ",
-  render_errors: [view: Portfolio.ErrorView, accepts: ~w(html json)],
+  secret_key_base: "IaUPLNesc6cDPYzCY4xieNdYzLTntyq+JHctCeUkq/ZffADqF9nQor/sgc2rWXIg",
+  render_errors: [view: PortfolioWeb.ErrorView, accepts: ~w(html json)],
   pubsub: [name: Portfolio.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
@@ -23,31 +28,18 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
-# Configure phoenix generators
-config :phoenix, :generators,
-  migration: true,
-  binary_id: false
-
+# Configure Guardian
 config :guardian, Guardian,
-  allowed_algos: ["HS512"],
-  verify_module: Guardian.JWT,
   issuer: "Portfolio",
   ttl: {30, :days},
-  verify_issuer: true,
+  allowed_drift: 2000,
   secret_key: "lksdjowiurowieurlkjsdlwwer",
-  serializer: Portfolio.GuardianSerializer
+  serializer: Portfolio.Guardian
 
-# Mailgun
+# Configure Mailgun
 config :portfolio,
   mailgun_domain: System.get_env("MAILGUN_DOMAIN"),
   mailgun_key: System.get_env("MAILGUN_KEY")
-
-# Theme configuration
-config :portfolio,
-  site_name: "Daniel Rivas",
-  showcase_email: System.get_env("PORTFOLIO_SHOWCASE_EMAIL") || "john.doe@email.com",
-  theme: :hairline,
-  static_path: Path.expand("../priv/static", __DIR__)
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

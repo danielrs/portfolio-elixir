@@ -1,4 +1,4 @@
-FROM trenpixster/elixir:1.3.4
+FROM trenpixster/elixir:1.5
 
 #
 # System dependencies
@@ -39,7 +39,7 @@ ENV PATH      $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 # Install Elixir's rebar, hex, and phoenix
 RUN mix local.rebar --force \
     && mix local.hex --force \
-    && mix archive.install https://github.com/phoenixframework/archives/raw/master/phoenix_new.ez --force
+    && mix archive.install https://github.com/phoenixframework/archives/raw/master/phx_new.ez --force
 
 #
 # Deploy
